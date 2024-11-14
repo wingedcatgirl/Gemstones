@@ -6,7 +6,7 @@
 --- BADGE_COLOR: ba1728
 --- DEPENDENCIES: [Steamodded>=1.0.0~ALPHA-0812d]
 --- DISPLAY_NAME: Gemstones
---- VERSION: 1.0.0
+--- VERSION: 0.0.1
 
 ----------------------------------------------
 ------------MOD CODE -------------------------
@@ -22,8 +22,8 @@ SMODS.Atlas{
 -- Gemstone Consumable
 SMODS.ConsumableType{
 	key = "Gemstone",
-    primary_colour = HEX("8c36a3"),
-    secondary_colour = HEX("622473"),
+    primary_colour = HEX("d1303e"),
+    secondary_colour = HEX("d1303e"),
     collection_rows = { 6, 6 },
     shop_rate = 0.2,
     loc_txt = {
@@ -59,26 +59,42 @@ SMODS.Consumable{
     loc_txt = {
         name = "Ruby",
         text = {
-            "{X:mult,C:white}X#1.2#{} Mult",
+            "{X:mult,C:white}X#1#{} Mult",
             "when scored"
         }
     },
     config = {
         max_highlighted = 1,
+        x_mult = 1.2,
     },
 
     loc_vars = function(self, info_queue)
-        return { vars = {self.config.mult, self.config.chips, self.config.money, self.config.x_mult, } }
+        return { vars = { self.config.x_mult } }
     end,
 
     can_use = function(self, card)
-        if G.hand.highlighted == 1 then
+        if #G.hand.highlighted == 1 then
             return true
         end
     end,
     
     use = function(self, card, area, copier)
-        print(card, area, copier)
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.1,
+            func = function()
+                for i = 1, card.ability.max_highlighted do
+                    local highlighted = G.hand.highlighted[i]
+
+                    if highlighted then
+                        sendDebugMessage("Gem Slot for card held: "..highlighted.gem_slot, "Gemstone")
+                    else
+                        break
+                    end
+                end
+                return true
+            end
+        }))
     end,
 
     disovered = true,
