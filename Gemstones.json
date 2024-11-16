@@ -1,0 +1,19 @@
+{
+	"id": "Gemstones",
+	"name": "Gemstones",
+	"display_name": "Gemstones",
+	"author": ["officialhalo"],
+	"description": "Adds Gemstones, which can be applied to cards and Jokers to give unique effects.",
+	"prefix": "gems",
+	"main_file": "gemstones.lua",
+	"priority": 36,
+	"badge_colour": "eb3452",
+	"badge_text_colour": "FFFFFF",
+	"version": "0.0.1",
+	"dependencies": [
+		{
+			"id": "Steamodded",
+			"min_version": "1.0.0~ALPHA-1030e"
+		}
+	]
+}

@@ -1,17 +1,4 @@
---- STEAMODDED HEADER
---- MOD_NAME: Gemstones
---- MOD_ID: gemstones
---- MOD_AUTHOR: [officialhalo]
---- MOD_DESCRIPTION: A mod that adds Gemstones, which can be applied to cards to give unique effects.
---- BADGE_COLOR: ba1728
---- DEPENDENCIES: [Steamodded>=1.0.0~ALPHA-0812d]
---- DISPLAY_NAME: Gemstones
---- VERSION: 0.0.1
-
-----------------------------------------------
-------------MOD CODE -------------------------
-
--- Atlas
+-- ATLAS
 SMODS.Atlas{
     key = "gems_atlas",
     path = "Tarots.png",
@@ -19,7 +6,31 @@ SMODS.Atlas{
     py = 95
 }:register()
 
--- Gemstone Consumable
+SMODS.Atlas{
+    key = "slot_atlas",
+    path = "stickers.png",
+    px = 71,
+    py = 95
+}:register()
+
+SMODS.Atlas{
+    key = "empty_joker",
+    path = "empty_joker.png",
+    px = 71,
+    py = 95
+}:register()
+
+-- GEM SLOT
+SMODS.Sticker{
+    key = "GemSlot-Empty",
+    badge_colour = HEX("734226"),
+    prefix_config = { key = false },
+    rate = 0.0,
+    atlas = "slot_atlas",
+    pos = { x = 1, y = 0 }
+}
+
+-- CONSUMABLES
 SMODS.ConsumableType{
 	key = "Gemstone",
     primary_colour = HEX("d1303e"),
@@ -32,7 +43,7 @@ SMODS.ConsumableType{
         label = "Gemstone",
         undiscovered = {
             name = "Undiscovered Gemstone",
-            text = { "discover it" },
+            text = { "Apply this gem", "to a card to", "discover its ability!" },
         }
     },
     default = "gem-Ruby",
@@ -59,6 +70,7 @@ SMODS.Consumable{
     loc_txt = {
         name = "Ruby",
         text = {
+            "When attatched, gives",
             "{X:mult,C:white}X#1#{} Mult",
             "when scored"
         }
@@ -83,15 +95,7 @@ SMODS.Consumable{
             trigger = 'after',
             delay = 0.1,
             func = function()
-                for i = 1, card.ability.max_highlighted do
-                    local highlighted = G.hand.highlighted[i]
-
-                    if highlighted then
-                        sendDebugMessage("Gem Slot for card held: "..highlighted.gem_slot, "Gemstone")
-                    else
-                        break
-                    end
-                end
+                
                 return true
             end
         }))
@@ -100,5 +104,26 @@ SMODS.Consumable{
     disovered = true,
 }
 
-----------------------------------------------
-------------MOD CODE END----------------------
+-- EDITION
+SMODS.Edition{
+    key = "GemSlot",
+    shader = false,
+    atlas = "gems_atlas",
+    pos = { x = 3, y = 3 },
+    discovered = false, 
+    unlocked = true,
+    loc_txt = {
+        name = "Gem Slot",
+        label = "gem-slot",
+        text = { "Current Gem: #1" }
+    },
+    config = {
+        slot = "Empty",
+        slot_key = "empty"
+    },
+    in_shop = false,
+
+    loc_vars = function (self, info_queue)
+        return { vars = { self.config.slot } }
+    end,
+}

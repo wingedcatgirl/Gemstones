@@ -1,12 +1,15 @@
 [manifest]
 version = "1.0.0"
 dump_lua = true
-priority = 0
+priority = 1
+
+# setting up gem slot
+# Card:init()
 
 [[patches]]
 [patches.pattern]
 target = "card.lua"
-pattern = "self.added_to_deck = true"
+pattern = "self.rank = nil"
 position = "after"
 payload = "self.gem_slot = nil"
 match_indent = true
