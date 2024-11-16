@@ -3,13 +3,27 @@ version = "1.0.0"
 dump_lua = true
 priority = 1
 
-# setting up gem slot
-# Card:init()
-
+# Applies stickers to contents
 [[patches]]
 [patches.pattern]
 target = "card.lua"
-pattern = "self.rank = nil"
-position = "after"
-payload = "self.gem_slot = nil"
+pattern = "card.T.x = self.T.x"
+position = "before"
+payload = '''
+if self.ability.eternal then
+	card.ability.eternal = self.ability.eternal
+end
+if self.ability.perishable then
+	card.ability.perishable = self.ability.perishable
+end
+if self.ability.rental then
+	card.ability.rental = self.ability.rental
+end
+if self.pinned then
+	card.pinned = self.pinned
+end
+if self.ability.gem_slot then
+    card.ability.gem_slot = self.ability.gem_slot
+end
+'''
 match_indent = true

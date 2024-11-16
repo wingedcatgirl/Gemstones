@@ -20,14 +20,43 @@ SMODS.Atlas{
     py = 95
 }:register()
 
--- GEM SLOT
+-- GEM SLOTS
 SMODS.Sticker{
     key = "GemSlot-Empty",
     badge_colour = HEX("734226"),
     prefix_config = { key = false },
     rate = 0.0,
     atlas = "slot_atlas",
-    pos = { x = 1, y = 0 }
+    pos = { x = 1, y = 0 },
+    loc_txt = {
+        name = "Gem Slot (Empty)",
+        text = { "No effect" },
+        label = "Gem Slot"
+    },
+    loc_vars = function(self, info_queue, card)
+        return {}
+    end
+}
+
+SMODS.Sticker{
+    key = "GemSlot-Ruby",
+    badge_colour = HEX("734226"),
+    prefix_config = { key = false },
+    rate = 0.0,
+    atlas = "slot_atlas",
+    pos = { x = 1, y = 0 },
+    config = { x_mult = 1.2 },
+    loc_txt = {
+        name = "Gem Slot (Ruby)",
+        text = {
+            "Gives {X:mult,C:white}X#1#{} Mult",
+            "when scored"
+        },
+        label = "Gem Slot"
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { self.config.x_mult } }
+    end
 }
 
 -- CONSUMABLES
@@ -66,12 +95,14 @@ SMODS.Consumable{
     pos = { x = 3, y = 3 },
     cost = 3,
     atlas = "gems_atlas",
+    should_apply = false,
     order = 1,
     loc_txt = {
         name = "Ruby",
         text = {
-            "When attatched, gives",
-            "{X:mult,C:white}X#1#{} Mult",
+            "When attatched to",
+            "a card or Joker,",
+            "gives {X:mult,C:white}X#1#{} Mult",
             "when scored"
         }
     },
@@ -95,7 +126,7 @@ SMODS.Consumable{
             trigger = 'after',
             delay = 0.1,
             func = function()
-                
+                card:set_ruby_slot()
                 return true
             end
         }))
@@ -104,26 +135,27 @@ SMODS.Consumable{
     disovered = true,
 }
 
--- EDITION
-SMODS.Edition{
-    key = "GemSlot",
-    shader = false,
-    atlas = "gems_atlas",
-    pos = { x = 3, y = 3 },
-    discovered = false, 
-    unlocked = true,
-    loc_txt = {
-        name = "Gem Slot",
-        label = "gem-slot",
-        text = { "Current Gem: #1" }
-    },
-    config = {
-        slot = "Empty",
-        slot_key = "empty"
-    },
-    in_shop = false,
+function Card:calculate_ruby_slot()
+    return {
+        x_mult = 1.2
+    }
+end
 
-    loc_vars = function (self, info_queue)
-        return { vars = { self.config.slot } }
-    end,
-}
+function Card:set_ruby_slot()
+    self.ability.gem_slot = "ruby"
+end
+
+-- CARD FUNCS
+local ec = eval_card
+function eval_card(card, context)
+    local ret = ec(card, context)
+    if card.area == G.hand or card.area == G.play or card.area == G.discard or card.area == G.deck then
+		for k, v in pairs(SMODS.Stickers) do
+			if card.ability[k] and v.calculate and type(v.calculate) == "function" then
+				context.from_playing_card = true
+				context.ret = ret
+				v:calculate(card, context)
+			end
+		end
+	end
+end
