@@ -35,7 +35,7 @@ SMODS.Sticker{
     },
     loc_vars = function(self, info_queue, card)
         return {}
-    end
+    end,
 }
 
 SMODS.Sticker{
@@ -137,11 +137,14 @@ SMODS.Consumable{
 
 function Card:calculate_ruby_slot()
     return {
-        x_mult = 1.2
+        message = localize({ type = "variable", key = "a_xmult", vars = { card.ability.x_mult } }),
+        colour = G.C.RED,
+        mult_mod = card.ability.x_mult,
     }
 end
 
 function Card:set_ruby_slot()
+    local sticker = SMODS.Stickers["GemSlot-Ruby"]:apply(self, true)
     self.ability.gem_slot = "ruby"
 end
 
