@@ -22,7 +22,7 @@ SMODS.Atlas{
 
 -- GEM SLOTS
 SMODS.Sticker{
-    key = "GemSlot-Empty",
+    key = "gemslot_empty",
     badge_colour = HEX("734226"),
     prefix_config = { key = false },
     rate = 0.0,
@@ -39,8 +39,8 @@ SMODS.Sticker{
 }
 
 SMODS.Sticker{
-    key = "GemSlot-Ruby",
-    badge_colour = HEX("734226"),
+    key = "gemslot_ruby",
+    badge_colour = HEX("e3394f"),
     prefix_config = { key = false },
     rate = 0.0,
     atlas = "slot_atlas",
@@ -49,14 +49,14 @@ SMODS.Sticker{
     loc_txt = {
         name = "Gem Slot (Ruby)",
         text = {
-            "Gives {X:mult,C:white}X#1#{} Mult",
+            "{X:mult,C:white}X#1#{} Mult",
             "when scored"
         },
         label = "Gem Slot"
     },
     loc_vars = function(self, info_queue, card)
         return { vars = { self.config.x_mult } }
-    end
+    end,
 }
 
 -- CONSUMABLES
@@ -109,6 +109,7 @@ SMODS.Consumable{
     config = {
         max_highlighted = 1,
         x_mult = 1.2,
+        sticker_id = "gemslot_ruby"
     },
 
     loc_vars = function(self, info_queue)
@@ -122,33 +123,33 @@ SMODS.Consumable{
     end,
     
     use = function(self, card, area, copier)
-        G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 0.1,
-            func = function()
-                card:set_ruby_slot()
-                return true
-            end
-        }))
+        card:change_gemslot(self.config.sticker_id)
     end,
 
     disovered = true,
 }
 
-function Card:calculate_ruby_slot()
+function Card:calculate_ruby_slot(self)
     return {
-        message = localize({ type = "variable", key = "a_xmult", vars = { card.ability.x_mult } }),
+        message = localize({ type = "variable", key = "a_xmult", vars = { self.ability.x_mult } }),
         colour = G.C.RED,
-        mult_mod = card.ability.x_mult,
+        x_mult = self.ability.x_mult,
     }
 end
 
-function Card:set_ruby_slot()
-    local sticker = SMODS.Stickers["GemSlot-Ruby"]:apply(self, true)
-    self.ability.gem_slot = "ruby"
+-- CARD FUNCS
+function Card:change_gemslot(self, slot_id)
+    for k, v in self.ability do
+        if string.find(k, "gemslot") then
+            self.ability[k] = nil
+            break
+        end
+    end
+
+    local sticker = SMODS.Stickers[slot_id]:apply(self, true)
+    self.ability.gemslot_ruby = true
 end
 
--- CARD FUNCS
 local ec = eval_card
 function eval_card(card, context)
     local ret = ec(card, context)

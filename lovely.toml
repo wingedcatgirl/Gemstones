@@ -10,8 +10,10 @@ target = "card.lua"
 pattern = "card.T.x = self.T.x"
 position = "before"
 payload = '''
-if self.ability.gem_slot then
-    card.ability.gem_slot = self.ability.gem_slot
+if self.ability.gemslot_empty then
+    card.ability.gemslot_empty = self.ability.gemslot_empty
+elseif self.ability.gemslot_ruby then
+    card.ability.gemslot_ruby = self.ability.gemslot_ruby
 end
 '''
 match_indent = true
