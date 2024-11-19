@@ -20,7 +20,16 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = "functions/state_events.lua"
-pattern = "if G.play.cards[i].ability.effect == 'Stone Card' then"
-position = "at"
-payload = "if G.play.cards[i].ability.effect == 'Stone Card' or G.play.cards[i].ability.gemslot_pearl then"
+pattern = "if not inside then table.insert(pures, G.play.cards[i]) end"
+position = "after"
+payload = '''
+            elseif G.play.cards[i].ability.gemslot_pearl then
+                local inside = false
+                for j=1, #scoring_hand do
+                    if scoring_hand[j] == G.play.cards[i] then
+                        inside = true
+                    end
+                end
+                if not inside then table.insert(pures, G.play.cards[i]) end
+'''
 match_indent = true

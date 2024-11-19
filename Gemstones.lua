@@ -22,6 +22,13 @@ SMODS.Atlas{
     py = 95
 }:register()
 
+SMODS.Atlas{
+    key = "gemstone_pack",
+    path = "boosters.png",
+    px = 71,
+    py = 95
+}:register()
+
 -- GEM SLOTS
 SMODS.Sticker{
     key = "gemslot_empty",
@@ -35,7 +42,7 @@ SMODS.Sticker{
     loc_vars = function(self, info_queue, card)
         return {}
     end,
-    apply = function(self, card) end,
+    added = function(self, card) end,
     removed = function(self, card) end,
 }
 
@@ -51,7 +58,7 @@ SMODS.Sticker{
     loc_vars = function(self, info_queue, card)
         return { vars = { self.config.x_mult } }
     end,
-    apply = function(self, card)
+    added = function(self, card)
         card.ability.x_mult = card.ability.x_mult + (self.config.x_mult - 1)
     end,
     removed = function(self, card)
@@ -71,8 +78,52 @@ SMODS.Sticker{
     loc_vars = function(self, info_queue, card)
         return {}
     end,
-    apply = function(self, card) end,
+    added = function(self, card) end,
     removed = function(self, card) end,
+}
+
+SMODS.Sticker{
+    key = "gemslot_topaz",
+    badge_colour = HEX("e6af19"),
+    prefix_config = { key = false },
+    rate = 0.0,
+    atlas = "slot_atlas",
+    pos = { x = 3, y = 1 },
+    config = { dollars = 2 },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { self.config.x_mult } }
+    end,
+    added = function(self, card)
+        card.ability.p_dollars = card.ability.p_dollars + self.config.dollars
+    end,
+    removed = function(self, card)
+        card.ability.p_dollars = card.ability.p_dollars - self.config.dollars
+    end
+}
+
+-- BOOSTER PACK
+SMODS.Booster{
+    name = "Gemstone Pack",
+    key = "gemstone_normal_1",
+    kind = "Gemstone",
+    atlas = "gemstone_pack",
+    group_key = "k_gems_gemstone_pack",
+    pos = { x = 0, y = 3 },
+	config = { extra = 3, choose = 1},
+    cost = 4,
+    order = 1,
+    weight = 3,
+    draw_hand = true, 
+    unlocked = true,
+    discovered = true,
+    
+    create_card = function(self, card)
+        return create_card('Gemstone', G.pack_cards, nil, nil, true, true, nil, "gem-Ruby")
+    end,
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.config.center.config.choose, card.ability.extra } }
+    end
 }
 
 -- TYPE
@@ -233,6 +284,32 @@ SMODS.Consumable{
     use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
 }
 
+SMODS.Consumable{
+    object_type = "Consumable",
+    set = "Gemstone",
+    name = "gem-Topaz",
+    key = "topaz",
+    atlas = "gems_atlas",
+    pos = { x = 5, y = 3 },
+    cost = 3,
+    should_apply = false,
+    disovered = true,
+    order = 1,
+    config = {
+        max_highlighted = 1,
+        money_earned = 2,
+        sticker_id = "gemslot_topaz"
+    },
+
+    loc_vars = function(self, info_queue)
+        info_queue[#info_queue + 1] = { key = "gemslot_topaz", set = "Other", vars = { self.config.money_earned } }
+        return { vars = { self.config.max_highlighted } }
+    end,
+
+    can_use = function(self, card) return can_use_gemstone_consumeable(self, card) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+}
+
 -- CARD FUNCS
 function can_use_gemstone_consumeable(self, card)
     return 
@@ -283,7 +360,7 @@ function set_gemslot(self, id)
         end
     end
 
-    stickers[id]:apply(self)
+    stickers[id]:added(self)
     self.ability[id] = true
 end
 

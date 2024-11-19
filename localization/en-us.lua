@@ -21,6 +21,15 @@ return {
                     "{C:attention}card{} or {C:attention}Joker{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
+            },
+            c_gems_topaz = {
+                name = "Topaz",
+                text = {
+                    "Attatches a {C:money}Topaz",
+                    "{}Gemstone to {C:green}#1#{} selected",
+                    "{C:attention}card{} or {C:attention}Joker{}",
+                    "{C:inactive}(Must have a Gem Slot){}"
+                }
             }
         },
         Joker = {},
@@ -66,16 +75,35 @@ return {
                     "This playing card",
                     "is always scored"
                 },
+            },
+            gemslot_topaz = {
+                name = "Topaz Gem Slot",
+                text = {
+                    "Earn {C:money}$2{} when this",
+                    "card is played",
+                    "and scores",
+                },
+            },
+            p_gems_gemstone_normal_1 = {
+                name = "Gemstone Pack",
+                text = {
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{C:hearts} Gemstone{} cards",
+                }
             }
         },
         misc = {
             achievement_names = {},
             achievement_descriptions = {},
             challenge_names = {},
-            dictionary = {},
+            dictionary = {
+                k_gems_gemstone_pack = "Gemstones Pack"
+            },
             labels = {
                 gemslot_empty = "Empty Slot",
-                gemslot_ruby = "Ruby Slot"
+                gemslot_ruby = "Ruby Slot",
+                gemslot_pearl = "Pearl Slot",
+                gemslot_topaz = "Topaz Slot"
             },
         }
     }
