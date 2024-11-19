@@ -3,12 +3,24 @@ version = "1.0.0"
 dump_lua = true
 priority = 1
 
-# Applies stickers to contents
+# Force key
 [[patches]]
 [patches.pattern]
-target = "card.lua"
-pattern = "card.T.x = self.T.x"
+target = "functions/common_events.lua"
+pattern = "if _type == 'Joker' then"
 position = "before"
 payload = '''
+if _type == 'Gemstone' then 
+    forced_key = 'c_gems_ruby'
+end
 '''
+match_indent = true
+
+# Pearl functionality
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "if G.play.cards[i].ability.effect == 'Stone Card' then"
+position = "at"
+payload = "if G.play.cards[i].ability.effect == 'Stone Card' or G.play.cards[i].ability.gemslot_pearl then"
 match_indent = true

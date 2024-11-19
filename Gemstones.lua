@@ -1,3 +1,5 @@
+Gemstones = SMODS.current_mod
+
 -- ATLAS
 SMODS.Atlas{
     key = "gems_atlas",
@@ -33,6 +35,8 @@ SMODS.Sticker{
     loc_vars = function(self, info_queue, card)
         return {}
     end,
+    apply = function(self, card) end,
+    removed = function(self, card) end,
 }
 
 SMODS.Sticker{
@@ -41,23 +45,37 @@ SMODS.Sticker{
     prefix_config = { key = false },
     rate = 0.0,
     atlas = "slot_atlas",
-    pos = { x = 1, y = 0 },
+    pos = { x = 2, y = 0 },
     config = { x_mult = 1.2 },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { self.config.x_mult } }
     end,
-    calculate = function(self, card, context)
-        if context.scoring_hand or card.area == G.jokers then
-            return {
-                x_mult = self.config.x_mult,
-                card = card
-            }
-        end
+    apply = function(self, card)
+        card.ability.x_mult = card.ability.x_mult + (self.config.x_mult - 1)
+    end,
+    removed = function(self, card)
+        card.ability.x_mult = card.ability.x_mult - (self.config.x_mult - 1)
     end
 }
 
--- CONSUMABLES
+SMODS.Sticker{
+    key = "gemslot_pearl",
+    badge_colour = HEX("34d2eb"),
+    prefix_config = { key = false },
+    rate = 0.0,
+    atlas = "slot_atlas",
+    pos = { x = 4, y = 0 },
+    config = {},
+
+    loc_vars = function(self, info_queue, card)
+        return {}
+    end,
+    apply = function(self, card) end,
+    removed = function(self, card) end,
+}
+
+-- TYPE
 SMODS.ConsumableType{
 	key = "Gemstone",
     primary_colour = HEX("d1303e"),
@@ -84,12 +102,12 @@ SMODS.UndiscoveredSprite{
     pos = {x = 5, y = 2},
 }
 
--- Empty Slot
+-- TAROT CARDS
 SMODS.Consumable{
     object_type = "Consumable",
     set = "Tarot",
-    name = "gem-Create",
-    key = "create_empty",
+    name = "gem-Enfusion",
+    key = "enfusion",
     atlas = "gems_atlas",
     pos = { x = 6, y = 2 },
     cost = 3,
@@ -110,13 +128,55 @@ SMODS.Consumable{
         return 
         (#G.jokers.highlighted + #G.hand.highlighted) == self.config.max_highlighted
         and
-        (get_gemstone(G.jokers.highlighted[1]) or get_gemstone(G.hand.highlighted[1])) == nil
+        (get_gemslot(G.jokers.highlighted[1]) or get_gemslot(G.hand.highlighted[1])) == nil
     end,
 
     use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier) end,
 }
 
--- Ruby
+SMODS.Consumable{
+    object_type = "Consumable",
+    set = "Tarot",
+    name = "gem-Excavator",
+    key = "excavator",
+    atlas = "gems_atlas",
+    pos = { x = 6, y = 2 },
+    cost = 3,
+    should_apply = false,
+    disovered = true,
+    order = 301,
+    config = {},
+
+    loc_vars = function(self, info_queue, desc_nodes)
+        return {}
+    end,
+
+    can_use = function(self, card)
+        if (#G.consumeables.cards < G.consumeables.config.card_limit or self.area == G.consumeables) 
+        and G.GAME.last_used_gemstone then return true end 
+    end,
+
+    use = function(self, card, area, copier) 
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after', 
+            delay = 0.4, 
+            func = function()
+                if G.consumeables.config.card_limit > #G.consumeables.cards then
+                    play_sound('timpani')
+                    local new_gemstone = create_card('Gemstone', G.consumeables, nil, nil, nil, nil, G.GAME.last_used_gemstone, 'excavate')
+
+                    new_gemstone:add_to_deck()
+                    G.consumeables:emplace(new_gemstone)
+                    card:juice_up(0.3, 0.5)
+                end
+                return true    
+            end 
+        }))
+        delay(0.6)
+    end,
+}
+
+-- GEMSTONE CARDS
 SMODS.Consumable{
     object_type = "Consumable",
     set = "Gemstone",
@@ -139,31 +199,95 @@ SMODS.Consumable{
         return { vars = { self.config.max_highlighted } }
     end,
 
+    can_use = function(self, card) return can_use_gemstone_consumeable(self, card) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+}
+
+SMODS.Consumable{
+    object_type = "Consumable",
+    set = "Gemstone",
+    name = "gem-Pearl",
+    key = "pearl",
+    atlas = "gems_atlas",
+    pos = { x = 3, y = 2 },
+    cost = 3,
+    should_apply = false,
+    disovered = true,
+    order = 1,
+    config = {
+        max_highlighted = 1,
+        sticker_id = "gemslot_pearl"
+    },
+
+    loc_vars = function(self, info_queue)
+        info_queue[#info_queue + 1] = { key = "gemslot_pearl", set = "Other", vars = { self.config.x_mult } }
+        return { vars = { self.config.max_highlighted } }
+    end,
+
     can_use = function(self, card)
         return 
-        (#G.jokers.highlighted + #G.hand.highlighted) == self.config.max_highlighted
+        #G.hand.highlighted == self.config.max_highlighted
         and
-        (get_gemstone(G.jokers.highlighted[1]) or get_gemstone(G.hand.highlighted[1])) ~= nil
+        get_gemslot(G.hand.highlighted[1]) ~= nil
     end,
-    
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
 }
 
 -- CARD FUNCS
-function use_gemstone_consumeable(self, card, area, copier)
-    if area then
-        area:remove_from_highlighted(card)
-    end
-
-    if G.jokers.highlighted[1] then
-        apply_gemslot(G.jokers.highlighted[1], self.config.sticker_id)
-
-    elseif G.hand.highlighted[1] then
-        apply_gemslot(G.hand.highlighted[1], self.config.sticker_id)
-    end
+function can_use_gemstone_consumeable(self, card)
+    return 
+    (#G.jokers.highlighted + #G.hand.highlighted) == self.config.max_highlighted
+    and
+    (get_gemslot(G.jokers.highlighted[1]) or get_gemslot(G.hand.highlighted[1])) ~= nil
 end
 
-function get_gemstone(card)
+function use_gemstone_consumeable(self, card, area, copier, is_gemstone)
+    local joker_highlighted = G.jokers.highlighted[1]
+    local hand_highlighted = G.hand.highlighted[1]
+
+    if is_gemstone then
+        G.GAME.last_used_gemstone = self.key
+        sendDebugMessage("NEW LAST USED: "..G.GAME.last_used_gemstone, "Gemstones")
+    end
+
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.4,
+        func = function()
+            if joker_highlighted then
+                set_gemslot(joker_highlighted, self.config.sticker_id)
+                joker_highlighted:juice_up(0.5, 0.5)
+        
+            elseif hand_highlighted then
+                set_gemslot(hand_highlighted, self.config.sticker_id)
+                hand_highlighted:juice_up(0.5, 0.5)
+            end
+
+            card:juice_up(0.5, 0.5)
+            play_sound('gold_seal', 1.2, 0.4)
+            return true
+        end
+    }))
+
+    delay(0.6)
+    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2, func = function() G.hand:unhighlight_all(); G.jokers:unhighlight_all(); return true end }))
+end
+
+function set_gemslot(self, id)
+    local stickers = SMODS.Stickers
+
+    for k, v in pairs(self.ability) do
+        if string.find(k, "gemslot") then
+            stickers[k]:removed(self)
+            self.ability[k] = nil
+        end
+    end
+
+    stickers[id]:apply(self)
+    self.ability[id] = true
+end
+
+function get_gemslot(card)
     if not card then return nil end
     
     for k, v in pairs(card.ability) do
@@ -171,16 +295,6 @@ function get_gemstone(card)
             return k
         end
     end
-end
-
-function apply_gemslot(card, id)
-    for k, v in pairs(card.ability) do
-        if string.find(k, "gemslot") then
-            card.ability[k] = nil
-        end
-    end
-
-    card.ability[id] = true
 end
 
 local ec = eval_card
@@ -198,4 +312,9 @@ function eval_card(card, context)
 	end
 
 	return ret
+end
+
+-- SMODS MOD FUNCS
+function Gemstones.reset_game_globals(run_start)
+	G.GAME.last_used_gemstone = nil
 end
