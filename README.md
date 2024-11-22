@@ -6,3 +6,9 @@ Gemstones are a new card modifier that do not interfer with any current modifier
 
 ## How can I equip Gemstones?
 You can equip Gemstones by using the new Tarot card "The Enfusion" to create an empty Gem Slot, then apply Gemstones using Gemstone Consumables.
+
+## How to install?
+
+1. Download the latest release
+2. Extract the folder inside your Mods folder (`%AppData%/Roaming/Balatro/Mods` for Windows)
+3. Done!
