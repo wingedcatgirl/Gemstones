@@ -1,0 +1,17 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+# Opal functionality
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "local id = self:get_id()"
+position = "after"
+payload = '''
+        if self.ability.gemslot_opal then
+            return true
+        end
+'''
+match_indent = true

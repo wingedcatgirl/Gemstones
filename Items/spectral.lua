@@ -1,0 +1,16 @@
+--SMODS.Consumable{
+--    set = "Spectral",
+--    name = "gems-Radiance",
+--    key = "radiance",
+--    config = {
+--        max_highlighted = 1,
+--        sticker_id = "gemslot_astral"
+--    },
+--
+--    loc_vars = function(self, info_queue)
+--        return {}
+--    end,
+--
+--    can_use = function(self, card) return can_use_gemstone_consumeable(self, card) end,
+--    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+--}

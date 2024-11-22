@@ -1,0 +1,17 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+# Force key
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "if _type == 'Joker' then"
+position = "before"
+payload = '''
+if _type == 'Gemstone' then 
+    forced_key = 'c_gems_ruby'
+end
+'''
+match_indent = true

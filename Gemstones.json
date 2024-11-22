@@ -5,7 +5,7 @@
 	"author": ["officialhalo"],
 	"description": "Adds Gemstones, which can be applied to cards and Jokers to give unique effects.",
 	"prefix": "gems",
-	"main_file": "gemstones.lua",
+	"main_file": "Gemstones.lua",
 	"priority": 36,
 	"badge_colour": "eb3452",
 	"badge_text_colour": "FFFFFF",
