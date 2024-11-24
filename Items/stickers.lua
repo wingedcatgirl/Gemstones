@@ -172,3 +172,74 @@ SMODS.Sticker{
         end
     end
 }
+
+-- Amethyst Gem Slot
+SMODS.Sticker{
+    key = "gemslot_amethyst",
+    badge_colour = HEX("c41ed6"),
+    prefix_config = { key = false },
+    rate = 0.0,
+    atlas = "slot_atlas",
+    pos = { x = 2, y = 1 },
+    config = { h_x_mult = 1.35 },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { self.config.h_x_mult } }
+    end,
+	draw = function(self, card) --don't draw shine
+		G.shared_stickers[self.key].role.draw_major = card
+		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
+	end,
+    added = function(self, card)
+        card.ability.h_x_mult = card.ability.h_x_mult + self.config.h_x_mult
+    end,
+    removed = function(self, card)
+        card.ability.h_x_mult = card.ability.h_x_mult - self.config.h_x_mult
+    end
+}
+
+-- Aquamarine Gem Slot
+SMODS.Sticker{
+    key = "gemslot_aquamarine",
+    badge_colour = HEX("80b8c7"),
+    prefix_config = { key = false },
+    rate = 0.0,
+    atlas = "slot_atlas",
+    pos = { x = 3, y = 1 },
+    config = { x_chips = 2 },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { self.config.x_chips } }
+    end,
+	draw = function(self, card) --don't draw shine
+		G.shared_stickers[self.key].role.draw_major = card
+		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
+	end,
+    added = function(self, card)
+        card.ability.x_chips = card.ability.x_chips + self.config.x_chips
+    end,
+    removed = function(self, card)
+        card.ability.x_chips = card.ability.x_chips - self.config.x_chips
+    end
+}
+
+-- Jade Gem Slot
+SMODS.Sticker{
+    key = "gemslot_jade",
+    badge_colour = HEX("0db813"),
+    prefix_config = { key = false },
+    rate = 0.0,
+    atlas = "slot_atlas",
+    pos = { x = 4, y = 1 },
+    config = {},
+
+    loc_vars = function(self, info_queue, card)
+        return {}
+    end,
+	draw = function(self, card) --don't draw shine
+		G.shared_stickers[self.key].role.draw_major = card
+		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
+	end,
+    added = function(self, card) end,
+    removed = function(self, card) end,
+}

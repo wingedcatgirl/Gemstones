@@ -54,8 +54,51 @@ return {
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
             },
+            c_gems_amethyst = {
+                name = "Amethyst",
+                text = {
+                    "Attatch a {C:purple}Amethyst",
+                    "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:inactive}(Must have a Gem Slot){}"
+                }
+            },
+            c_gems_aquamarine = {
+                name = "Aquamarine",
+                text = {
+                    "Attatch a {C:blue}Aquamarine",
+                    "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:inactive}(Must have a Gem Slot){}"
+                }
+            },
+            c_gems_jade = {
+                name = "Jade",
+                text = {
+                    "Attatch a {C:green}Jade",
+                    "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:inactive}(Must have a Gem Slot){}"
+                }
+            },
         },
-        Joker = {},
+        Joker = {
+            j_gems_drill_miner = {
+                name = "Drill Miner",
+                text = {
+                    "Create a {C:hearts}Gemstone{} card",
+                    "when {C:attention}Blind{} is selected",
+                    "{C:inactive}(Must have room)",
+                }
+            },
+            j_gems_gem_gauntlet = {
+                name = "Gem Gauntlet",
+                text = {
+                    "Gives {X:mult,C:white} X#1# {} Mult",
+                    "for each card",
+                    "with a {C:attention}Gem Slot{}",
+                    "in your {C:attention}full deck",
+                    "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
+                },
+            },
+        },
         Planet = {},
         Spectral = {},
         Stake = {},
@@ -63,9 +106,10 @@ return {
             c_gems_infusion = {
                 name = "The Infusion",
                 text = {
-                    "Creates an Empty",
+                    "Create an Empty",
                     "Gem Slot to {C:green}#1#{}",
-                    "selected {C:attention}card{} or {C:attention}Joker{}"
+                    "selected {C:attention}card{} or {C:attention}Joker{}",
+                    "{C:inactive}(Can override occupied slots)",
                 }
             },
             c_gems_excavator = {
@@ -140,20 +184,65 @@ return {
                     "{C:attention}#1#{} time"
                 },
             },
+            gemslot_amethyst = {
+                name = "Amethyst",
+                text = {
+                    "{X:mult,C:white} X#1# {} Mult",
+                    "while this card",
+                    "stays in hand",
+                },
+            },
+            gemslot_aquamarine = {
+                name = "Aquamarine",
+                text = {
+                    "{X:chips,C:white}X#1#{} Chips",
+                    "when scored"
+                },
+            },
+            gemslot_jade = {
+                name = "Jade",
+                text = {
+                    "This card's rank",
+                    "is upgraded by",
+                    "{C:attention}1{} when played"
+                },
+            },
             p_gems_gemstone_normal_1 = {
                 name = "Gemstone Pack",
                 text = {
                     "Choose {C:attention}#1#{} of up to",
                     "{C:attention}#2#{C:hearts} Gemstone{} cards",
                 }
-            }
+            },
+            p_gems_gemstone_normal_2 = {
+                name = "Gemstone Pack",
+                text = {
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{C:hearts} Gemstone{} cards",
+                }
+            },
+            p_gems_gemstone_jumbo_1 = {
+                name = "Jumbo Gemstone Pack",
+                text = {
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{C:hearts} Gemstone{} cards",
+                }
+            },
+            p_gems_gemstone_mega_1 = {
+                name = "Mega Gemstone Pack",
+                text = {
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{C:hearts} Gemstone{} cards",
+                }
+            },
         },
         misc = {
             achievement_names = {},
             achievement_descriptions = {},
             challenge_names = {},
             dictionary = {
-                k_gems_gemstone_pack = "Gemstones Pack"
+                k_plus_gemstone = "+1 Gemstone",
+                p_gems_gemstone_pack = "Gemstones Pack"
             },
             labels = {
                 gemslot_empty = "Empty Slot",
@@ -161,7 +250,10 @@ return {
                 gemslot_pearl = "Pearl Slot",
                 gemslot_topaz = "Topaz Slot",
                 gemslot_opal = "Opal Slot",
-                gemslot_diamond = "Diamond Slot"
+                gemslot_diamond = "Diamond Slot",
+                gemslot_amethyst = "Amethyst Slot",
+                gemslot_aquamarine = "Aquamarine Slot",
+                gemslot_jade = "Jade Slot"
             },
         }
     }

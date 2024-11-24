@@ -16,6 +16,13 @@ SMODS.Atlas{
 }:register()
 
 SMODS.Atlas{
+    key = "tarots_atlas",
+    path = "tarots.png",
+    px = 71,
+    py = 95
+}:register()
+
+SMODS.Atlas{
     key = "empty_joker",
     path = "empty_joker.png",
     px = 71,
@@ -37,6 +44,7 @@ SMODS.UndiscoveredSprite{
 }
 
 -- SMODS Functions
+SMODS.load_file("Items/jokers.lua")()
 SMODS.load_file("Items/boosters.lua")()
 SMODS.load_file("Items/gemstones.lua")()
 SMODS.load_file("Items/stickers.lua")()

@@ -4,8 +4,8 @@ SMODS.Consumable{
     set = "Tarot",
     name = "gem-Infusion",
     key = "infusion",
-    atlas = "gems_atlas",
-    pos = { x = 0, y = 3 },
+    atlas = "tarots_atlas",
+    pos = { x = 0, y = 0 },
     cost = 3,
     should_apply = false,
     disovered = true,
@@ -21,10 +21,7 @@ SMODS.Consumable{
     end,
 
     can_use = function(self, card)
-        return 
-        (#G.jokers.highlighted + #G.hand.highlighted) <= self.config.max_highlighted
-        and
-        (get_gemslot(G.jokers.highlighted[1]) or get_gemslot(G.hand.highlighted[1])) == nil
+        return (#G.jokers.highlighted + #G.hand.highlighted) <= self.config.max_highlighted
     end,
 
     use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier) end,
@@ -36,8 +33,8 @@ SMODS.Consumable{
     set = "Tarot",
     name = "gem-Excavator",
     key = "excavator",
-    atlas = "gems_atlas",
-    pos = { x = 1, y = 3 },
+    atlas = "tarots_atlas",
+    pos = { x = 1, y = 0 },
     cost = 3,
     should_apply = false,
     disovered = true,
@@ -78,8 +75,8 @@ SMODS.Consumable{
     set = "Tarot",
     name = "gem-Polish",
     key = "polish",
-    atlas = "gems_atlas",
-    pos = { x = 2, y = 3 },
+    atlas = "tarots_atlas",
+    pos = { x = 2, y = 0 },
     cost = 3,
     should_apply = false,
     disovered = true,

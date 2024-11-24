@@ -14,6 +14,8 @@ end
 '''
 
 # Diamond functionality
+# These patches are required because repetitions are calculated for Jokers and Seals only
+# Patching in sticker support required me (Halo) to patch every instance repetitions are calculated
 [[patches]]
 [patches.pattern]
 target = "functions/common_events.lua"
@@ -21,7 +23,7 @@ pattern = "if context.repetition_only then"
 position = "after"
 payload = ''' 
 for k, v in pairs(SMODS.Stickers) do
-    if card.area == G.hand and card.ability.name ~= "Metal Card" then break end
+    if card.area == G.hand and (card.ability.name ~= "Metal Card" or card.ability.name ~= "Gold Card") then break end
 
 	if card.ability[k] and v.calculate and type(v.calculate) == "function" then
 		local stickers = v:calculate(card, context)

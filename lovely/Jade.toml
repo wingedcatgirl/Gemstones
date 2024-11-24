@@ -1,0 +1,41 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+# Jade Functionality
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "--check the hand first"
+position = "before"
+payload = '''
+for i = 1, #G.hand.highlighted do
+    local _card = G.hand.highlighted[i]
+
+    if _card.ability.gemslot_jade then
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.1,
+            func = function()
+                local rank_data = SMODS.Ranks[_card.base.value]
+                local behavior = rank_data.strength_effect or { fixed = 1, ignore = false, random = false }
+                local new_rank
+
+                if behavior.ignore or not next(rank_data.next) then
+                    return true
+                elseif behavior.random then
+                    -- TODO doesn't respect in_pool
+                    new_rank = pseudorandom_element(rank_data.next, pseudoseed('strength'))
+                else
+                    local ii = (behavior.fixed and rank_data.next[behavior.fixed]) and behavior.fixed or 1
+                    new_rank = rank_data.next[ii]
+                end
+                assert(SMODS.change_base(_card, nil, new_rank))
+                return true
+            end
+        }))
+    end
+end
+'''
+match_indent = true
