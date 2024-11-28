@@ -1,4 +1,4 @@
--- Enfusion Tarot
+-- Infusion Tarot
 SMODS.Consumable{
     object_type = "Consumable",
     set = "Tarot",
@@ -21,7 +21,8 @@ SMODS.Consumable{
     end,
 
     can_use = function(self, card)
-        return (#G.jokers.highlighted + #G.hand.highlighted) <= self.config.max_highlighted
+        local total = (#G.jokers.highlighted + #G.hand.highlighted)
+        return total <= self.config.max_highlighted and total ~= 0
     end,
 
     use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier) end,
@@ -81,6 +82,7 @@ SMODS.Consumable{
     should_apply = false,
     disovered = true,
     order = 302,
+    enhancement_gate = "m_stone",
     config = { max_highlighted = 1, create = 1 },
 
     loc_vars = function(self, info_queue, desc_nodes)

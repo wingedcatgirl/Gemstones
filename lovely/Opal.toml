@@ -10,8 +10,8 @@ target = "card.lua"
 pattern = "local id = self:get_id()"
 position = "after"
 payload = '''
-        if self.ability.gemslot_opal then
-            return true
-        end
+if self.ability.gemslot_opal then
+    return true
+end
 '''
 match_indent = true

@@ -1,0 +1,20 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+# Turquoise Functionality
+[[patches]]
+[patches.regex]
+target = "functions/state_events.lua"
+pattern = '(?<indent>[\t ]*)if destroyed then \n'
+position = "before"
+line_prepend = '$indent'
+payload = '''
+if i == 1 then
+    if scoring_hand[i].ability.gemslot_turquoise then
+        destroyed = true
+        SMODS.Stickers["gemslot_turquoise"]:calculate(card, {destroying_card = scoring_hand[1], full_hand = G.play.cards})
+    end
+end
+'''

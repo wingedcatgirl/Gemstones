@@ -48,6 +48,7 @@ SMODS.load_file("Items/jokers.lua")()
 SMODS.load_file("Items/boosters.lua")()
 SMODS.load_file("Items/gemstones.lua")()
 SMODS.load_file("Items/stickers.lua")()
+SMODS.load_file("Items/spectral.lua")()
 SMODS.load_file("Items/tarots.lua")()
 SMODS.load_file("Items/utility.lua")()
 

@@ -7,7 +7,7 @@ return {
             c_gems_ruby = {
                 name = "Ruby",
                 text = {
-                    "Attatch a {C:red}Ruby",
+                    "Attach a {C:ruby}Ruby",
                     "{}Gemstone to {C:green}#1#{} selected",
                     "{C:attention}card{} or {C:attention}Joker{}",
                     "{C:inactive}(Must have a Gem Slot){}"
@@ -16,7 +16,7 @@ return {
             c_gems_pearl = {
                 name = "Pearl",
                 text = {
-                    "Attatch a {C:blue}Pearl",
+                    "Attach a {C:pearl}Pearl",
                     "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
@@ -24,7 +24,7 @@ return {
             c_gems_topaz = {
                 name = "Topaz",
                 text = {
-                    "Attatch a {C:money}Topaz",
+                    "Attach a {C:topaz}Topaz",
                     "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
@@ -32,7 +32,7 @@ return {
             c_gems_amber = {
                 name = "Amber",
                 text = {
-                    "Attatch an {C:money}Amber",
+                    "Attach an {C:amber}Amber",
                     "{}Gemstone to {C:green}#1#{} selected",
                     "{C:attention}card{} or {C:attention}Joker{}",
                     "{C:inactive}(Must have a Gem Slot){}"
@@ -41,7 +41,7 @@ return {
             c_gems_opal = {
                 name = "Opal",
                 text = {
-                    "Attatch a {C:green}Opal",
+                    "Attach an {C:opal}Opal",
                     "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
@@ -49,7 +49,7 @@ return {
             c_gems_diamond = {
                 name = "Diamond",
                 text = {
-                    "Attatch a {C:blue}Diamond",
+                    "Attach a {C:diamond}Diamond",
                     "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
@@ -57,7 +57,7 @@ return {
             c_gems_amethyst = {
                 name = "Amethyst",
                 text = {
-                    "Attatch a {C:purple}Amethyst",
+                    "Attach an {C:amethyst}Amethyst",
                     "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
@@ -65,7 +65,7 @@ return {
             c_gems_aquamarine = {
                 name = "Aquamarine",
                 text = {
-                    "Attatch a {C:blue}Aquamarine",
+                    "Attach an {C:aquamarine}Aquamarine",
                     "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
@@ -73,8 +73,48 @@ return {
             c_gems_jade = {
                 name = "Jade",
                 text = {
-                    "Attatch a {C:green}Jade",
+                    "Attach a {C:jade}Jade",
                     "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:inactive}(Must have a Gem Slot){}"
+                }
+            },
+            c_gems_quartz = {
+                name = "Quartz",
+                text = {
+                    "Attach a {C:quartz}Quartz",
+                    "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:inactive}(Must have a Gem Slot){}"
+                }
+            },
+            c_gems_emerald = {
+                name = "Emerald",
+                text = {
+                    "Attach an {C:emerald}Emerald",
+                    "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:inactive}(Must have a Gem Slot){}"
+                }
+            },
+            c_gems_turquoise = {
+                name = "Turquoise",
+                text = {
+                    "Attach an {C:turquoise}Turquoise",
+                    "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:inactive}(Must have a Gem Slot){}"
+                }
+            },
+            c_gems_epidote = {
+                name = "Epidote",
+                text = {
+                    "Attach an {C:epidote}Epidote",
+                    "{}Gemstone to {C:green}#1#{} selected {C:attention}Joker{}",
+                    "{C:inactive}(Must have a Gem Slot){}"
+                }
+            },
+            c_gems_adamite = {
+                name = "Adamite",
+                text = {
+                    "Attach an {C:adamite}Adamite",
+                    "{}Gemstone to {C:green}#1#{} selected {C:attention}Joker{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
             },
@@ -93,14 +133,24 @@ return {
                 text = {
                     "Gives {X:mult,C:white} X#1# {} Mult",
                     "for each card",
-                    "with a {C:attention}Gem Slot{}",
+                    "with a {C:attention}Gem Slot{}",   
                     "in your {C:attention}full deck",
                     "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
                 },
             },
         },
         Planet = {},
-        Spectral = {},
+        Spectral = {
+            c_gems_shine = {
+                name = "Shine",
+                text = {
+                    "Select up to {C:green}#1#{} cards to",
+                    "randomly attach a {C:diamond}Diamond{}, {C:turquoise}Turquoise",
+                    "{C:emerald}Emerald{}, {C:jade}Jade{}, or {C:amber}Amber{} {C:hearts}Gemstone{}",
+                    "{C:inactive}(Gem Slot not required)"
+                }
+            }
+        },
         Stake = {},
         Tarot = {
             c_gems_infusion = {
@@ -108,8 +158,8 @@ return {
                 text = {
                     "Create an Empty",
                     "Gem Slot to {C:green}#1#{}",
-                    "selected {C:attention}card{} or {C:attention}Joker{}",
-                    "{C:inactive}(Can override occupied slots)",
+                    "selected {C:attention}cards{} or {C:attention}Jokers{}",
+                    "{C:inactive}(Can override occupied slots)"
                 }
             },
             c_gems_excavator = {
@@ -125,7 +175,7 @@ return {
                 text = {
                     "Remove the stone from",
                     "a {C:attention}Stone{} card and",
-                    "creates {C:green}#1#{} random",
+                    "create {C:green}#1#{} random",
                     "{C:hearts}Gemstone{} card"
                 },
             }
@@ -207,6 +257,48 @@ return {
                     "{C:attention}1{} when played"
                 },
             },
+            gemslot_quartz = {
+                name = "Quartz",
+                text = {
+                    "This card",
+                    "permanently gains",
+                    "+#1# {C:chips}Chips{}",
+                    "when scored"
+                },
+            },
+            gemslot_emerald = {
+                name = "Emerald",
+                text = {
+                    "This card's",
+                    "enhancement is ",
+                    "{C:attention}randomized{} when played"
+                },
+            },
+            gemslot_turquoise = {
+                name = "Turquoise",
+                text = {
+                    "If scored and first in hand,",
+                    "{C:attention}destroy{} this card and create",
+                    "{C:attention}#1#{} {C:dark_edition}Negative{} {C:planet}Planet{} for",
+                    "played poker hand"
+                },
+            },
+            gemslot_epidote = {
+                name = "Epidote",
+                text = {
+                    "Increases the values",
+                    "of this Joker by",
+                    "{C:attention}#1#% when triggered"
+                },
+            },
+            gemslot_adamite = {
+                name = "Adamite",
+                text = {
+                    "{C:green}#1# in #2#{} chance",
+                    "to retrigger this",
+                    "Joker {C:attention}#3#{} time"
+                },
+            },
             p_gems_gemstone_normal_1 = {
                 name = "Gemstone Pack",
                 text = {
@@ -236,25 +328,42 @@ return {
                 }
             },
         },
-        misc = {
-            achievement_names = {},
-            achievement_descriptions = {},
-            challenge_names = {},
-            dictionary = {
-                k_plus_gemstone = "+1 Gemstone",
-                p_gems_gemstone_pack = "Gemstones Pack"
-            },
-            labels = {
-                gemslot_empty = "Empty Slot",
-                gemslot_ruby = "Ruby Slot",
-                gemslot_pearl = "Pearl Slot",
-                gemslot_topaz = "Topaz Slot",
-                gemslot_opal = "Opal Slot",
-                gemslot_diamond = "Diamond Slot",
-                gemslot_amethyst = "Amethyst Slot",
-                gemslot_aquamarine = "Aquamarine Slot",
-                gemslot_jade = "Jade Slot"
-            },
+    },
+    misc = {
+        achievement_names = {},
+        achievement_descriptions = {},
+        challenge_names = {},
+        dictionary = {
+            k_plus_gemstone = "+1 Gemstone",
+            k_gems_gemstone_pack = "Gemstone Pack"
+        },
+        labels = {
+            gemslot_empty = "Gem Slot",
+            gemslot_ruby = "Gem Slot",
+            gemslot_pearl = "Gem Slot",
+            gemslot_topaz = "Gem Slot",
+            gemslot_opal = "Gem Slot",
+            gemslot_diamond = "Gem Slot",
+            gemslot_amethyst = "Gem Slot",
+            gemslot_aquamarine = "Gem Slot",
+            gemslot_jade = "Gem Slot",
+            gemslot_quartz = "Gem Slot",
+            gemslot_emerald = "Gem Slot",
+            gemslot_turquoise = "Gem Slot",
+            gemslot_epidote = "Gem Slot",
+            gemslot_adamite = "Gem Slot"
+        },
+        v_dictionary = {
+            a_xchips = {"X#1# Chips"},
+            a_powmult = {"^#1# Mult"},
+            a_powchips = {"^#1# Chips"},
+            a_powmultchips = {"^#1# Mult+Chips"},
+            a_round = {"+#1# Round"},
+            a_xchips_minus = {"-X#1# Chips"},
+            a_powmult_minus = {"-^#1# Mult"},
+            a_powchips_minus = {"-^#1# Chips"},
+            a_powmultchips_minus = {"-^#1# Mult+Chips"},
+            a_round_minus = {"-#1# Round"},
         }
     }
 }

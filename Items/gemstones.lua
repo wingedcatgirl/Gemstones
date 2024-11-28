@@ -59,7 +59,7 @@ SMODS.Consumable{
     cost = 3,
     should_apply = false,
     disovered = true,
-    order = 1,
+    order = 2,
     config = {
         max_highlighted = 1,
         sticker_id = "gemslot_pearl"
@@ -91,7 +91,7 @@ SMODS.Consumable{
     cost = 3,
     should_apply = false,
     disovered = true,
-    order = 1,
+    order = 3,
     config = {
         max_highlighted = 1,
         money_earned = 2,
@@ -124,7 +124,7 @@ SMODS.Consumable{
     cost = 3,
     should_apply = false,
     disovered = true,
-    order = 1,
+    order = 4,
     config = {
         max_highlighted = 1,
         level_up_odds = 3,
@@ -132,7 +132,7 @@ SMODS.Consumable{
     },
 
     loc_vars = function(self, info_queue)
-        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = {G.GAME.probabilities.normal or 1, self.config.level_up_odds} }
+        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = { G.GAME.probabilities.normal or 1, self.config.level_up_odds } }
         return { vars = { self.config.max_highlighted } }
     end,
 
@@ -152,7 +152,7 @@ SMODS.Consumable{
     cost = 3,
     should_apply = false,
     disovered = true,
-    order = 1,
+    order = 5,
     config = {
         max_highlighted = 1,
         level_up_odds = 3,
@@ -185,7 +185,7 @@ SMODS.Consumable{
     cost = 3,
     should_apply = false,
     disovered = true,
-    order = 1,
+    order = 6,
     config = {
         max_highlighted = 1,
         retriggers = 1,
@@ -218,7 +218,7 @@ SMODS.Consumable{
     cost = 3,
     should_apply = false,
     disovered = true,
-    order = 1,
+    order = 7,
     config = {
         max_highlighted = 1,
         h_x_mult = 1.35,
@@ -251,7 +251,7 @@ SMODS.Consumable{
     cost = 3,
     should_apply = false,
     disovered = true,
-    order = 1,
+    order = 8,
     config = {
         max_highlighted = 1,
         x_chips = 2,
@@ -284,7 +284,7 @@ SMODS.Consumable{
     cost = 3,
     should_apply = false,
     disovered = true,
-    order = 1,
+    order = 9,
     config = {
         max_highlighted = 1,
         sticker_id = "gemslot_jade"
@@ -300,6 +300,171 @@ SMODS.Consumable{
         #G.hand.highlighted == self.config.max_highlighted
         and
         get_gemslot(G.hand.highlighted[1]) ~= nil 
+    end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+}
+
+-- Quartz Gemstone
+SMODS.Consumable{
+    object_type = "Consumable",
+    set = "Gemstone",
+    name = "gem-Quartz",
+    key = "quartz",
+    atlas = "gems_atlas",
+    pos = { x = 9, y = 0 },
+    soul_pos = { x = 9, y = 1 },
+    cost = 3,
+    should_apply = false,
+    disovered = true,
+    order = 10,
+    config = {
+        max_highlighted = 1,
+        bonus_chips = 10,
+        sticker_id = "gemslot_quartz"
+    },
+
+    loc_vars = function(self, info_queue)
+        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = { self.config.bonus_chips } }
+        return { vars = { self.config.max_highlighted } }
+    end,
+
+    can_use = function(self, card) 
+        return 
+        #G.hand.highlighted == self.config.max_highlighted
+        and
+        get_gemslot(G.hand.highlighted[1]) ~= nil 
+    end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+}
+
+-- Emerald Gemstone
+SMODS.Consumable{
+    object_type = "Consumable",
+    set = "Gemstone",
+    name = "gem-Emerald",
+    key = "emerald",
+    atlas = "gems_atlas",
+    pos = { x = 0, y = 2 },
+    soul_pos = { x = 0, y = 3 },
+    cost = 3,
+    should_apply = false,
+    disovered = true,
+    order = 11,
+    config = {
+        max_highlighted = 1,
+        sticker_id = "gemslot_emerald"
+    },
+
+    loc_vars = function(self, info_queue)
+        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = {} }
+        return { vars = { self.config.max_highlighted } }
+    end,
+
+    can_use = function(self, card) 
+        return 
+        #G.hand.highlighted == self.config.max_highlighted
+        and
+        get_gemslot(G.hand.highlighted[1]) ~= nil 
+    end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+}
+
+-- Turquoise Gemstone
+SMODS.Consumable{
+    object_type = "Consumable",
+    set = "Gemstone",
+    name = "gem-Turquoise",
+    key = "turquoise",
+    atlas = "gems_atlas",
+    pos = { x = 1, y = 2 },
+    soul_pos = { x = 1, y = 3 },
+    cost = 3,
+    should_apply = false,
+    disovered = true,
+    order = 12,
+    config = {
+        max_highlighted = 1,
+        planets_amount = 1,
+        sticker_id = "gemslot_turquoise"
+    },
+
+    loc_vars = function(self, info_queue)
+        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = { self.config.planets_amount } }
+        return { vars = { self.config.max_highlighted } }
+    end,
+
+    can_use = function(self, card) 
+        return 
+        #G.hand.highlighted == self.config.max_highlighted
+        and
+        get_gemslot(G.hand.highlighted[1]) ~= nil 
+    end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+}
+
+-- Epidote Gemstone
+SMODS.Consumable{
+    object_type = "Consumable",
+    set = "Gemstone",
+    name = "gem-Epidote",
+    key = "epidote",
+    atlas = "gems_atlas",
+    pos = { x = 2, y = 2 },
+    soul_pos = { x = 2, y = 3 },
+    cost = 3,
+    should_apply = false,
+    disovered = true,
+    order = 13,
+    config = {
+        max_highlighted = 1,
+        val_multi = 1.05,
+        sticker_id = "gemslot_epidote"
+    },
+
+    loc_vars = function(self, info_queue)
+        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = { ((self.config.val_multi - 1) * 100) } }
+        return { vars = { self.config.max_highlighted } }
+    end,
+
+    can_use = function(self, card) 
+        return 
+        #G.jokers.highlighted <= self.config.max_highlighted
+        and
+        get_gemslot(G.jokers.highlighted[1]) ~= nil 
+    end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+}
+
+-- Adamite Gemstone
+SMODS.Consumable{
+    object_type = "Consumable",
+    set = "Gemstone",
+    name = "gem-Adamite",
+    key = "adamite",
+    atlas = "gems_atlas",
+    pos = { x = 3, y = 2 },
+    soul_pos = { x = 3, y = 3 },
+    cost = 3,
+    should_apply = false,
+    disovered = true,
+    order = 14,
+    config = {
+        max_highlighted = 1,
+        retriggers = 2,
+        chance = 3,
+        sticker_id = "gemslot_adamite"
+    },
+
+    loc_vars = function(self, info_queue)
+        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = { G.GAME.probabilities.normal or 1, self.config.chance, self.config.retriggers } }
+        return { vars = { self.config.max_highlighted } }
+    end,
+
+    can_use = function(self, card) 
+        return 
+        #G.jokers.highlighted == self.config.max_highlighted
+        and
+        get_gemslot(G.jokers.highlighted[1]) ~= nil 
     end,
     use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
 }

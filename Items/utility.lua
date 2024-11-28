@@ -90,6 +90,20 @@ function eval_card(card, context)
 	return ret
 end
 
+--Localization colors
+local lc = loc_colour
+function loc_colour(_c, _default)
+	if not G.ARGS.LOC_COLOURS then
+		lc()
+	end
+	
+	for k, v in pairs(SMODS.Stickers) do
+		local sticker = SMODS.Stickers[k]
+		G.ARGS.LOC_COLOURS[string.gsub(sticker.key, "gemslot_", "")] = sticker.badge_colour
+	end
+	return lc(_c, _default)
+end
+
 -- Levels currently played hand
 function level_current_hand(card, amount)
     local text,disp_text = G.FUNCS.get_poker_hand_info(G.play.cards)
@@ -97,6 +111,85 @@ function level_current_hand(card, amount)
     card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')})
     update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(text, 'poker_hands'),chips = G.GAME.hands[text].chips, mult = G.GAME.hands[text].mult, level=G.GAME.hands[text].level})
     level_up_hand(card, text, nil, amount)
+end
+
+-- Check to see if a Gemstonee card can be stored
+function can_store_gemstone_card(card)
+	local limit = 0
+	for i = 1, #G.consumeables.cards do
+		local card = G.consumeables.cards[i]
+		if card.ability.set == "Gemstone" then limit = limit + 0.5 else limit = limit + 1 end
+	end
+
+	if limit < G.consumeables.config.card_limit + ((card.edition and card.edition.negative) and 1 or 0) then return true else return false end
+end
+
+-- Deep Clean table
+function deep_clean(obj, seen)
+	if type(obj) ~= "table" then
+		return obj
+	end
+	if seen and seen[obj] then
+		return seen[obj]
+	end
+	local s = seen or {}
+	local res = setmetatable({}, getmetatable(obj))
+	s[obj] = res
+	for k, v in pairs(obj) do
+		res[deep_clean(k, s)] = deep_clean(v, s)
+	end
+	return res
+end
+
+-- Increase Joker Values by X% (from Betmma's Jokers)
+function inc_joker_value(self, multi, reset)
+    G.E_MANAGER:add_event(Event({func = function()
+		if self.default_vals and reset then self.ability = deep_clean(self.default_vals) return true elseif not self.default_vals then self.default_vals = deep_clean(self.ability) end
+
+        local possibleKeys={'bonus','h_mult','mult','t_mult','h_dollars','x_mult','extra_value','h_size','perma_bonus','p_dollars','h_x_mult','t_chips','d_size'}
+        local self_ability=self.ability
+		
+        for k, v in pairs(possibleKeys) do
+            if self_ability[v] and (self_ability[v]~=(v=='x_mult' and 1 or 0)) then
+                self_ability[v]=self_ability[v]*multi
+            end
+        end
+        if self_ability.extra then
+            if type(self_ability.extra)=='table' then
+                for k, v in pairs(self_ability.extra) do
+                    if type(v)=='number' then
+                        self_ability.extra[k]=self_ability.extra[k]*multi
+                    end
+                end
+            elseif type(self_ability.extra)=='number' then
+                self_ability.extra=self_ability.extra*multi
+            end
+        end
+        self:juice_up(0.5, 0.5)
+    return true end }))
+    card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), colour = G.C.RED, no_juice = true})
+end
+
+-- Select a random item from a table
+function randomSelect(table)
+	for i = 1, 5 do
+		math.random()
+	end
+    if #table == 0 then
+        return nil -- Table is empty
+    end
+    local randomIndex = math.random(1, #table)
+    return table[randomIndex]
+end
+
+-- Makes sure Gemstones can be bought with half a slot remaining
+local G_FUNCS_check_for_buy_space = G.FUNCS.check_for_buy_space
+function G.FUNCS.check_for_buy_space(card)
+	if card.ability.consumeable then
+		return can_store_gemstone_card(card)
+	end
+
+	return G_FUNCS_check_for_buy_space(card)
 end
 
 -- Adds a Store button (from Betmma's Vouchers)
@@ -147,7 +240,13 @@ end
 -- GLOBALS --
 
 G.FUNCS.can_reserve_card = function(e)
-	if #G.consumeables.cards < G.consumeables.config.card_limit then
+	local limit = 0
+	for i = 1, #G.consumeables.cards do
+		local card = G.consumeables.cards[i]
+		if card.ability.set == "Gemstone" then limit = limit + 0.5 else limit = limit + 1 end
+	end
+
+	if limit < G.consumeables.config.card_limit then
 		e.config.colour = G.C.GREEN
 		e.config.button = "reserve_card"
 	else
