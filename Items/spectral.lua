@@ -20,7 +20,7 @@ SMODS.Consumable{
     set = "Spectral",
     name = "gems-Shine",
     key = "shine",
-    atlas = "tarots_atlas",
+    atlas = "tarots",
     pos = { x = 0, y = 2 },
     cost = 4,
     should_apply = false,

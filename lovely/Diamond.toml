@@ -23,7 +23,10 @@ pattern = "if context.repetition_only then"
 position = "after"
 payload = ''' 
 for k, v in pairs(SMODS.Stickers) do
-    if card.area == G.hand and (card.ability.name ~= "Metal Card" or card.ability.name ~= "Gold Card") then break end
+    if card.area == G.hand then 
+        if not (card.ability.name ~= "Steel Card" or card.ability.name ~= "Gold Card") then break end
+        if context.end_of_round and card.ability.name ~= "Gold Card" then break end
+    end
 
 	if card.ability[k] and v.calculate and type(v.calculate) == "function" then
 		local stickers = v:calculate(card, context)

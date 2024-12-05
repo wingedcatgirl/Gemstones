@@ -1,13 +1,21 @@
+-- Create Atlas
+SMODS.Atlas{
+    key = "joker",
+    path = "jokers.png",
+    px = 71,
+    py = 95
+}:register()
+
 -- Drill Miner
 SMODS.Joker{
     object_type = "Joker",
     name = "gems-Drill Miner",
     key = "drill_miner",
-    atlas = "empty_joker",
+    atlas = "joker",
     pos = { x = 0, y = 0 },
     rarity = 2,
     cost = 6,
-    order = 151,
+    order = 1,
     blueprint_compat = true,
     config = {},
 
@@ -50,11 +58,11 @@ SMODS.Joker{
     object_type = "Joker",
     name = "gems-Gem Gauntlet",
     key = "gem_gauntlet",
-    atlas = "empty_joker",
-    pos = { x = 0, y = 0 },
+    atlas = "joker",
+    pos = { x = 1, y = 0 },
     rarity = 2,
     cost = 7,
-    order = 152,
+    order = 2,
     blueprint_compat = true,
     config = {
         gem_slot_tally = 0,
@@ -83,14 +91,14 @@ SMODS.Joker{
         if G["playing_cards"] and G["jokers"] then
             for i = 1, #G.playing_cards do
                 local c = G.playing_cards[i]
-                for k, v in pairs(c.ability) do if string.find(k, "gemslot") then
+                for k, v in pairs(c.ability) do if string.find(k, "gemslot") and k ~= "gemslot_empty" then
                     card.ability.gem_slot_tally = card.ability.gem_slot_tally + 1
                 end end
             end
     
             for i = 1, #G.jokers.cards do
                 local j = G.jokers.cards[i]
-                for k, v in pairs(j.ability) do if string.find(k, "gemslot") then
+                for k, v in pairs(j.ability) do if string.find(k, "gemslot") and k ~= "gemslot_empty" then
                     card.ability.gem_slot_tally = card.ability.gem_slot_tally + 1
                 end end
             end
@@ -103,17 +111,139 @@ SMODS.Joker{
         if G["playing_cards"] and G["jokers"] then
             for i = 1, #G.playing_cards do
                 local c = G.playing_cards[i]
-                for k, v in pairs(c.ability) do if string.find(k, "gemslot") then
+                for k, v in pairs(c.ability) do if string.find(k, "gemslot") and k ~= "gemslot_empty" then
                     card.ability.gem_slot_tally = card.ability.gem_slot_tally + 1
                 end end
             end
     
             for i = 1, #G.jokers.cards do
                 local j = G.jokers.cards[i]
-                for k, v in pairs(j.ability) do if string.find(k, "gemslot") then
+                for k, v in pairs(j.ability) do if string.find(k, "gemslot") and k ~= "gemslot_empty" then
                     card.ability.gem_slot_tally = card.ability.gem_slot_tally + 1
                 end end
             end
+        end
+    end
+}
+
+-- Blacksmith
+SMODS.Joker{
+    object_type = "Joker",
+    name = "gems-Blacksmith",
+    key = "blacksmith",
+    atlas = "joker",
+    pos = { x = 2, y = 0 },
+    rarity = 1,
+    cost = 4,
+    order = 3,
+    blueprint_compat = false,
+    config = {},
+
+    loc_vars = function(self, info_queue, desc_nodes)
+        info_queue[#info_queue + 1] = { key = "gemslot_empty", set = "Other", vars = {} }
+        return {}
+    end,
+
+    calculate = function(self, card, context)
+        if context.first_hand_drawn and not context.blueprint then
+            local eval = function() return G.GAME.current_round.hands_played == 0 end
+            juice_card_until(card, eval, true)
+
+        elseif context.before and G.GAME.current_round.hands_played == 0 and not context.blueprint then
+            local _card = context.full_hand[1]
+            if not get_gemslot(_card) then
+                set_gemslot(_card, "gemslot_empty")
+                
+                _card:juice_up(0.5, 0.5)
+                play_sound('gold_seal', 1.2, 0.4)
+
+                return {
+                    message = localize('k_applied_ex'),
+                    colour = G.C.CHIPS,
+                    card = card,
+                }
+            end
+        end
+    end
+}
+
+-- Domini
+SMODS.Joker{
+    object_type = "Joker",
+    name = "gems-Domini",
+    key = "domini",
+    atlas = "joker",
+    pos = { x = 3, y = 0 },
+    soul_pos = { x = 3, y = 1 },
+    rarity = 4,
+    cost = 20,
+    order = 4,
+    blueprint_compat = true,
+    perishable_compat = false,
+    eternal_compat = false,
+    rental_compat = false,
+    config = {
+        gemstone_tally = 0,
+        extra = { unique_count = 2 }
+    },
+
+    loc_vars = function(self, info_queue, center)
+        return { vars = { center.ability.extra.unique_count, math.floor(center.ability.gemstone_tally / center.ability.extra.unique_count) } }
+    end,
+
+    set_ability = function(self, card, initial, delay_sprites)
+        card.ability.gemstone_tally = 0
+        local found = {}
+        
+        if G["playing_cards"] and G["jokers"] then
+            for i = 1, #G.playing_cards do
+                local c = G.playing_cards[i]
+                for k, v in pairs(c.ability) do if string.find(k, "gemslot") and k ~= "gemslot_empty" and not found[k] then
+                    found[k] = true
+                    card.ability.gemstone_tally = card.ability.gemstone_tally + 1
+                end end
+            end
+    
+            for i = 1, #G.jokers.cards do
+                local j = G.jokers.cards[i]
+                for k, v in pairs(j.ability) do if string.find(k, "gemslot") and k ~= "gemslot_empty" and not found[k] then
+                    found[k] = true
+                    card.ability.gemstone_tally = card.ability.gemstone_tally + 1
+                end end
+            end
+        end
+    end,
+
+    update = function(self, card, context)
+        card.ability.gemstone_tally = 0
+        local found = {}
+        
+        if G["playing_cards"] and G["jokers"] then
+            for i = 1, #G.playing_cards do
+                local c = G.playing_cards[i]
+                for k, v in pairs(c.ability) do if string.find(k, "gemslot") and k ~= "gemslot_empty" and not found[k] then
+                    found[k] = true
+                    card.ability.gemstone_tally = card.ability.gemstone_tally + 1
+                end end
+            end
+    
+            for i = 1, #G.jokers.cards do
+                local j = G.jokers.cards[i]
+                for k, v in pairs(j.ability) do if string.find(k, "gemslot") and k ~= "gemslot_empty" and not found[k] then
+                    found[k] = true
+                    card.ability.gemstone_tally = card.ability.gemstone_tally + 1
+                end end
+            end
+        end
+    end,
+
+    calculate = function(self, card, context)
+        if context.repetition and context.cardarea == G.play and card.ability.gemstone_tally > 1 then
+            return {
+                message = localize('k_again_ex'),
+                repetitions = card.ability.gemstone_tally / card.ability.extra.unique_count,
+                card = card
+            }
         end
     end
 }

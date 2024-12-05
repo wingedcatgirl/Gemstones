@@ -1,14 +1,14 @@
 -- Check to see if a Gemstone Consumable can be used
 function can_use_gemstone_consumeable(self, card)
     return 
-    (#G.jokers.highlighted + #G.hand.highlighted) == self.config.max_highlighted
+    (#G.jokers.highlighted + #G.hand.highlighted) == self.config.max_highlighted or 1
     and
     (get_gemslot(G.jokers.highlighted[1]) or get_gemslot(G.hand.highlighted[1])) ~= nil
 end
 
 -- Use and consume a Gemstone
 function use_gemstone_consumeable(self, card, area, copier, is_gemstone)
-    if is_gemstone == true then G.GAME.last_used_gemstone = self.key end
+    if is_gemstone == true then G.GAME.last_used_gemstone = self.key or card.key end
 
     for i = 1, #G.hand.highlighted do
         local highlighted = G.hand.highlighted[i]
@@ -70,6 +70,24 @@ function get_gemslot(card)
             return k
         end
     end
+end
+
+-- Apply Crystal Deck to run
+local Backapply_to_runRef = Back.apply_to_run
+function Back.apply_to_run(self)
+	Backapply_to_runRef(self)
+
+	if self.effect.config.gems_set_slot then
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				for i = #G.playing_cards, 1, -1 do
+					set_gemslot(G.playing_cards[i], self.effect.config.sticker_id)
+				end
+
+				return true
+			end
+		}))
+	end
 end
 
 -- Sticker compatability for playing cards (from Cryptid)
@@ -215,14 +233,14 @@ function G.UIDEF.use_and_sell_buttons(card)
 							shadow = true,
 							colour = G.C.UI.BACKGROUND_INACTIVE,
 							one_press = true,
-							button = "store_card",
+							button = "use_card",
 							func = "can_reserve_card",
 						},
 						nodes = {
 							{
 								n = G.UIT.T,
 								config = {
-									text = " STORE ",
+									text = localize("b_pull"),
 									colour = G.C.UI.TEXT_LIGHT,
 									scale = 0.55,
 									shadow = true,
@@ -230,8 +248,42 @@ function G.UIDEF.use_and_sell_buttons(card)
 							},
 						},
 					},
-				}
-	        }
+					{
+						n = G.UIT.R,
+						config = {
+							ref_table = card,
+							r = 0.08,
+							padding = 0.1,
+							align = "bm",
+							minw = 0.5 * card.T.w - 0.15,
+							maxw = 0.9 * card.T.w - 0.15,
+							minh = 0.1 * card.T.h,
+							hover = true,
+							shadow = true,
+							colour = G.C.UI.BACKGROUND_INACTIVE,
+							one_press = true,
+							button = "Do you know that this parameter does nothing?",
+							func = "can_use_consumeable",
+						},
+						nodes = {
+							{
+								n = G.UIT.T,
+								config = {
+									text = localize("b_use"),
+									colour = G.C.UI.TEXT_LIGHT,
+									scale = 0.45,
+									shadow = true,
+								},
+							},
+						},
+					},
+					{ n = G.UIT.R, config = { align = "bm", w = 7.7 * card.T.w } },
+					{ n = G.UIT.R, config = { align = "bm", w = 7.7 * card.T.w } },
+					{ n = G.UIT.R, config = { align = "bm", w = 7.7 * card.T.w } },
+					{ n = G.UIT.R, config = { align = "bm", w = 7.7 * card.T.w } },
+					-- Betmma can't explain it, neither can I
+				},
+			}
 		end
 	end
 	return G_UIDEF_use_and_sell_buttons_ref(card)

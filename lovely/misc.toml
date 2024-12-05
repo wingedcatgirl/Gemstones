@@ -3,19 +3,6 @@ version = "1.0.0"
 dump_lua = true
 priority = 1
 
-# Force key
-[[patches]]
-[patches.pattern]
-target = "functions/common_events.lua"
-pattern = "if _type == 'Joker' then"
-position = "before"
-payload = '''
-if _type == 'Gemstone' then 
-    forced_key = 'c_gems_ruby'
-end
-'''
-match_indent = true
-
 # Callback Gemstone pool to Ruby
 [[patches]]
 [patches.pattern]
@@ -47,4 +34,63 @@ else
     self.config.card_count = #self.cards
 end
 '''
+match_indent = true
+
+# Can add Tarot card from Purple Seal
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if self.seal == 'Purple' and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then"
+position = "at"
+payload = '''
+local limit = 0
+for i = 1, #G.consumeables.cards do
+    local card = G.consumeables.cards[i]
+    if card.ability.set == "Gemstone" then
+        limit = limit + 0.5
+    else
+        limit = limit + 1
+    end
+end
+
+if self.seal == 'Purple' and (G.consumeables.config.card_limit - (limit + G.GAME.consumeable_buffer)) >= 1 then
+'''
+match_indent = true
+
+# Sticker compatability for Challenge Jokers
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "if v.pinned then _joker.pinned = true end"
+position = "after"
+payload = "if v.gemslot then set_gemslot(_joker, v.gemslot) end"
+match_indent = true 
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "if v.pinned then card.pinned = true end"
+position = "after"
+payload = "if v.gemslot then set_gemslot(card, v.gemslot) end"
+match_indent = true
+
+# No shop planets
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "elseif v.id == 'no_shop_jokers' then"
+position = "before"
+payload = """
+elseif v.id == 'gems_no_planets' then
+    self.GAME.planet_rate = 0
+"""
+match_indent = true
+
+# Joker Selection Limit at 2
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "{card_limit = self.GAME.starting_params.joker_slots, type = 'joker', highlight_limit = 1})"
+position = "at"
+payload = "{card_limit = self.GAME.starting_params.joker_slots, type = 'joker', highlight_limit = 2})"
 match_indent = true

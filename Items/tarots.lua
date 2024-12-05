@@ -1,22 +1,30 @@
+-- Create Atlas
+SMODS.Atlas{
+    key = "tarots",
+    path = "tarots.png",
+    px = 71,
+    py = 95
+}:register()
+
 -- Infusion Tarot
 SMODS.Consumable{
     object_type = "Consumable",
     set = "Tarot",
     name = "gem-Infusion",
     key = "infusion",
-    atlas = "tarots_atlas",
+    atlas = "tarots",
     pos = { x = 0, y = 0 },
     cost = 3,
     should_apply = false,
     disovered = true,
-    order = 300,
+    order = 1,
     config = {
         max_highlighted = 2,
         sticker_id = "gemslot_empty"
     },
 
     loc_vars = function(self, info_queue)
-        info_queue[#info_queue + 1] = { key = "gemslot_empty", set = "Other", vars = {} }
+        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = {} }
         return { vars = { self.config.max_highlighted } }
     end,
 
@@ -34,12 +42,12 @@ SMODS.Consumable{
     set = "Tarot",
     name = "gem-Excavator",
     key = "excavator",
-    atlas = "tarots_atlas",
+    atlas = "tarots",
     pos = { x = 1, y = 0 },
     cost = 3,
     should_apply = false,
     disovered = true,
-    order = 301,
+    order = 2,
     config = {},
 
     loc_vars = function(self, info_queue, desc_nodes)
@@ -76,12 +84,12 @@ SMODS.Consumable{
     set = "Tarot",
     name = "gem-Polish",
     key = "polish",
-    atlas = "tarots_atlas",
+    atlas = "tarots",
     pos = { x = 2, y = 0 },
     cost = 3,
     should_apply = false,
     disovered = true,
-    order = 302,
+    order = 3,
     enhancement_gate = "m_stone",
     config = { max_highlighted = 1, create = 1 },
 

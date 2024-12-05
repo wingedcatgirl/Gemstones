@@ -10,5 +10,5 @@ You can equip Gemstones by using the new Tarot card "The Enfusion" to create an 
 ## How to install?
 
 1. Download the latest release
-2. Extract the folder inside your Mods folder (`%AppData%/Roaming/Balatro/Mods` for Windows)
+2. Extract the folders inside your Mods folder (`%AppData%/Roaming/Balatro/Mods` for Windows)
 3. Done!

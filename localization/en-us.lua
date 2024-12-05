@@ -1,7 +1,30 @@
 return {
     descriptions = {
-        Back = {},
-        Blind = {},
+        Back = {
+            b_gems_crystal = {
+                name = "Crystal Deck",
+                text = {
+                    "All playing cards start",
+                    "with an {C:empty}Empty{} Gem Slot"
+                }
+            }
+        },
+        Blind = {
+            bl_gems_rock = {
+                name = "The Rock",
+                text = {
+                    "All cards with an occupied",
+                    "Gem Slot are debuffed"
+                }
+            },
+            bl_gems_hammer = {
+                name = "The Hammer",
+                text = {
+                    "Lose $3 for every card played",
+                    "with an occupied Gem Slot"
+                }
+            }
+        },
         Edition = {},
         Gemstone = {
             c_gems_ruby = {
@@ -132,14 +155,48 @@ return {
                 name = "Gem Gauntlet",
                 text = {
                     "Gives {X:mult,C:white} X#1# {} Mult",
-                    "for each card",
-                    "with a {C:attention}Gem Slot{}",   
+                    "for each card with ",
+                    "an {C:attention}occupied Gem Slot{}",   
                     "in your {C:attention}full deck",
                     "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
                 },
             },
+            j_gems_blacksmith = {
+                name = "Blacksmith",
+                text = {
+                    "If the {C:attention}first card{} in the",
+                    "{C:attention}first hand{} has no Gem Slot,",
+                    "create an {C:empty}Empty{} Gem Slot"
+                }
+            },
+            j_gems_domini = {
+                name = "Domini",
+                text = {
+                    "Retrigger all scoring cards",
+                    "for every {C:attention}#1#{} unique {C:hearts}Gemstones",
+                    "applied to {C:attention}cards{} and {C:attention}Jokers",
+                    "{C:inactive}(Currently {C:attention}#2# {C:inactive}times)"
+                }
+            }
         },
         Planet = {},
+        Sleeve = {
+            sleeve_gems_crystal_sleeve = {
+                name = "Crystal Sleeve",
+                text = {
+                    "All playing cards start",
+                    "with an {C:empty}Empty{} Gem Slot"
+                }
+            },
+            sleeve_gems_crystal_sleeve_alt = {
+                name = "Crystal Sleeve",
+                text = {
+                    "All playing cards that appear",
+                    "during the run will",
+                    "have an {C:empty}Empty{} Gem Slot"
+                }
+            }
+        },
         Spectral = {
             c_gems_shine = {
                 name = "Shine",
@@ -156,8 +213,8 @@ return {
             c_gems_infusion = {
                 name = "The Infusion",
                 text = {
-                    "Create an Empty",
-                    "Gem Slot to {C:green}#1#{}",
+                    "Create an {C:empty}Empty{}",
+                    "Gem Slot to {C:green}2{}",
                     "selected {C:attention}cards{} or {C:attention}Jokers{}",
                     "{C:inactive}(Can override occupied slots)"
                 }
@@ -287,8 +344,8 @@ return {
                 name = "Epidote",
                 text = {
                     "Increases the values",
-                    "of this Joker by",
-                    "{C:attention}#1#% when triggered"
+                    "of this Joker by {C:attention}#1#% ",
+                    "after {C:attention}Blind{} is defeated"
                 },
             },
             gemslot_adamite = {
@@ -304,6 +361,7 @@ return {
                 text = {
                     "Choose {C:attention}#1#{} of up to",
                     "{C:attention}#2#{C:hearts} Gemstone{} cards",
+                    "or {C:tarot}The Infusion{} card"
                 }
             },
             p_gems_gemstone_normal_2 = {
@@ -311,6 +369,7 @@ return {
                 text = {
                     "Choose {C:attention}#1#{} of up to",
                     "{C:attention}#2#{C:hearts} Gemstone{} cards",
+                    "or {C:tarot}The Infusion{} card"
                 }
             },
             p_gems_gemstone_jumbo_1 = {
@@ -318,6 +377,7 @@ return {
                 text = {
                     "Choose {C:attention}#1#{} of up to",
                     "{C:attention}#2#{C:hearts} Gemstone{} cards",
+                    "or {C:tarot}The Infusion{} card"
                 }
             },
             p_gems_gemstone_mega_1 = {
@@ -325,6 +385,7 @@ return {
                 text = {
                     "Choose {C:attention}#1#{} of up to",
                     "{C:attention}#2#{C:hearts} Gemstone{} cards",
+                    "or {C:tarot}The Infusion{} card"
                 }
             },
         },
@@ -332,8 +393,12 @@ return {
     misc = {
         achievement_names = {},
         achievement_descriptions = {},
-        challenge_names = {},
+        challenge_names = {
+            c_gems_amber_gamble = "Amber Gamble"
+        },
         dictionary = {
+            b_pull = "PULL",
+            k_applied_ex = "Applied!",
             k_plus_gemstone = "+1 Gemstone",
             k_gems_gemstone_pack = "Gemstone Pack"
         },
@@ -342,6 +407,7 @@ return {
             gemslot_ruby = "Gem Slot",
             gemslot_pearl = "Gem Slot",
             gemslot_topaz = "Gem Slot",
+            gemslot_amber = "Gem Slot",
             gemslot_opal = "Gem Slot",
             gemslot_diamond = "Gem Slot",
             gemslot_amethyst = "Gem Slot",
@@ -364,6 +430,9 @@ return {
             a_powchips_minus = {"-^#1# Chips"},
             a_powmultchips_minus = {"-^#1# Mult+Chips"},
             a_round_minus = {"-#1# Round"},
+        },
+        v_text = {
+            ch_c_gems_no_planets = {"{C:planet}Planet{} cards never spawn"},
         }
     }
 }

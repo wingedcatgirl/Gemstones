@@ -1,3 +1,11 @@
+-- Create Atlas
+SMODS.Atlas{
+    key = "slot",
+    path = "stickers.png",
+    px = 71,
+    py = 95
+}:register()
+
 -- Empty Gem Slot
 SMODS.Sticker{
     key = "gemslot_empty",
@@ -5,7 +13,7 @@ SMODS.Sticker{
     prefix_config = { key = false },
     rate = 0.0,
     order = 1,
-    atlas = "slot_atlas",
+    atlas = "slot",
     pos = { x = 0, y = 0 },
     config = {},
 
@@ -26,7 +34,7 @@ SMODS.Sticker{
     badge_colour = HEX("e3394f"),
     prefix_config = { key = false },
     rate = 0.0,
-    atlas = "slot_atlas",
+    atlas = "slot",
     pos = { x = 1, y = 0 },
     config = { x_mult = 1.2 },
 
@@ -51,7 +59,7 @@ SMODS.Sticker{
     badge_colour = HEX("34d2eb"),
     prefix_config = { key = false },
     rate = 0.0,
-    atlas = "slot_atlas",
+    atlas = "slot",
     pos = { x = 2, y = 0 },
     config = {},
 
@@ -72,7 +80,7 @@ SMODS.Sticker{
     badge_colour = HEX("e6af19"),
     prefix_config = { key = false },
     rate = 0.0,
-    atlas = "slot_atlas",
+    atlas = "slot",
     pos = { x = 3, y = 0 },
     config = { dollars = 2 },
 
@@ -97,7 +105,7 @@ SMODS.Sticker{
     badge_colour = HEX("ff9524"),
     prefix_config = { key = false },
     rate = 0.0,
-    atlas = "slot_atlas",
+    atlas = "slot",
     pos = { x = 4, y = 0 },
     config = { level_up_odds = 3 },
 
@@ -129,7 +137,7 @@ SMODS.Sticker{
     badge_colour = HEX("bfeeb0"),
     prefix_config = { key = false },
     rate = 0.0,
-    atlas = "slot_atlas",
+    atlas = "slot",
     pos = { x = 0, y = 1 },
     config = {},
 
@@ -150,7 +158,7 @@ SMODS.Sticker{
     badge_colour = HEX("abd8ff"),
     prefix_config = { key = false },
     rate = 0.0,
-    atlas = "slot_atlas",
+    atlas = "slot",
     pos = { x = 1, y = 1 },
     config = { retriggers = 1 },
 
@@ -180,7 +188,7 @@ SMODS.Sticker{
     badge_colour = HEX("c41ed6"),
     prefix_config = { key = false },
     rate = 0.0,
-    atlas = "slot_atlas",
+    atlas = "slot",
     pos = { x = 2, y = 1 },
     config = { h_x_mult = 1.35 },
 
@@ -205,7 +213,7 @@ SMODS.Sticker{
     badge_colour = HEX("80b8c7"),
     prefix_config = { key = false },
     rate = 0.0,
-    atlas = "slot_atlas",
+    atlas = "slot",
     pos = { x = 3, y = 1 },
     config = { x_chips = 2 },
 
@@ -230,7 +238,7 @@ SMODS.Sticker{
     badge_colour = HEX("0db813"),
     prefix_config = { key = false },
     rate = 0.0,
-    atlas = "slot_atlas",
+    atlas = "slot",
     pos = { x = 4, y = 1 },
     config = {},
 
@@ -251,7 +259,7 @@ SMODS.Sticker{
     badge_colour = HEX("fff3d1"),
     prefix_config = { key = false },
     rate = 0.0,
-    atlas = "slot_atlas",
+    atlas = "slot",
     pos = { x = 0, y = 2 },
     config = { bonus_chips = 10 },
 
@@ -280,7 +288,7 @@ SMODS.Sticker{
     badge_colour = HEX("159d49"),
     prefix_config = { key = false },
     rate = 0.0,
-    atlas = "slot_atlas",
+    atlas = "slot",
     pos = { x = 1, y = 2 },
     config = {},
 
@@ -301,7 +309,7 @@ SMODS.Sticker{
     badge_colour = HEX("52bab1"),
     prefix_config = { key = false },
     rate = 0.0,
-    atlas = "slot_atlas",
+    atlas = "slot",
     pos = { x = 2, y = 2 },
     config = { planets_amount = 1 },
 
@@ -353,9 +361,9 @@ SMODS.Sticker{
     badge_colour = HEX("7c822b"),
     prefix_config = { key = false },
     rate = 0.0,
-    atlas = "slot_atlas",
+    atlas = "slot",
     pos = { x = 3, y = 2 },
-    config = { val_multi = 1.05 },
+    config = { val_multi = 1.1 },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { ((self.config.val_multi - 1) * 100) } }
@@ -364,10 +372,14 @@ SMODS.Sticker{
 		G.shared_stickers[self.key].role.draw_major = card
 		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
 	end,
-    added = function(self, card) end,
+    added = function(self, card) card.ability.epidote_upgraded = false end,
     removed = function(self, card) end,
     calculate = function(self, card, context)
-        if context.post_trigger and card == context.other_joker and not context.blueprint then
+        if context.setting_blind then
+            card.ability.epidote_upgraded = false
+        
+        elseif context.end_of_round and context.individual and not context.blueprint and not card.ability.epidote_upgraded then
+            card.ability.epidote_upgraded = true
             inc_joker_value(card, self.config.val_multi)
             return nil, true
         end
@@ -380,7 +392,7 @@ SMODS.Sticker{
     badge_colour = HEX("783435"),
     prefix_config = { key = false },
     rate = 0.0,
-    atlas = "slot_atlas",
+    atlas = "slot",
     pos = { x = 4, y = 2 },
     config = { retriggers = 1, chance = 2 },
 
@@ -394,7 +406,7 @@ SMODS.Sticker{
     added = function(self, card) end,
     removed = function(self, card) end,
     calculate = function(self, card, context)
-        if context.retrigger_joker_check and not context.retrigger_joker and context.other_card ~= card then
+        if context.retrigger_joker_check and not context.retrigger_joker and context.other_joker ~= card then
             if pseudorandom(pseudoseed("adamite_slot")) < G.GAME.probabilities.normal / self.config.chance then
 			    return {
 			    	message = localize("k_again_ex"),

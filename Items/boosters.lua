@@ -1,3 +1,11 @@
+-- Create Atlas
+SMODS.Atlas{
+    key = "gemstone_pack",
+    path = "boosters.png",
+    px = 71,
+    py = 95
+}:register()
+
 -- Booster Pack 1
 SMODS.Booster{
     name = "Gemstone Pack",
@@ -6,19 +14,24 @@ SMODS.Booster{
     atlas = "gemstone_pack",
     group_key = "k_gems_gemstone_pack",
     pos = { x = 0, y = 0 },
-	config = { extra = 3, choose = 1 },
+	config = { extra = 4, choose = 1 },
     cost = 4,
     order = 1,
-    weight = 3,
-    draw_hand = false, 
+    weight = 1.2,
+    draw_hand = true, 
     unlocked = true,
     discovered = true,
     
-    create_card = function(self, card)
-        return create_card('Gemstone', G.pack_cards, nil, nil, true, true, nil, "gem-Ruby")
+    create_card = function(self, card, i)
+        if i == card.ability.extra then
+            return create_card("Tarot", G.pack_cards, nil, nil, true, nil, "c_gems_infusion", "ar1")
+        else
+            return create_card('Gemstone', G.pack_cards, nil, nil, true, nil, nil, "gems")
+        end
     end,
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.config.center.config.choose, card.ability.extra } }
+        info_queue[#info_queue + 1] = { key = "c_gems_infusion", set = "Tarot", vars = {} }
+        return { vars = { card.config.center.config.choose, card.ability.extra - 1 } }
     end
 }
 
@@ -30,19 +43,24 @@ SMODS.Booster{
     atlas = "gemstone_pack",
     group_key = "k_gems_gemstone_pack",
     pos = { x = 1, y = 0 },
-	config = { extra = 3, choose = 1 },
+	config = { extra = 4, choose = 1 },
     cost = 4,
     order = 1,
-    weight = 3,
-    draw_hand = false, 
+    weight = 1.2,
+    draw_hand = true, 
     unlocked = true,
     discovered = true,
     
-    create_card = function(self, card)
-        return create_card('Gemstone', G.pack_cards, nil, nil, true, true, nil, "gem-Ruby")
+    create_card = function(self, card, i)
+        if i == card.ability.extra then
+            return create_card("Tarot", G.pack_cards, nil, nil, true, nil, "c_gems_infusion", "ar1")
+        else
+            return create_card('Gemstone', G.pack_cards, nil, nil, true, nil, nil, "gems")
+        end
     end,
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.config.center.config.choose, card.ability.extra } }
+        info_queue[#info_queue + 1] = { key = "c_gems_infusion", set = "Tarot", vars = {} }
+        return { vars = { card.config.center.config.choose, card.ability.extra - 1 } }
     end
 }
 
@@ -54,19 +72,24 @@ SMODS.Booster{
     atlas = "gemstone_pack",
     group_key = "k_gems_gemstone_pack",
     pos = { x = 2, y = 0 },
-	config = { extra = 5, choose = 1 },
-    cost = 4,
+	config = { extra = 6, choose = 1 },
+    cost = 6,
     order = 1,
-    weight = 3,
-    draw_hand = false, 
+    weight = 0.6,
+    draw_hand = true, 
     unlocked = true,
     discovered = true,
     
-    create_card = function(self, card)
-        return create_card('Gemstone', G.pack_cards, nil, nil, true, true, nil, "gem-Ruby")
+    create_card = function(self, card, i)
+        if i == card.ability.extra then
+            return create_card("Tarot", G.pack_cards, nil, nil, true, nil, "c_gems_infusion", "ar1")
+        else
+            return create_card('Gemstone', G.pack_cards, nil, nil, true, nil, nil, "gems")
+        end
     end,
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.config.center.config.choose, card.ability.extra } }
+        info_queue[#info_queue + 1] = { key = "c_gems_infusion", set = "Tarot", vars = {} }
+        return { vars = { card.config.center.config.choose, card.ability.extra - 1 } }
     end
 }
 
@@ -78,18 +101,23 @@ SMODS.Booster{
     atlas = "gemstone_pack",
     group_key = "k_gems_gemstone_pack",
     pos = { x = 3, y = 0 },
-	config = { extra = 5, choose = 2 },
-    cost = 4,
+	config = { extra = 6, choose = 2 },
+    cost = 8,
     order = 1,
-    weight = 3,
-    draw_hand = false, 
+    weight = 0.6,
+    draw_hand = true, 
     unlocked = true,
     discovered = true,
     
-    create_card = function(self, card)
-        return create_card('Gemstone', G.pack_cards, nil, nil, true, true, nil, "gem-Ruby")
+    create_card = function(self, card, i)
+        if i == card.ability.extra then
+            return create_card("Tarot", G.pack_cards, nil, nil, true, nil, "c_gems_infusion", "ar1")
+        else
+            return create_card('Gemstone', G.pack_cards, nil, nil, true, nil, nil, "gems")
+        end
     end,
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.config.center.config.choose, card.ability.extra } }
+        info_queue[#info_queue + 1] = { key = "c_gems_infusion", set = "Tarot", vars = {} }
+        return { vars = { card.config.center.config.choose, card.ability.extra - 1 } }
     end
 }
