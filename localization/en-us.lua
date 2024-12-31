@@ -184,8 +184,8 @@ return {
             sleeve_gems_crystal_sleeve = {
                 name = "Crystal Sleeve",
                 text = {
-                    "All playing cards start",
-                    "with an {C:empty}Empty{} Gem Slot"
+                    "All playing cards in your starting",
+                    "deck have an {C:empty}Empty{} Gem Slot"
                 }
             },
             sleeve_gems_crystal_sleeve_alt = {

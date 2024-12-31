@@ -108,7 +108,15 @@ function eval_card(card, context)
 	return ret
 end
 
---Localization colors
+-- Last used Gemstone card
+local igo = Game.init_game_object
+Game.init_game_object = function(self)
+  	local ret = igo(self)
+  	ret.last_used_gemstone = nil
+  	return ret
+end
+
+-- Localization colors
 local lc = loc_colour
 function loc_colour(_c, _default)
 	if not G.ARGS.LOC_COLOURS then

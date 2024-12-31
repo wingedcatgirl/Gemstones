@@ -7,18 +7,21 @@ SMODS.UndiscoveredSprite{
     pos = {x = 5, y = 2},
 }
 
---Load Item Files
-local files = NFS.getDirectoryItems(SMODS.current_mod.path .. "Items")
+-- Mod Icon
+SMODS.Atlas{
+	key = "modicon",
+	path = "modicon.png",
+	px = 32,
+	py = 32
+}
+
+-- Load Item Files
+local files = NFS.getDirectoryItems(SMODS.current_mod.path .. "content")
 for _, file in ipairs(files) do
 	print("Gemstones | Loading Item file " .. file)
-	local f, err = SMODS.load_file("Items/" .. file)
+	local f, err = SMODS.load_file("content/" .. file)
 	if err then
 		error(err)
 	end
 	f()
-end
-
--- SMODS Functions
-function Gemstones.reset_game_globals(run_start)
-	G.GAME.last_used_gemstone = nil
 end
