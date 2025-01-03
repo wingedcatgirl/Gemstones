@@ -1,10 +1,12 @@
+if not Gemstones_Config.Gems_Jokers then return end
+
 -- Create Atlas
 SMODS.Atlas{
     key = "joker",
     path = "jokers.png",
     px = 71,
     py = 95
-}:register()
+}
 
 -- Drill Miner
 SMODS.Joker{
@@ -74,7 +76,7 @@ SMODS.Joker{
     end,
 
     calculate = function(self, card, context)
-        if context.joker_main then
+        if context.cardarea == G.jokers and not context.before and not context.after then
             if card.ability.gem_slot_tally > 0 then
                 return {
                     message = localize{type='variable',key='a_xmult',vars={1 + (card.ability.extra.xmod_increase * card.ability.gem_slot_tally)}},

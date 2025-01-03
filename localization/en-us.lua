@@ -31,7 +31,7 @@ return {
                 name = "Ruby",
                 text = {
                     "Attach a {C:ruby}Ruby",
-                    "{}Gemstone to {C:green}#1#{} selected",
+                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected",
                     "{C:attention}card{} or {C:attention}Joker{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
@@ -40,7 +40,7 @@ return {
                 name = "Pearl",
                 text = {
                     "Attach a {C:pearl}Pearl",
-                    "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected {C:attention}card{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
             },
@@ -48,7 +48,7 @@ return {
                 name = "Topaz",
                 text = {
                     "Attach a {C:topaz}Topaz",
-                    "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected {C:attention}card{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
             },
@@ -56,7 +56,7 @@ return {
                 name = "Amber",
                 text = {
                     "Attach an {C:amber}Amber",
-                    "{}Gemstone to {C:green}#1#{} selected",
+                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected",
                     "{C:attention}card{} or {C:attention}Joker{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
@@ -65,7 +65,7 @@ return {
                 name = "Opal",
                 text = {
                     "Attach an {C:opal}Opal",
-                    "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected {C:attention}card{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
             },
@@ -73,7 +73,7 @@ return {
                 name = "Diamond",
                 text = {
                     "Attach a {C:diamond}Diamond",
-                    "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected {C:attention}card{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
             },
@@ -81,7 +81,7 @@ return {
                 name = "Amethyst",
                 text = {
                     "Attach an {C:amethyst}Amethyst",
-                    "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected {C:attention}card{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
             },
@@ -89,7 +89,8 @@ return {
                 name = "Aquamarine",
                 text = {
                     "Attach an {C:aquamarine}Aquamarine",
-                    "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected",
+                    "{C:attention}card{} or {C:attention}Joker{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
             },
@@ -97,7 +98,7 @@ return {
                 name = "Jade",
                 text = {
                     "Attach a {C:jade}Jade",
-                    "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected {C:attention}card{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
             },
@@ -105,7 +106,7 @@ return {
                 name = "Quartz",
                 text = {
                     "Attach a {C:quartz}Quartz",
-                    "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected {C:attention}card{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
             },
@@ -113,7 +114,7 @@ return {
                 name = "Emerald",
                 text = {
                     "Attach an {C:emerald}Emerald",
-                    "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected {C:attention}card{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
             },
@@ -121,7 +122,7 @@ return {
                 name = "Turquoise",
                 text = {
                     "Attach an {C:turquoise}Turquoise",
-                    "{}Gemstone to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected {C:attention}card{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
             },
@@ -129,7 +130,7 @@ return {
                 name = "Epidote",
                 text = {
                     "Attach an {C:epidote}Epidote",
-                    "{}Gemstone to {C:green}#1#{} selected {C:attention}Joker{}",
+                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected {C:attention}Joker{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
             },
@@ -137,7 +138,7 @@ return {
                 name = "Adamite",
                 text = {
                     "Attach an {C:adamite}Adamite",
-                    "{}Gemstone to {C:green}#1#{} selected {C:attention}Joker{}",
+                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected {C:attention}Joker{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
             },
@@ -209,6 +210,23 @@ return {
             }
         },
         Stake = {},
+        Tag = {
+            tag_gems_gemstone = {
+                name = "Gemstone Tag",
+                text = {
+                    "Gives a free",
+                    "{C:hearts}Mega Gemstone Pack"
+                }
+            },
+            tag_gems_infused = {
+                name = "Infused Tag",
+                text = {
+                    "Next Joker in shop",
+                    "is free and has a",
+                    "{V:1}#1#{} Gem Slot applied"
+                }
+            }
+        },
         Tarot = {
             c_gems_infusion = {
                 name = "The Infusion",
@@ -326,9 +344,10 @@ return {
             gemslot_emerald = {
                 name = "Emerald",
                 text = {
-                    "This card's",
-                    "enhancement is ",
-                    "{C:attention}randomized{} when played"
+                    "When {C:attention}discarded{}, {C:green}#1# in #2#{} chance",
+                    "to add {C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or",
+                    "{C:dark_edition}Polychrome{} edition to",
+                    "a random card in {C:attention}hand"
                 },
             },
             gemslot_turquoise = {

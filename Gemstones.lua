@@ -1,4 +1,6 @@
+-- Defining Globals
 Gemstones = SMODS.current_mod
+Gemstones_Config = Gemstones.config
 
 -- Undiscovered Sprite
 SMODS.UndiscoveredSprite{

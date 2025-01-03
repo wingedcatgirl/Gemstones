@@ -1,3 +1,5 @@
+if not Gemstones_Config.Gems_Decks then return end
+
 -- Create Atlas
 SMODS.Atlas{
     key = "decks",

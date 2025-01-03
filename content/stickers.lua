@@ -229,6 +229,15 @@ SMODS.Sticker{
     end,
     removed = function(self, card)
         card.ability.x_chips = card.ability.x_chips - self.config.x_chips
+    end,
+    calculate = function(self, card, context)
+        if context.cardarea == G.jokers and not context.before and not context.after then
+            return {
+                message = localize{type='variable',key='a_xchips',vars={card.ability.x_chips}},
+                Xchip_mod = card.ability.x_chips,
+                colour = G.C.CHIPS
+            }
+        end
     end
 }
 
@@ -290,10 +299,10 @@ SMODS.Sticker{
     rate = 0.0,
     atlas = "slot",
     pos = { x = 1, y = 2 },
-    config = {},
+    config = { odds = 4 },
 
     loc_vars = function(self, info_queue, card)
-        return {}
+        return { vars = { G.GAME.probabilities.normal or 1, self.config.odds } }
     end,
 	draw = function(self, card) --don't draw shine
 		G.shared_stickers[self.key].role.draw_major = card
@@ -301,6 +310,26 @@ SMODS.Sticker{
 	end,
     added = function(self, card) end,
     removed = function(self, card) end,
+    calculate = function(self, card, context)
+        if context.discard then
+            local pool = {}
+            for i, j in ipairs(G.hand.cards) do
+            local _card = G.hand.cards[i]
+                if not _card.edition and (_card ~= card) then
+                    table.insert(pool, _card)
+                end
+            end
+            if #pool > 0 then
+                if pseudorandom('gemslot_emerald') < G.GAME.probabilities.normal / self.config.odds then
+                    local _card = pseudorandom_element(pool, pseudoseed('gemslot_emerald'))
+                    local edition = poll_edition('wheel_of_fortune', nil, false, true, {'e_polychrome', 'e_holo', 'e_foil'})
+                    _card:set_edition(edition)
+                else
+                    card_eval_status_text(card, 'jokers', nil, nil, nil, {message = localize('k_nope_ex'), colour = G.C.SECONDARY_SET.Tarot})
+                end
+            end
+        end
+    end
 }
 
 -- Turquoise Gem Slot
@@ -406,7 +435,7 @@ SMODS.Sticker{
     added = function(self, card) end,
     removed = function(self, card) end,
     calculate = function(self, card, context)
-        if context.retrigger_joker_check and not context.retrigger_joker and context.other_joker ~= card then
+        if context.retrigger_joker_check and not context.retrigger_joker and context.other_card == card then
             if pseudorandom(pseudoseed("adamite_slot")) < G.GAME.probabilities.normal / self.config.chance then
 			    return {
 			    	message = localize("k_again_ex"),

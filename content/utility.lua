@@ -297,6 +297,29 @@ function G.UIDEF.use_and_sell_buttons(card)
 	return G_UIDEF_use_and_sell_buttons_ref(card)
 end
 
+-- Create UI for Gem Slots
+function create_UIBox_gemslots()
+	local _pool = {}
+	for i, v in pairs(SMODS.Stickers) do
+		if i:find("gemslot") then
+			_pool[i] = v
+		end
+	end
+
+	return SMODS.card_collection_UIBox(_pool, { 5, 5 }, {
+		snap_back = true,
+        hide_single_page = true,
+        collapse_single_page = true,
+        center = 'c_base',
+        h_mod = 1.03,
+		back_func = 'your_collection_other_gameobjects',
+		modify_card = function(card, center)
+            card.ignore_pinned = true
+            center:apply(card, true)
+        end,
+	})
+end
+
 -- GLOBALS --
 
 G.FUNCS.can_reserve_card = function(e)
@@ -340,4 +363,182 @@ G.FUNCS.reserve_card = function(e)
 			return true
 		end,
 	}))
+end
+
+-- For Gem Slot collection UI
+G.FUNCS.your_collection_gemslot = function()
+	G.SETTINGS.paused = true
+	G.FUNCS.overlay_menu{
+	  definition = create_UIBox_gemslots(),
+	}
+end
+
+--- SMODS ---
+
+-- Override function to remove Gem Slots from the pool
+create_UIBox_your_collection_stickers = function()
+	local _pool = {}
+	for i, v in pairs(SMODS.Stickers) do
+		if not i:find("gemslot") then
+			_pool[i] = v
+		end
+	end
+
+    return SMODS.card_collection_UIBox(_pool, {5,5}, {
+        snap_back = true,
+        hide_single_page = true,
+        collapse_single_page = true,
+        center = 'c_base',
+        h_mod = 1.03,
+        back_func = 'your_collection_other_gameobjects',
+        modify_card = function(card, center)
+            card.ignore_pinned = true
+            center:apply(card, true)
+        end,
+    })
+end
+
+-- Gem Slots Collection Tab
+Gemstones.custom_collection_tabs = function()
+    return {
+        UIBox_button({
+			button = 'your_collection_gemslot', 
+			label = {'Gem Slots'}, 
+			minw = 5,
+			minh = 1, 
+			id = 'your_collection_gemslot', 
+			focus_args = {snap_to = true}
+		})
+    }
+end
+
+-- Credits Tab
+Gemstones.extra_tabs = function()
+    local scale = 0.5
+    return {
+        label = "Credits",
+        tab_definition_function = function()
+        return {
+            n = G.UIT.ROOT,
+            config = {
+            align = "cm",
+            padding = 0.05,
+            colour = G.C.CLEAR,
+            },
+            nodes = {
+            {
+                n = G.UIT.R,
+                config = {
+                padding = 0,
+                align = "cm"
+                },
+                nodes = {
+                {
+                    n = G.UIT.T,
+                    config = {
+                    text = "Lead Developer: Halo",
+                    shadow = true,
+                    scale = scale,
+                    colour = G.C.GOLD
+                    }
+                }
+                }
+            },
+			{
+                n = G.UIT.R,
+                config = {
+                padding = 0,
+                align = "cm"
+                },
+                nodes = {
+                {
+                    n = G.UIT.T,
+                    config = {
+                    text = "Contributors: AlexZGreat",
+                    shadow = true,
+                    scale = scale*0.8,
+                    colour = G.C.GREEN
+                    }
+                }
+                }
+            },
+			{
+                n = G.UIT.R,
+                config = {
+                padding = 0,
+                align = "cm"
+                },
+                nodes = {
+                {
+                    n = G.UIT.T,
+                    config = {
+                    text = "Special Thanks: Balatro Modding Community",
+                    shadow = false,
+                    scale = scale*0.65,
+                    colour = G.C.BLACK
+                    }
+                }
+                }
+            },
+            }
+        }
+        end
+    }
+end
+
+-- Config Tab
+Gemstones.config_tab = function()
+    return {
+      n = G.UIT.ROOT,
+      config = {
+        align = "cm",
+        padding = 0.05,
+        colour = G.C.CLEAR,
+      },
+      nodes = {
+        create_toggle({
+            label = "Enable Blinds",
+            ref_table = Gemstones_Config,
+            ref_value = "Gems_Blinds",
+        }),
+        create_toggle({
+            label = "Enable Challenges",
+            ref_table = Gemstones_Config,
+            ref_value = "Gems_Challenges",
+        }),
+        create_toggle({
+            label = "Enable Decks",
+            ref_table = Gemstones_Config,
+            ref_value = "Gems_Decks",
+        }),
+        create_toggle({
+            label = "Enable Jokers",
+            ref_table = Gemstones_Config,
+            ref_value = "Gems_Jokers",
+        }),
+        create_toggle({
+            label = "Enable Tags",
+            ref_table = Gemstones_Config,
+            ref_value = "Gems_Tags",
+        }),
+		{
+			n = G.UIT.R,
+			config = {
+			padding = 0,
+			align = "cm"
+			},
+			nodes = {
+			{
+				n = G.UIT.T,
+				config = {
+				text = "(Restart your game to apply any changes)",
+				shadow = false,
+				scale = 0.5*0.5,
+				colour = G.C.WHITE
+				}
+			}
+			}
+		},
+      },
+    }
 end

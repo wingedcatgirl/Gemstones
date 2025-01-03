@@ -271,12 +271,7 @@ SMODS.Consumable{
         return { vars = { self.config.max_highlighted } }
     end,
 
-    can_use = function(self, card) 
-        return 
-        #G.hand.highlighted == self.config.max_highlighted
-        and
-        get_gemslot(G.hand.highlighted[1]) ~= nil 
-    end,
+    can_use = function(self, card) return can_use_gemstone_consumeable(self, card) end,
     use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
 }
 
@@ -360,11 +355,12 @@ SMODS.Consumable{
     order = 11,
     config = {
         max_highlighted = 1,
+        odds = 4,
         sticker_id = "gemslot_emerald"
     },
 
     loc_vars = function(self, info_queue)
-        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = {} }
+        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = { G.GAME.probabilities.normal or 1, self.config.odds } }
         return { vars = { self.config.max_highlighted } }
     end,
 

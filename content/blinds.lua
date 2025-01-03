@@ -1,3 +1,5 @@
+if not Gemstones_Config.Gems_Blinds then return end
+
 -- Create Atlas
 SMODS.Atlas{
     key = "blinds",

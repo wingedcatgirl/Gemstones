@@ -1,3 +1,5 @@
+if not Gemstones_Config.Gems_Challenges then return end
+
 -- Amber Gamble
 SMODS.Challenge{
     key = "amber_gamble",

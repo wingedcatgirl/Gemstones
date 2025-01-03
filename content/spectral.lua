@@ -33,7 +33,7 @@ SMODS.Consumable{
     loc_vars = function(self, info_queue)
         info_queue[#info_queue + 1] = { key = "gemslot_diamond", set = "Other", vars = { SMODS.Stickers["gemslot_diamond"].config.retriggers } }
         info_queue[#info_queue + 1] = { key = "gemslot_turquoise", set = "Other", vars = { SMODS.Stickers["gemslot_turquoise"].config.planets_amount } }
-        info_queue[#info_queue + 1] = { key = "gemslot_emerald", set = "Other", vars = {} }
+        info_queue[#info_queue + 1] = { key = "gemslot_emerald", set = "Other", vars = { G.GAME.probabilities.normal or 1, SMODS.Stickers["gemslot_emerald"].config.odds } }
         info_queue[#info_queue + 1] = { key = "gemslot_jade", set = "Other", vars = {} }
         info_queue[#info_queue + 1] = { key = "gemslot_amber", set = "Other", vars = { G.GAME.probabilities.normal or 1, SMODS.Stickers["gemslot_amber"].config.level_up_odds } }
         return { vars = { self.config.max_highlighted } }
@@ -46,15 +46,8 @@ SMODS.Consumable{
 
     use = function(self, card, area, copier) 
         for i = 1, self.config.max_highlighted do
-            local options = {
-                "diamond",
-                "turquoise",
-                "emerald",
-                "jade",
-                "amber"
-            }
-
-            local rand_slot = "gemslot_"..randomSelect(options)
+            local options = { "diamond", "turquoise", "emerald", "jade", "amber" }
+            local rand_slot = "gemslot_"..pseudorandom_element(options, pseudoseed('spectral_shine'))
             local _c = G.hand.highlighted[i]
             
             G.E_MANAGER:add_event(Event({
