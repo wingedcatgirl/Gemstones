@@ -7,40 +7,45 @@ function can_use_gemstone_consumeable(self, card)
 end
 
 -- Use and consume a Gemstone
-function use_gemstone_consumeable(self, card, area, copier, is_gemstone)
+function use_gemstone_consumeable(self, card, area, copier, is_gemstone, type)
+	type = type or "cards,jokers"
     if is_gemstone == true then G.GAME.last_used_gemstone = self.key or card.key end
 
-    for i = 1, #G.hand.highlighted do
-        local highlighted = G.hand.highlighted[i]
-        G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 0.4,
-            func = function()
-                set_gemslot(highlighted, self.config.sticker_id)
-                highlighted:juice_up(0.5, 0.5)
-    
-                card:juice_up(0.5, 0.5)
-                play_sound('gold_seal', 1.2, 0.4)
-                return true
-            end
-        }))
-    end
+    if type:find("cards") then
+		for i = 1, #G.hand.highlighted do
+			local highlighted = G.hand.highlighted[i]
+			G.E_MANAGER:add_event(Event({
+				trigger = 'after',
+				delay = 0.4,
+				func = function()
+					set_gemslot(highlighted, self.config.sticker_id)
+					highlighted:juice_up(0.5, 0.5)
+		
+					card:juice_up(0.5, 0.5)
+					play_sound('gold_seal', 1.2, 0.4)
+					return true
+				end
+			}))
+		end
+	end
 
-    for i = 1, #G.jokers.highlighted do
-        local highlighted = G.jokers.highlighted[i]
-        G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 0.4,
-            func = function()
-                set_gemslot(highlighted, self.config.sticker_id)
-                highlighted:juice_up(0.5, 0.5)
-    
-                card:juice_up(0.5, 0.5)
-                play_sound('gold_seal', 1.2, 0.4)
-                return true
-            end
-        }))
-    end
+    if type:find("jokers") then
+		for i = 1, #G.jokers.highlighted do
+			local highlighted = G.jokers.highlighted[i]
+			G.E_MANAGER:add_event(Event({
+				trigger = 'after',
+				delay = 0.4,
+				func = function()
+					set_gemslot(highlighted, self.config.sticker_id)
+					highlighted:juice_up(0.5, 0.5)
+		
+					card:juice_up(0.5, 0.5)
+					play_sound('gold_seal', 1.2, 0.4)
+					return true
+				end
+			}))
+		end
+	end
 
     delay(0.6)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2, func = function() G.hand:unhighlight_all(); G.jokers:unhighlight_all(); return true end }))

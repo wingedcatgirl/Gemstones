@@ -52,7 +52,7 @@ SMODS.Consumable{
     end,
 
     can_use = function(self, card) return can_use_gemstone_consumeable(self, card) end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards,jokers") end,
 }
 
 -- Pearl Gemstone
@@ -84,7 +84,7 @@ SMODS.Consumable{
         and
         get_gemslot(G.hand.highlighted[1]) ~= nil 
     end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards") end,
 }
 
 -- Topaz Gemstone
@@ -117,7 +117,7 @@ SMODS.Consumable{
         and
         get_gemslot(G.hand.highlighted[1]) ~= nil 
     end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards") end,
 }
 
 -- Amber Gemstone
@@ -145,7 +145,7 @@ SMODS.Consumable{
     end,
 
     can_use = function(self, card) return can_use_gemstone_consumeable(self, card) end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards,jokers") end,
 }
 
 -- Opal Gemstone
@@ -178,7 +178,7 @@ SMODS.Consumable{
         and
         get_gemslot(G.hand.highlighted[1]) ~= nil 
     end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards") end,
 }
 
 -- Diamond Gemstone
@@ -211,7 +211,7 @@ SMODS.Consumable{
         and
         get_gemslot(G.hand.highlighted[1]) ~= nil 
     end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards") end,
 }
 
 -- Amethyst Gemstone
@@ -244,7 +244,7 @@ SMODS.Consumable{
         and
         get_gemslot(G.hand.highlighted[1]) ~= nil 
     end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards") end,
 }
 
 -- Aquamarine Gemstone
@@ -272,7 +272,7 @@ SMODS.Consumable{
     end,
 
     can_use = function(self, card) return can_use_gemstone_consumeable(self, card) end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards,jokers") end,
 }
 
 -- Jade Gemstone
@@ -304,7 +304,7 @@ SMODS.Consumable{
         and
         get_gemslot(G.hand.highlighted[1]) ~= nil 
     end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards") end,
 }
 
 -- Quartz Gemstone
@@ -337,7 +337,7 @@ SMODS.Consumable{
         and
         get_gemslot(G.hand.highlighted[1]) ~= nil 
     end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards") end,
 }
 
 -- Emerald Gemstone
@@ -370,7 +370,7 @@ SMODS.Consumable{
         and
         get_gemslot(G.hand.highlighted[1]) ~= nil 
     end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards") end,
 }
 
 -- Turquoise Gemstone
@@ -403,7 +403,7 @@ SMODS.Consumable{
         and
         get_gemslot(G.hand.highlighted[1]) ~= nil 
     end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards") end,
 }
 
 -- Epidote Gemstone
@@ -436,7 +436,7 @@ SMODS.Consumable{
         and
         get_gemslot(G.jokers.highlighted[1]) ~= nil 
     end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "jokers") end,
 }
 
 -- Adamite Gemstone
@@ -470,5 +470,5 @@ SMODS.Consumable{
         and
         get_gemslot(G.jokers.highlighted[1]) ~= nil 
     end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "jokers") end,
 }
