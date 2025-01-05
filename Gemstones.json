@@ -6,10 +6,10 @@
 	"description": "Adds Gemstones, which can be applied to cards and Jokers to give unique effects.",
 	"prefix": "gems",
 	"main_file": "Gemstones.lua",
-	"priority": 36,
+	"priority": -1,
 	"badge_colour": "eb3452",
 	"badge_text_colour": "FFFFFF",
-	"version": "0.6.1",
+	"version": "0.7.0",
 	"dependencies": [
 		"Steamodded (>=1.0.0~ALPHA-1217b)",
 		"Lovely (>=0.6)",

@@ -6,7 +6,7 @@ Gemstones_Config = Gemstones.config
 SMODS.UndiscoveredSprite{
     key = 'Gemstone',
     atlas = 'gems',
-    pos = {x = 5, y = 2},
+    pos = { x = 9, y = 4 },
 }
 
 -- Mod Icon

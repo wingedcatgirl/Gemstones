@@ -1,9 +1,6 @@
 -- Check to see if a Gemstone Consumable can be used
 function can_use_gemstone_consumeable(self, card)
-    return 
-    (#G.jokers.highlighted + #G.hand.highlighted) == self.config.max_highlighted or 1
-    and
-    (get_gemslot(G.jokers.highlighted[1]) or get_gemslot(G.hand.highlighted[1])) ~= nil
+    return (#G.jokers.highlighted + #G.hand.highlighted) == (self.config.max_highlighted or 1) and ((get_gemslot(G.jokers.highlighted[1]) ~= nil or get_gemslot(G.hand.highlighted[1])) ~= nil)
 end
 
 -- Use and consume a Gemstone
@@ -77,6 +74,8 @@ function get_gemslot(card)
     end
 end
 
+--- HOOKS ---
+
 -- Apply Crystal Deck to run
 local Backapply_to_runRef = Back.apply_to_run
 function Back.apply_to_run(self)
@@ -134,6 +133,75 @@ function loc_colour(_c, _default)
 	end
 	return lc(_c, _default)
 end
+
+-- Card debuff for Sapphire
+local Cardset_debufff = Card.set_debuff
+function Card:set_debuff(should_debuff)
+	if self.ability.gemslot_sapphire then
+		self.debuff = false
+		return
+	else
+		Cardset_debufff(self, should_debuff)
+	end
+end
+
+-- Override Talisman function
+function Card:get_chip_x_bonus()
+    if self.debuff then return 0 end
+    if self.ability.set == 'Joker' then return 0 end
+    if ((self.ability.x_chips or 0) + (self.ability.perma_x_chips or 0)) <= 1 then return 0 end
+    return self.ability.x_chips + (self.ability.perma_x_chips or 0)
+end
+
+-- Card suit for Sapphire
+local Cardis_suit = Card.is_suit
+function Card:is_suit(suit, bypass_debuff, flush_calc)
+	if flush_calc then
+		if self.ability.gemslot_sapphire and not self.debuff then
+			return true
+		end
+		return Cardis_suit(self, suit, bypass_debuff, flush_calc)
+	else
+		if self.debuff and not bypass_debuff then return end
+		if self.ability.gemslot_sapphire then
+			return true
+		end
+		return Cardis_suit(self, suit, bypass_debuff, flush_calc)
+	end
+end
+
+-- Spawn same rarity Joker for Obsidian
+local Cardremove = Card.remove
+function Card:remove()
+	if G.STAGE == G.STAGES.RUN and self.ability.gemslot_obsidian then
+		local legendary = self.config.center.rarity == 4
+		local rarity
+
+		if self.config.center.rarity == 1 then
+			rarity = 0.5
+		elseif self.config.center.rarity == 2 then
+			rarity = 0.8
+		elseif self.config.center.rarity == 3 then
+			rarity = 0.995
+		elseif self.config.center.rarity == 4 then
+			rarity = 1
+		else
+			rarity = self.config.center.rarity
+		end
+
+		local new_card = SMODS.create_card({
+			set = 'Joker',
+			area = G.jokers,
+			rarity = rarity,
+			legendary = legendary
+		})
+		G.jokers:emplace(new_card)
+		new_card:add_to_deck()
+	end
+	return Cardremove(self)
+end
+
+--- GLOBAL FUNCS ---
 
 -- Levels currently played hand
 function level_current_hand(card, amount)

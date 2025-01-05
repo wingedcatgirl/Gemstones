@@ -4,7 +4,7 @@ SMODS.Atlas{
     path = "boosters.png",
     px = 71,
     py = 95
-}:register()
+}
 
 -- Booster Pack 1
 SMODS.Booster{

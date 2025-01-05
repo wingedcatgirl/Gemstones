@@ -44,3 +44,34 @@ SMODS.Challenge{
     consumeables = {},
     vouchers = {},
 }
+
+-- Only Flushes
+--SMODS.Challenge{
+--    key = "only_flushes",
+--    order = 2,
+--    rules = {
+--        custom = {
+--            { id = "gems_lock_slot_sapphire" }
+--        },
+--        modifiers = {}
+--    },
+--    restrictions = {
+--		banned_cards = {
+--            { id = "c_gems_infusion" },
+--            { id = 'p_gems_gemstone_normal_1', ids = {
+--                'p_gems_gemstone_normal_1','p_gems_gemstone_normal_2','p_gems_gemstone_jumbo_1','p_gems_gemstone_mega_1',
+--            }},
+--        },
+--        banned_tags = {
+--            { id = "tag_gems_gemstone" },
+--        },
+--		banned_other = {
+--            { id = 'bl_gems_rock', type = 'blind' },
+--            { id = 'bl_gems_hammer', type = 'blind' },
+--        },
+--    },
+--    deck = { type = "Challenge Deck" },
+--    jokers = {},
+--    consumeables = {},
+--    vouchers = {},
+--}

@@ -4,7 +4,7 @@ SMODS.Atlas{
     path = "gemstones.png",
     px = 71,
     py = 95
-}:register()
+}
 
 -- Gemstone Consumable Type
 SMODS.ConsumableType{
@@ -42,7 +42,7 @@ SMODS.Consumable{
     order = 1,
     config = {
         max_highlighted = 1,
-        x_mult = 1.2,
+        x_mult = 1.25,
         sticker_id = "gemslot_ruby"
     },
 
@@ -51,8 +51,13 @@ SMODS.Consumable{
         return { vars = { self.config.max_highlighted } }
     end,
 
-    can_use = function(self, card) return can_use_gemstone_consumeable(self, card) end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards,jokers") end,
+    can_use = function(self, card) 
+        return 
+        #G.hand.highlighted == self.config.max_highlighted
+        and
+        get_gemslot(G.hand.highlighted[1]) ~= nil 
+    end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards") end,
 }
 
 -- Pearl Gemstone
@@ -111,13 +116,8 @@ SMODS.Consumable{
         return { vars = { self.config.max_highlighted } }
     end,
 
-    can_use = function(self, card) 
-        return 
-        #G.hand.highlighted == self.config.max_highlighted
-        and
-        get_gemslot(G.hand.highlighted[1]) ~= nil 
-    end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards") end,
+    can_use = function(self, card) return can_use_gemstone_consumeable(self, card) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards,jokers") end,
 }
 
 -- Amber Gemstone
@@ -262,7 +262,7 @@ SMODS.Consumable{
     order = 8,
     config = {
         max_highlighted = 1,
-        x_chips = 2,
+        x_chips = 1.75,
         sticker_id = "gemslot_aquamarine"
     },
 
@@ -271,8 +271,13 @@ SMODS.Consumable{
         return { vars = { self.config.max_highlighted } }
     end,
 
-    can_use = function(self, card) return can_use_gemstone_consumeable(self, card) end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards,jokers") end,
+    can_use = function(self, card) 
+        return 
+        #G.hand.highlighted == self.config.max_highlighted
+        and
+        get_gemslot(G.hand.highlighted[1]) ~= nil 
+    end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards") end,
 }
 
 -- Jade Gemstone
@@ -471,4 +476,92 @@ SMODS.Consumable{
         get_gemslot(G.jokers.highlighted[1]) ~= nil 
     end,
     use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "jokers") end,
+}
+
+-- Obsidian Gemstone
+SMODS.Consumable{
+    object_type = "Consumable",
+    set = "Gemstone",
+    name = "gem-Obsidian",
+    key = "obsidian",
+    atlas = "gems",
+    pos = { x = 4, y = 2 },
+    soul_pos = { x = 4, y = 3 },
+    cost = 3,
+    should_apply = false,
+    disovered = true,
+    order = 15,
+    config = {
+        max_highlighted = 1,
+        sticker_id = "gemslot_obsidian"
+    },
+
+    loc_vars = function(self, info_queue)
+        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = {} }
+        return { vars = { self.config.max_highlighted } }
+    end,
+
+    can_use = function(self, card) 
+        return 
+        #G.jokers.highlighted == self.config.max_highlighted
+        and
+        get_gemslot(G.jokers.highlighted[1]) ~= nil 
+    end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "jokers") end,
+}
+
+-- Sapphire Gemstone
+SMODS.Consumable{
+    object_type = "Consumable",
+    set = "Gemstone",
+    name = "gem-Sapphire",
+    key = "sapphire",
+    atlas = "gems",
+    pos = { x = 5, y = 2 },
+    soul_pos = { x = 5, y = 3 },
+    cost = 3,
+    should_apply = false,
+    disovered = true,
+    order = 16,
+    config = {
+        max_highlighted = 1,
+        sticker_id = "gemslot_sapphire"
+    },
+
+    loc_vars = function(self, info_queue)
+        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = {} }
+        return { vars = { self.config.max_highlighted } }
+    end,
+
+    can_use = function(self, card) return can_use_gemstone_consumeable(self, card) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards,jokers") end,
+}
+
+-- Aventurine Gemstone
+SMODS.Consumable{
+    object_type = "Consumable",
+    set = "Gemstone",
+    name = "gem-Aventurine",
+    key = "aventurine",
+    atlas = "gems",
+    pos = { x = 6, y = 2 },
+    soul_pos = { x = 6, y = 3 },
+    cost = 3,
+    should_apply = false,
+    disovered = true,
+    order = 17,
+    config = {
+        max_highlighted = 1,
+        x_mult = 1.75,
+        cash = 4,
+        sticker_id = "gemslot_aventurine"
+    },
+
+    loc_vars = function(self, info_queue)
+        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = { self.config.x_mult, self.config.cash } }
+        return { vars = { self.config.max_highlighted } }
+    end,
+
+    can_use = function(self, card) return can_use_gemstone_consumeable(self, card) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards") end,
 }

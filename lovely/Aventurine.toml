@@ -1,0 +1,13 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+# Prevent flipping
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "if card.facing == 'back' and self.config.type ~= 'discard' and self.config.type ~= 'deck' and not stay_flipped then"
+position = "at"
+payload = "if card.facing == 'back' and self.config.type ~= 'discard' and self.config.type ~= 'deck' and not stay_flipped and not card.ability.gemslot_aventurine then"
+match_indent = true

@@ -4,7 +4,7 @@ SMODS.Atlas{
     path = "tarots.png",
     px = 71,
     py = 95
-}:register()
+}
 
 -- Infusion Tarot
 SMODS.Consumable{

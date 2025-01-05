@@ -4,7 +4,7 @@ SMODS.Atlas{
     path = "stickers.png",
     px = 71,
     py = 95
-}:register()
+}
 
 -- Empty Gem Slot
 SMODS.Sticker{
@@ -36,7 +36,7 @@ SMODS.Sticker{
     rate = 0.0,
     atlas = "slot",
     pos = { x = 1, y = 0 },
-    config = { x_mult = 1.2 },
+    config = { x_mult = 1.25 },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { self.config.x_mult } }
@@ -46,11 +46,11 @@ SMODS.Sticker{
 		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
 	end,
     added = function(self, card)
-        card.ability.x_mult = card.ability.x_mult + (self.config.x_mult - 1)
+        card.ability.perma_x_mult = card.ability.perma_x_mult + (self.config.x_mult - 1)
     end,
     removed = function(self, card)
-        card.ability.x_mult = card.ability.x_mult - (self.config.x_mult - 1)
-    end
+        card.ability.perma_x_mult = card.ability.perma_x_mult - (self.config.x_mult - 1)
+    end,
 }
 
 -- Pearl Gem Slot
@@ -85,17 +85,23 @@ SMODS.Sticker{
     config = { dollars = 2 },
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { self.config.x_mult } }
+        return { vars = { self.config.dollars } }
     end,
 	draw = function(self, card) --don't draw shine
 		G.shared_stickers[self.key].role.draw_major = card
 		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
 	end,
     added = function(self, card)
-        card.ability.p_dollars = card.ability.p_dollars + self.config.dollars
+        if card.area ~= G.jokers then card.ability.p_dollars = card.ability.p_dollars + self.config.dollars end
     end,
     removed = function(self, card)
-        card.ability.p_dollars = card.ability.p_dollars - self.config.dollars
+        if card.area ~= G.jokers then card.ability.p_dollars = card.ability.p_dollars - self.config.dollars end
+    end,
+    calculate = function(self, card, context)
+        if context.end_of_round then
+            ease_dollars(self.config.dollars)
+            card_eval_status_text(card, 'jokers', nil, nil, nil, {message = "$"..self.config.dollars, colour = G.C.GOLD})
+        end
     end
 }
 
@@ -200,10 +206,10 @@ SMODS.Sticker{
 		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
 	end,
     added = function(self, card)
-        card.ability.h_x_mult = card.ability.h_x_mult + self.config.h_x_mult
+        card.ability.perma_h_x_mult = card.ability.perma_h_x_mult + self.config.h_x_mult
     end,
     removed = function(self, card)
-        card.ability.h_x_mult = card.ability.h_x_mult - self.config.h_x_mult
+        card.ability.perma_h_x_mult = card.ability.perma_h_x_mult - self.config.h_x_mult
     end
 }
 
@@ -215,7 +221,7 @@ SMODS.Sticker{
     rate = 0.0,
     atlas = "slot",
     pos = { x = 3, y = 1 },
-    config = { x_chips = 2 },
+    config = { x_chips = 1.75 },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { self.config.x_chips } }
@@ -225,19 +231,10 @@ SMODS.Sticker{
 		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
 	end,
     added = function(self, card)
-        card.ability.x_chips = card.ability.x_chips + self.config.x_chips
+        card.ability.perma_x_chips = card.ability.perma_x_chips + self.config.x_chips
     end,
     removed = function(self, card)
-        card.ability.x_chips = card.ability.x_chips - self.config.x_chips
-    end,
-    calculate = function(self, card, context)
-        if context.cardarea == G.jokers and not context.before and not context.after then
-            return {
-                message = localize{type='variable',key='a_xchips',vars={card.ability.x_chips}},
-                Xchip_mod = card.ability.x_chips,
-                colour = G.C.CHIPS
-            }
-        end
+        card.ability.perma_x_chips = card.ability.perma_x_chips - self.config.x_chips
     end
 }
 
@@ -445,4 +442,84 @@ SMODS.Sticker{
             end
 		end
     end
-}   
+}
+
+-- Obsidian Gem Slot
+SMODS.Sticker{
+    key = "gemslot_obsidian",
+    badge_colour = HEX("303a3b"),
+    prefix_config = { key = false },
+    rate = 0.0,
+    atlas = "slot",
+    pos = { x = 0, y = 3 },
+    config = {},
+
+    loc_vars = function(self, info_queue, card)
+        return {}
+    end,
+	draw = function(self, card) --don't draw shine
+		G.shared_stickers[self.key].role.draw_major = card
+		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
+	end,
+    added = function(self, card) end,
+    removed = function(self, card) end,
+}
+
+-- Sapphire Gem Slot
+SMODS.Sticker{
+    key = "gemslot_sapphire",
+    badge_colour = HEX("425fa6"),
+    prefix_config = { key = false },
+    rate = 0.0,
+    atlas = "slot",
+    pos = { x = 1, y = 3 },
+    config = {},
+
+    loc_vars = function(self, info_queue, card)
+        return {}
+    end,
+	draw = function(self, card) --don't draw shine
+		G.shared_stickers[self.key].role.draw_major = card
+		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
+	end,
+    added = function(self, card)
+        card:set_debuff()
+    end,
+    removed = function(self, card) end,
+}
+
+-- Aventurine Gem Slot
+SMODS.Sticker{
+    key = "gemslot_aventurine",
+    badge_colour = HEX("299a74"),
+    prefix_config = { key = false },
+    rate = 0.0,
+    atlas = "slot",
+    pos = { x = 2, y = 3 },
+    config = {
+        x_mult = 1.75,
+        dollars = 4
+    },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { self.config.x_mult, self.config.dollars } }
+    end,
+	draw = function(self, card) --don't draw shine
+		G.shared_stickers[self.key].role.draw_major = card
+		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
+	end,
+    added = function(self, card)
+        card.ability.perma_x_mult = card.ability.perma_x_mult + (self.config.x_mult - 1)
+        card:flip('back')
+    end,
+    removed = function(self, card)
+        card.ability.perma_x_mult = card.ability.perma_x_mult - (self.config.x_mult - 1)
+        card:flip('front')
+    end,
+    calculate = function(self, card, context)
+        if context.discard then
+            ease_dollars(self.config.dollars)
+            card_eval_status_text(card, 'jokers', nil, nil, nil, {message = "$"..self.config.dollars, colour = G.C.GOLD})
+        end
+    end
+}
