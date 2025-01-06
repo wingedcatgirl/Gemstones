@@ -46,11 +46,21 @@ SMODS.Sticker{
 		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
 	end,
     added = function(self, card)
-        card.ability.perma_x_mult = card.ability.perma_x_mult + (self.config.x_mult - 1)
+        if card.area ~= G.jokers then card.ability.perma_x_mult = card.ability.perma_x_mult + (self.config.x_mult - 1) end
     end,
     removed = function(self, card)
-        card.ability.perma_x_mult = card.ability.perma_x_mult - (self.config.x_mult - 1)
+        if card.area ~= G.jokers then card.ability.perma_x_mult = card.ability.perma_x_mult - (self.config.x_mult - 1) end
     end,
+    calculate = function(self, card, context)
+        if card.area == G.jokers then
+            if context.joker_main and not context.before and not context.after then
+                SMODS.eval_this(card, {
+                    message = localize{type='variable',key='a_xmult',vars={self.config.x_mult},colour = G.C.MULT},
+                    Xmult_mod = self.config.x_mult
+                })
+            end
+        end
+    end
 }
 
 -- Pearl Gem Slot
@@ -231,10 +241,20 @@ SMODS.Sticker{
 		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
 	end,
     added = function(self, card)
-        card.ability.perma_x_chips = card.ability.perma_x_chips + self.config.x_chips
+        if card.area ~= G.jokers then card.ability.perma_x_chips = card.ability.perma_x_chips + self.config.x_chips end
     end,
     removed = function(self, card)
-        card.ability.perma_x_chips = card.ability.perma_x_chips - self.config.x_chips
+        if card.area ~= G.jokers then card.ability.perma_x_chips = card.ability.perma_x_chips - self.config.x_chips end
+    end,
+    calculate = function(self, card, context)
+        if card.area == G.jokers then
+            if context.joker_main and not context.before and not context.after then
+                SMODS.eval_this(card, {
+                    message = localize{type='variable',key='a_xchips',vars={self.config.x_chips},colour = G.C.CHIPS},
+                    Xchip_mod = self.config.x_chips
+                })
+            end
+        end
     end
 }
 

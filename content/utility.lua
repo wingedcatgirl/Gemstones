@@ -201,6 +201,20 @@ function Card:remove()
 	return Cardremove(self)
 end
 
+-- Extend SMODS.eval_this
+local SMODSeval_this = SMODS.eval_this
+function SMODS.eval_this(_card, effects)
+	SMODSeval_this(_card, effects)
+
+	if effects then
+		local extras = { mult = false, hand_chips = false }
+		if effects.Xchip_mod then
+            hand_chips = mod_chips(hand_chips * effects.Xchip_mod); extras.hand_chips = true
+        end
+		update_hand_text({ delay = 0 }, { chips = extras.hand_chips and hand_chips, mult = extras.mult and mult })
+	end
+end
+
 --- GLOBAL FUNCS ---
 
 -- Levels currently played hand

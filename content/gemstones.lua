@@ -51,13 +51,8 @@ SMODS.Consumable{
         return { vars = { self.config.max_highlighted } }
     end,
 
-    can_use = function(self, card) 
-        return 
-        #G.hand.highlighted == self.config.max_highlighted
-        and
-        get_gemslot(G.hand.highlighted[1]) ~= nil 
-    end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards") end,
+    can_use = function(self, card) return can_use_gemstone_consumeable(self, card) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards,jokers") end,
 }
 
 -- Pearl Gemstone
@@ -271,13 +266,8 @@ SMODS.Consumable{
         return { vars = { self.config.max_highlighted } }
     end,
 
-    can_use = function(self, card) 
-        return 
-        #G.hand.highlighted == self.config.max_highlighted
-        and
-        get_gemslot(G.hand.highlighted[1]) ~= nil 
-    end,
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards") end,
+    can_use = function(self, card) return can_use_gemstone_consumeable(self, card) end,
+    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier, true, "cards,jokers") end,
 }
 
 -- Jade Gemstone

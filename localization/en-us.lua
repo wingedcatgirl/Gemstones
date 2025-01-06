@@ -31,7 +31,8 @@ return {
                 name = "Ruby",
                 text = {
                     "Attach a {C:ruby}Ruby",
-                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected",
+                    "{C:attention}card{} or {C:attention}Joker{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
             },
@@ -89,7 +90,8 @@ return {
                 name = "Aquamarine",
                 text = {
                     "Attach an {C:aquamarine}Aquamarine",
-                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected",
+                    "{C:attention}card{} or {C:attention}Joker{}",
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
             },
