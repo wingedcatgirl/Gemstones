@@ -53,10 +53,10 @@ SMODS.Tag{
     end,
     apply = function(self, tag, context)
         if context.type == "store_joker_modify" then
-            if context.card.ability.set == 'Joker' and not get_gemslot(context.card) and not context.card.temp_slot then
+            if context.card.ability.set == 'Joker' and not Gemstones.get_gemslot(context.card) and not context.card.temp_slot then
                 context.card.temp_slot = true
                 tag:yep('+', G.C.DARK_EDITION,function() 
-                    set_gemslot(context.card, tag.ability.slot_applied)
+                    Gemstones.set_gemslot(context.card, tag.ability.slot_applied)
                     context.card.ability.couponed = true
                     context.card:set_cost()
                     context.card.temp_slot = nil

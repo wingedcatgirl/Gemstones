@@ -63,7 +63,7 @@ match_indent = true
 target = "game.lua"
 pattern = "if v.pinned then _joker.pinned = true end"
 position = "after"
-payload = "if v.gemslot then set_gemslot(_joker, v.gemslot) end"
+payload = "if v.gemslot then Gemstones.set_gemslot(_joker, v.gemslot) end"
 match_indent = true 
 
 [[patches]]
@@ -71,7 +71,7 @@ match_indent = true
 target = "functions/UI_definitions.lua"
 pattern = "if v.pinned then card.pinned = true end"
 position = "after"
-payload = "if v.gemslot then set_gemslot(card, v.gemslot) end"
+payload = "if v.gemslot then Gemstones.set_gemslot(card, v.gemslot) end"
 match_indent = true
 
 # No shop planets

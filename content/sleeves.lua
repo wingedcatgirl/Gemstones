@@ -32,7 +32,7 @@ if CardSleeves then
                 G.E_MANAGER:add_event(Event({
                     func = function()
                         for i = #G.playing_cards, 1, -1 do
-                            set_gemslot(G.playing_cards[i], "gemslot_empty")
+                            Gemstones.set_gemslot(G.playing_cards[i], "gemslot_empty")
                         end
         
                         return true
@@ -43,7 +43,7 @@ if CardSleeves then
         trigger_effect = function(self, args)
             if self.get_current_deck_key() == "b_gems_crystal" then
                 if args.context.create_card and args.context.card.base.id then
-                    set_gemslot(args.context.card, "gemslot_empty")
+                    Gemstones.set_gemslot(args.context.card, "gemslot_empty")
                 end
             end
         end

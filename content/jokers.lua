@@ -153,8 +153,8 @@ SMODS.Joker{
 
         elseif context.before and G.GAME.current_round.hands_played == 0 and not context.blueprint then
             local _card = context.full_hand[1]
-            if not get_gemslot(_card) then
-                set_gemslot(_card, "gemslot_empty")
+            if not Gemstones.get_gemslot(_card) then
+                Gemstones.set_gemslot(_card, "gemslot_empty")
                 
                 _card:juice_up(0.5, 0.5)
                 play_sound('gold_seal', 1.2, 0.4)

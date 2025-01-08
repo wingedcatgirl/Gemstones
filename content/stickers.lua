@@ -7,44 +7,30 @@ SMODS.Atlas{
 }
 
 -- Empty Gem Slot
-SMODS.Sticker{
+Gemstones.GemSlot{
     key = "gemslot_empty",
     badge_colour = HEX("734226"),
-    prefix_config = { key = false },
-    rate = 0.0,
     order = 1,
     atlas = "slot",
     pos = { x = 0, y = 0 },
     config = {},
-
-    loc_vars = function(self, info_queue, card)
-        return {}
-    end,
-	draw = function(self, card) --don't draw shine
-		G.shared_stickers[self.key].role.draw_major = card
-		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
-	end,
-    added = function(self, card) end,
-    removed = function(self, card) end,
+    joker_compat = true,
+    card_compat = true
 }
 
 -- Ruby Gem Slot
-SMODS.Sticker{
+Gemstones.GemSlot{
     key = "gemslot_ruby",
     badge_colour = HEX("e3394f"),
-    prefix_config = { key = false },
-    rate = 0.0,
     atlas = "slot",
     pos = { x = 1, y = 0 },
     config = { x_mult = 1.25 },
+    joker_compat = true,
+    card_compat = true,
 
     loc_vars = function(self, info_queue, card)
         return { vars = { self.config.x_mult } }
     end,
-	draw = function(self, card) --don't draw shine
-		G.shared_stickers[self.key].role.draw_major = card
-		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
-	end,
     added = function(self, card)
         if card.area ~= G.jokers then card.ability.perma_x_mult = card.ability.perma_x_mult + (self.config.x_mult - 1) end
     end,
@@ -64,43 +50,29 @@ SMODS.Sticker{
 }
 
 -- Pearl Gem Slot
-SMODS.Sticker{
+Gemstones.GemSlot{
     key = "gemslot_pearl",
     badge_colour = HEX("34d2eb"),
-    prefix_config = { key = false },
-    rate = 0.0,
     atlas = "slot",
     pos = { x = 2, y = 0 },
     config = {},
-
-    loc_vars = function(self, info_queue, card)
-        return {}
-    end,
-	draw = function(self, card) --don't draw shine
-		G.shared_stickers[self.key].role.draw_major = card
-		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
-	end,
-    added = function(self, card) end,
-    removed = function(self, card) end,
+    joker_compat = false,
+    card_compat = true,
 }
 
 -- Topaz Gem Slot
-SMODS.Sticker{
+Gemstones.GemSlot{
     key = "gemslot_topaz",
     badge_colour = HEX("e6af19"),
-    prefix_config = { key = false },
-    rate = 0.0,
     atlas = "slot",
     pos = { x = 3, y = 0 },
     config = { dollars = 2 },
+    joker_compat = true,
+    card_compat = true,
 
     loc_vars = function(self, info_queue, card)
         return { vars = { self.config.dollars } }
     end,
-	draw = function(self, card) --don't draw shine
-		G.shared_stickers[self.key].role.draw_major = card
-		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
-	end,
     added = function(self, card)
         if card.area ~= G.jokers then card.ability.p_dollars = card.ability.p_dollars + self.config.dollars end
     end,
@@ -116,24 +88,18 @@ SMODS.Sticker{
 }
 
 -- Amber Gem Slot
-SMODS.Sticker{
+Gemstones.GemSlot{
     key = "gemslot_amber",
     badge_colour = HEX("ff9524"),
-    prefix_config = { key = false },
-    rate = 0.0,
     atlas = "slot",
     pos = { x = 4, y = 0 },
     config = { level_up_odds = 3 },
+    joker_compat = true,
+    card_compat = true,
 
     loc_vars = function(self, info_queue, card)
         return { vars = { G.GAME.probabilities.normal or 1, self.config.level_up_odds } }
     end,
-	draw = function(self, card) --don't draw shine
-		G.shared_stickers[self.key].role.draw_major = card
-		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
-	end,
-    added = function(self, card) end,
-    removed = function(self, card) end,
     calculate = function(self, card, context)
         if context.cardarea == G.play and context.from_playing_card and not context.repetition then
             if pseudorandom(pseudoseed("amber_slot")) < G.GAME.probabilities.normal / self.config.level_up_odds then
@@ -148,45 +114,29 @@ SMODS.Sticker{
 }
 
 -- Opal Gem Slot
-SMODS.Sticker{
+Gemstones.GemSlot{
     key = "gemslot_opal",
     badge_colour = HEX("bfeeb0"),
-    prefix_config = { key = false },
-    rate = 0.0,
     atlas = "slot",
     pos = { x = 0, y = 1 },
     config = {},
-
-    loc_vars = function(self, info_queue, card)
-        return { vars = {} }
-    end,
-	draw = function(self, card) --don't draw shine
-		G.shared_stickers[self.key].role.draw_major = card
-		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
-	end,
-    added = function(self, card) end,
-    removed = function(self, card) end,
+    joker_compat = false,
+    card_compat = true,
 }
 
 -- Diamond Gem Slot
-SMODS.Sticker{
+Gemstones.GemSlot{
     key = "gemslot_diamond",
     badge_colour = HEX("abd8ff"),
-    prefix_config = { key = false },
-    rate = 0.0,
     atlas = "slot",
     pos = { x = 1, y = 1 },
     config = { retriggers = 1 },
+    joker_compat = false,
+    card_compat = true,
 
     loc_vars = function(self, info_queue, card)
         return { vars = { self.config.retriggers } }
     end,
-	draw = function(self, card) --don't draw shine
-		G.shared_stickers[self.key].role.draw_major = card
-		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
-	end,
-    added = function(self, card) end,
-    removed = function(self, card) end,
     calculate = function(self, card, context)
         if context.repetition then
             return {
@@ -199,22 +149,18 @@ SMODS.Sticker{
 }
 
 -- Amethyst Gem Slot
-SMODS.Sticker{
+Gemstones.GemSlot{
     key = "gemslot_amethyst",
     badge_colour = HEX("c41ed6"),
-    prefix_config = { key = false },
-    rate = 0.0,
     atlas = "slot",
     pos = { x = 2, y = 1 },
     config = { h_x_mult = 1.35 },
+    joker_compat = false,
+    card_compat = true,
 
     loc_vars = function(self, info_queue, card)
         return { vars = { self.config.h_x_mult } }
     end,
-	draw = function(self, card) --don't draw shine
-		G.shared_stickers[self.key].role.draw_major = card
-		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
-	end,
     added = function(self, card)
         card.ability.perma_h_x_mult = card.ability.perma_h_x_mult + self.config.h_x_mult
     end,
@@ -224,22 +170,18 @@ SMODS.Sticker{
 }
 
 -- Aquamarine Gem Slot
-SMODS.Sticker{
+Gemstones.GemSlot{
     key = "gemslot_aquamarine",
     badge_colour = HEX("80b8c7"),
-    prefix_config = { key = false },
-    rate = 0.0,
     atlas = "slot",
     pos = { x = 3, y = 1 },
     config = { x_chips = 1.75 },
+    joker_compat = true,
+    card_compat = true,
 
     loc_vars = function(self, info_queue, card)
         return { vars = { self.config.x_chips } }
     end,
-	draw = function(self, card) --don't draw shine
-		G.shared_stickers[self.key].role.draw_major = card
-		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
-	end,
     added = function(self, card)
         if card.area ~= G.jokers then card.ability.perma_x_chips = card.ability.perma_x_chips + self.config.x_chips end
     end,
@@ -259,45 +201,29 @@ SMODS.Sticker{
 }
 
 -- Jade Gem Slot
-SMODS.Sticker{
+Gemstones.GemSlot{
     key = "gemslot_jade",
     badge_colour = HEX("0db813"),
-    prefix_config = { key = false },
-    rate = 0.0,
     atlas = "slot",
     pos = { x = 4, y = 1 },
     config = {},
-
-    loc_vars = function(self, info_queue, card)
-        return {}
-    end,
-	draw = function(self, card) --don't draw shine
-		G.shared_stickers[self.key].role.draw_major = card
-		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
-	end,
-    added = function(self, card) end,
-    removed = function(self, card) end,
+    joker_compat = false,
+    card_compat = true,
 }
 
 -- Quartz Gem Slot
-SMODS.Sticker{
+Gemstones.GemSlot{
     key = "gemslot_quartz",
     badge_colour = HEX("fff3d1"),
-    prefix_config = { key = false },
-    rate = 0.0,
     atlas = "slot",
     pos = { x = 0, y = 2 },
     config = { bonus_chips = 10 },
+    joker_compat = false,
+    card_compat = true,
 
     loc_vars = function(self, info_queue, card)
         return { vars = { self.config.bonus_chips } }
     end,
-	draw = function(self, card) --don't draw shine
-		G.shared_stickers[self.key].role.draw_major = card
-		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
-	end,
-    added = function(self, card) end,
-    removed = function(self, card) end,
     calculate = function(self, card, context)
         if context.cardarea == G.play and context.from_playing_card and not context.repetition then
             card.ability.perma_bonus = card.ability.perma_bonus or 0
@@ -309,24 +235,18 @@ SMODS.Sticker{
 }
 
 -- Emerald Gem Slot
-SMODS.Sticker{
+Gemstones.GemSlot{
     key = "gemslot_emerald",
     badge_colour = HEX("159d49"),
-    prefix_config = { key = false },
-    rate = 0.0,
     atlas = "slot",
     pos = { x = 1, y = 2 },
     config = { odds = 4 },
+    joker_compat = false,
+    card_compat = true,
 
     loc_vars = function(self, info_queue, card)
         return { vars = { G.GAME.probabilities.normal or 1, self.config.odds } }
     end,
-	draw = function(self, card) --don't draw shine
-		G.shared_stickers[self.key].role.draw_major = card
-		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
-	end,
-    added = function(self, card) end,
-    removed = function(self, card) end,
     calculate = function(self, card, context)
         if context.discard then
             local pool = {}
@@ -350,24 +270,18 @@ SMODS.Sticker{
 }
 
 -- Turquoise Gem Slot
-SMODS.Sticker{
+Gemstones.GemSlot{
     key = "gemslot_turquoise",
     badge_colour = HEX("52bab1"),
-    prefix_config = { key = false },
-    rate = 0.0,
     atlas = "slot",
     pos = { x = 2, y = 2 },
     config = { planets_amount = 1 },
+    joker_compat = false,
+    card_compat = true,
 
     loc_vars = function(self, info_queue, card)
         return { vars = { self.config.planets_amount } }
     end,
-	draw = function(self, card) --don't draw shine
-		G.shared_stickers[self.key].role.draw_major = card
-		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
-	end,
-    added = function(self, card) end,
-    removed = function(self, card) end,
     calculate = function(self, card, context)
 		if context.destroying_card then
 			G.E_MANAGER:add_event(Event({
@@ -402,24 +316,20 @@ SMODS.Sticker{
 }
 
 -- Epidote Gem Slot
-SMODS.Sticker{
+Gemstones.GemSlot{
     key = "gemslot_epidote",
     badge_colour = HEX("7c822b"),
-    prefix_config = { key = false },
-    rate = 0.0,
     atlas = "slot",
     pos = { x = 3, y = 2 },
     config = { val_multi = 1.1 },
+    joker_compat = true,
+    card_compat = false,
 
     loc_vars = function(self, info_queue, card)
         return { vars = { ((self.config.val_multi - 1) * 100) } }
     end,
-	draw = function(self, card) --don't draw shine
-		G.shared_stickers[self.key].role.draw_major = card
-		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
-	end,
     added = function(self, card) card.ability.epidote_upgraded = false end,
-    removed = function(self, card) end,
+    removed = function(self, card) card.ability.epidote_upgraded = nil end,
     calculate = function(self, card, context)
         if context.setting_blind then
             card.ability.epidote_upgraded = false
@@ -433,24 +343,18 @@ SMODS.Sticker{
 }
 
 -- Adamite Gem Slot
-SMODS.Sticker{
+Gemstones.GemSlot{
     key = "gemslot_adamite",
     badge_colour = HEX("783435"),
-    prefix_config = { key = false },
-    rate = 0.0,
     atlas = "slot",
     pos = { x = 4, y = 2 },
     config = { retriggers = 1, chance = 2 },
+    joker_compat = true,
+    card_compat = false,
 
     loc_vars = function(self, info_queue, card)
         return { vars = { G.GAME.probabilities.normal or 1, self.config.chance, self.config.retriggers } }
     end,
-	draw = function(self, card) --don't draw shine
-		G.shared_stickers[self.key].role.draw_major = card
-		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
-	end,
-    added = function(self, card) end,
-    removed = function(self, card) end,
     calculate = function(self, card, context)
         if context.retrigger_joker_check and not context.retrigger_joker and context.other_card == card then
             if pseudorandom(pseudoseed("adamite_slot")) < G.GAME.probabilities.normal / self.config.chance then
@@ -465,69 +369,46 @@ SMODS.Sticker{
 }
 
 -- Obsidian Gem Slot
-SMODS.Sticker{
+Gemstones.GemSlot{
     key = "gemslot_obsidian",
     badge_colour = HEX("303a3b"),
-    prefix_config = { key = false },
-    rate = 0.0,
     atlas = "slot",
     pos = { x = 0, y = 3 },
     config = {},
-
-    loc_vars = function(self, info_queue, card)
-        return {}
-    end,
-	draw = function(self, card) --don't draw shine
-		G.shared_stickers[self.key].role.draw_major = card
-		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
-	end,
-    added = function(self, card) end,
-    removed = function(self, card) end,
+    joker_compat = true,
+    card_compat = false,
 }
 
 -- Sapphire Gem Slot
-SMODS.Sticker{
+Gemstones.GemSlot{
     key = "gemslot_sapphire",
     badge_colour = HEX("425fa6"),
-    prefix_config = { key = false },
-    rate = 0.0,
     atlas = "slot",
     pos = { x = 1, y = 3 },
     config = {},
+    joker_compat = true,
+    card_compat = true,
 
-    loc_vars = function(self, info_queue, card)
-        return {}
-    end,
-	draw = function(self, card) --don't draw shine
-		G.shared_stickers[self.key].role.draw_major = card
-		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
-	end,
-    added = function(self, card)
-        card:set_debuff()
-    end,
-    removed = function(self, card) end,
+    added = function(self, card) card:set_debuff() end,
+    removed = function(self, card) card:set_debuff() end,
 }
 
 -- Aventurine Gem Slot
-SMODS.Sticker{
+Gemstones.GemSlot{
     key = "gemslot_aventurine",
     badge_colour = HEX("299a74"),
-    prefix_config = { key = false },
-    rate = 0.0,
     atlas = "slot",
     pos = { x = 2, y = 3 },
     config = {
         x_mult = 1.75,
         dollars = 4
     },
+    joker_compat = true,
+    card_compat = false,
 
     loc_vars = function(self, info_queue, card)
         return { vars = { self.config.x_mult, self.config.dollars } }
     end,
-	draw = function(self, card) --don't draw shine
-		G.shared_stickers[self.key].role.draw_major = card
-		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
-	end,
     added = function(self, card)
         card.ability.perma_x_mult = card.ability.perma_x_mult + (self.config.x_mult - 1)
         card:flip('back')

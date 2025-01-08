@@ -22,7 +22,7 @@ SMODS.Blind{
     order = 1,
     boss_colour = HEX("494e52"),
     recalc_debuff = function(self, card, from_blind)
-        local k = get_gemslot(card)
+        local k = Gemstones.get_gemslot(card)
         if k and k ~= "gemslot_empty" then
             return true
         end
@@ -45,7 +45,7 @@ SMODS.Blind{
     press_play = function(self)
         G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2, func = function()
         for i = 1, #G.play.cards do
-            local k = get_gemslot(G.play.cards[i])
+            local k = Gemstones.get_gemslot(G.play.cards[i])
             if k and k ~= "gemslot_empty" then
                 G.E_MANAGER:add_event(Event({func = function() G.play.cards[i]:juice_up(); return true end })) 
                 ease_dollars(-3)

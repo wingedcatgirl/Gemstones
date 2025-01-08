@@ -54,7 +54,7 @@ SMODS.Consumable{
                 trigger = 'after',
                 delay = 0.4,
                 func = function()
-                    set_gemslot(_c, rand_slot)
+                    Gemstones.set_gemslot(_c, rand_slot)
                     _c:juice_up(0.5, 0.5)
         
                     card:juice_up(0.5, 0.5)
@@ -108,7 +108,7 @@ SMODS.Consumable{
                 trigger = 'after',
                 delay = 0.4,
                 func = function()
-                    set_gemslot(_c, rand_slot)
+                    Gemstones.set_gemslot(_c, rand_slot)
                     _c:juice_up(0.5, 0.5)
         
                     card:juice_up(0.5, 0.5)

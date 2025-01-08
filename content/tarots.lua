@@ -33,7 +33,7 @@ SMODS.Consumable{
         return total <= self.config.max_highlighted and total ~= 0
     end,
 
-    use = function(self, card, area, copier) use_gemstone_consumeable(self, card, area, copier) end,
+    use = function(self, card, area, copier) Gemstones.use_gemstone_consumeable(self, card, area, copier) end,
 }
 
 -- Excavator Tarot

@@ -1,21 +1,29 @@
 -- Check to see if a Gemstone Consumable can be used
-function can_use_gemstone_consumeable(self, card)
-    return (#G.jokers.highlighted + #G.hand.highlighted) == (self.config.max_highlighted or 1) and ((get_gemslot(G.jokers.highlighted[1]) ~= nil or get_gemslot(G.hand.highlighted[1])) ~= nil)
+function Gemstones.can_use_gemstone_consumeable(self, card)
+    local sticker_info = SMODS.Stickers[self.config.sticker_id]
+
+	if sticker_info.card_compat and sticker_info.joker_compat then
+		return (#G.jokers.highlighted + #G.hand.highlighted) == (self.config.max_highlighted or 1) and ((Gemstones.get_gemslot(G.jokers.highlighted[1]) ~= nil or Gemstones.get_gemslot(G.hand.highlighted[1])) ~= nil)
+	elseif sticker_info.card_compat and not sticker_info.joker_compat then
+		return  #G.jokers.highlighted <= self.config.max_highlighted and Gemstones.get_gemslot(G.jokers.highlighted[1]) ~= nil 
+	elseif not sticker_info.card_compat and sticker_info.joker_compat then
+		return  #G.hand.highlighted == self.config.max_highlighted and Gemstones.get_gemslot(G.hand.highlighted[1]) ~= nil 
+	end
 end
 
 -- Use and consume a Gemstone
-function use_gemstone_consumeable(self, card, area, copier, is_gemstone, type)
-	type = type or "cards,jokers"
-    if is_gemstone == true then G.GAME.last_used_gemstone = self.key or card.key end
+function Gemstones.use_gemstone_consumeable(self, card, area, copier)
+    if self.set == "Gemstone" then G.GAME.last_used_gemstone = self.key or card.key end
+	local sticker_info = SMODS.Stickers[self.config.sticker_id]
 
-    if type:find("cards") then
+    if sticker_info.card_compat then
 		for i = 1, #G.hand.highlighted do
 			local highlighted = G.hand.highlighted[i]
 			G.E_MANAGER:add_event(Event({
 				trigger = 'after',
 				delay = 0.4,
 				func = function()
-					set_gemslot(highlighted, self.config.sticker_id)
+					Gemstones.set_gemslot(highlighted, self.config.sticker_id)
 					highlighted:juice_up(0.5, 0.5)
 		
 					card:juice_up(0.5, 0.5)
@@ -26,14 +34,14 @@ function use_gemstone_consumeable(self, card, area, copier, is_gemstone, type)
 		end
 	end
 
-    if type:find("jokers") then
+    if sticker_info.joker_compat then
 		for i = 1, #G.jokers.highlighted do
 			local highlighted = G.jokers.highlighted[i]
 			G.E_MANAGER:add_event(Event({
 				trigger = 'after',
 				delay = 0.4,
 				func = function()
-					set_gemslot(highlighted, self.config.sticker_id)
+					Gemstones.set_gemslot(highlighted, self.config.sticker_id)
 					highlighted:juice_up(0.5, 0.5)
 		
 					card:juice_up(0.5, 0.5)
@@ -49,7 +57,7 @@ function use_gemstone_consumeable(self, card, area, copier, is_gemstone, type)
 end
 
 -- Apply gemstone
-function set_gemslot(card, id)
+function Gemstones.set_gemslot(card, id)
     local stickers = SMODS.Stickers
 
     for k, v in pairs(card.ability) do
@@ -64,7 +72,7 @@ function set_gemslot(card, id)
 end
 
 -- Check for gemstone
-function get_gemslot(card)
+function Gemstones.get_gemslot(card)
     if not card then return nil end
     
     for k, v in pairs(card.ability) do
@@ -85,7 +93,7 @@ function Back.apply_to_run(self)
 		G.E_MANAGER:add_event(Event({
 			func = function()
 				for i = #G.playing_cards, 1, -1 do
-					set_gemslot(G.playing_cards[i], self.effect.config.sticker_id)
+					Gemstones.set_gemslot(G.playing_cards[i], self.effect.config.sticker_id)
 				end
 
 				return true
@@ -226,7 +234,7 @@ function level_current_hand(card, amount)
     level_up_hand(card, text, nil, amount)
 end
 
--- Check to see if a Gemstonee card can be stored
+-- Check to see if a Gemstone card can be stored
 function can_store_gemstone_card(card)
 	local limit = 0
 	for i = 1, #G.consumeables.cards do
@@ -259,11 +267,11 @@ function inc_joker_value(self, multi, reset)
     G.E_MANAGER:add_event(Event({func = function()
 		if self.default_vals and reset then self.ability = deep_clean(self.default_vals) return true elseif not self.default_vals then self.default_vals = deep_clean(self.ability) end
 
-        local possibleKeys={'bonus','h_mult','mult','t_mult','h_dollars','x_mult','extra_value','h_size','perma_bonus','p_dollars','h_x_mult','t_chips','d_size'}
+        local possibleKeys={'bonus','h_mult','mult','t_mult','h_dollars','x_mult','x_chips','extra_value','h_size','perma_bonus','p_dollars','h_x_mult','t_chips','d_size'}
         local self_ability=self.ability
 		
         for k, v in pairs(possibleKeys) do
-            if self_ability[v] and (self_ability[v]~=(v=='x_mult' and 1 or 0)) then
+            if self_ability[v] and (self_ability[v]~=(v=='x_mult' and 1 or 0) or (self_ability[v]~=(v=='x_chips' and 1 or 0))) then
                 self_ability[v]=self_ability[v]*multi
             end
         end
