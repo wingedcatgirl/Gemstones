@@ -181,7 +181,7 @@ end
 -- Spawn same rarity Joker for Obsidian
 local Cardremove = Card.remove
 function Card:remove()
-	if G.STAGE == G.STAGES.RUN and self.ability.gemslot_obsidian then
+	if G.STAGE == G.STAGES.RUN and not G.SETTINGS.paused and self.ability.gemslot_obsidian then
 		local legendary = self.config.center.rarity == 4
 		local rarity
 
