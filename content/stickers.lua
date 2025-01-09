@@ -40,10 +40,10 @@ Gemstones.GemSlot{
     calculate = function(self, card, context)
         if card.area == G.jokers then
             if context.joker_main and not context.before and not context.after then
-                SMODS.eval_this(card, {
+                SMODS.calculate_effect({
                     message = localize{type='variable',key='a_xmult',vars={self.config.x_mult},colour = G.C.MULT},
-                    Xmult_mod = self.config.x_mult
-                })
+                    x_mult = self.config.x_mult
+                }, card)
             end
         end
     end

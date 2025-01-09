@@ -4,9 +4,9 @@ function Gemstones.can_use_gemstone_consumeable(self, card)
 
 	if sticker_info.card_compat and sticker_info.joker_compat then
 		return (#G.jokers.highlighted + #G.hand.highlighted) == (self.config.max_highlighted or 1) and ((Gemstones.get_gemslot(G.jokers.highlighted[1]) ~= nil or Gemstones.get_gemslot(G.hand.highlighted[1])) ~= nil)
-	elseif sticker_info.card_compat and not sticker_info.joker_compat then
-		return  #G.jokers.highlighted <= self.config.max_highlighted and Gemstones.get_gemslot(G.jokers.highlighted[1]) ~= nil 
 	elseif not sticker_info.card_compat and sticker_info.joker_compat then
+		return  #G.jokers.highlighted <= self.config.max_highlighted and Gemstones.get_gemslot(G.jokers.highlighted[1]) ~= nil 
+	elseif sticker_info.card_compat and not sticker_info.joker_compat then
 		return  #G.hand.highlighted == self.config.max_highlighted and Gemstones.get_gemslot(G.hand.highlighted[1]) ~= nil 
 	end
 end
