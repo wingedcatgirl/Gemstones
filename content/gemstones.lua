@@ -58,12 +58,7 @@ Gemstones.GemstoneConsumable{
     config = {
         max_highlighted = 1,
         sticker_id = "gemslot_pearl"
-    },
-
-    loc_vars = function(self, info_queue)
-        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = {} }
-        return { vars = { self.config.max_highlighted } }
-    end
+    }
 }
 
 -- Topaz Gemstone
@@ -118,12 +113,7 @@ Gemstones.GemstoneConsumable{
         max_highlighted = 1,
         level_up_odds = 3,
         sticker_id = "gemslot_opal"
-    },
-
-    loc_vars = function(self, info_queue)
-        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = {} }
-        return { vars = { self.config.max_highlighted } }
-    end
+    }
 }
 
 -- Diamond Gemstone
@@ -197,12 +187,7 @@ Gemstones.GemstoneConsumable{
     config = {
         max_highlighted = 1,
         sticker_id = "gemslot_jade"
-    },
-
-    loc_vars = function(self, info_queue)
-        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = {} }
-        return { vars = { self.config.max_highlighted } }
-    end
+    }
 }
 
 -- Quartz Gemstone
@@ -317,12 +302,7 @@ Gemstones.GemstoneConsumable{
     config = {
         max_highlighted = 1,
         sticker_id = "gemslot_obsidian"
-    },
-
-    loc_vars = function(self, info_queue)
-        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = {} }
-        return { vars = { self.config.max_highlighted } }
-    end
+    }
 }
 
 -- Sapphire Gemstone
@@ -336,12 +316,7 @@ Gemstones.GemstoneConsumable{
     config = {
         max_highlighted = 1,
         sticker_id = "gemslot_sapphire"
-    },
-
-    loc_vars = function(self, info_queue)
-        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = {} }
-        return { vars = { self.config.max_highlighted } }
-    end
+    }
 }
 
 -- Aventurine Gemstone
@@ -363,4 +338,19 @@ Gemstones.GemstoneConsumable{
         info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = { self.config.x_mult, self.config.cash } }
         return { vars = { self.config.max_highlighted } }
     end
+}
+
+
+-- Time Crystal Gemstone
+Gemstones.GemstoneConsumable{
+    name = "gem-Time Crystal",
+    key = "timecrystal",
+    atlas = "gems",
+    pos = { x = 7, y = 2 },
+    soul_pos = { x = 7, y = 3 },
+    order = 17,
+    config = {
+        max_highlighted = 1,
+        sticker_id = "gemslot_timecrystal"
+    }
 }

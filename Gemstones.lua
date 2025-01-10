@@ -43,7 +43,7 @@ Gemstones.GemstoneConsumable = SMODS.Consumable:extend{
 	config = { max_highlighted = 1, sticker_id = "gemslot_empty" },
 
     loc_vars = function(self, info_queue)
-        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = { self.config.retriggers } }
+        info_queue[#info_queue + 1] = { key = self.config.sticker_id, set = "Other", vars = {} }
         return { vars = { self.config.max_highlighted } }
     end,
 	can_use = function(self, card) return Gemstones.can_use_gemstone_consumeable(self, card) end,

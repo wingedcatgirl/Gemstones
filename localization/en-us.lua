@@ -435,6 +435,14 @@ return {
                     "This card is always flipped"
                 }
             },
+            gemslot_timecrystal = {
+                name = "Time Crystal",
+                text = {
+                    "This card returns",
+                    "to {C:attention}your deck",
+                    "when played"
+                },
+            },
             p_gems_gemstone_normal_1 = {
                 name = "Gemstone Pack",
                 text = {
@@ -501,6 +509,7 @@ return {
             gemslot_obsidian = "Gem Slot",
             gemslot_sapphire = "Gem Slot",
             gemslot_aventurine = "Gem Slot",
+            gemslot_timecrystal = "Gem Slot",
         },
         v_dictionary = {
             a_xchips = {"X#1# Chips"},

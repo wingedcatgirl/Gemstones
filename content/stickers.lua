@@ -80,7 +80,7 @@ Gemstones.GemSlot{
         if card.area ~= G.jokers then card.ability.p_dollars = card.ability.p_dollars - self.config.dollars end
     end,
     calculate = function(self, card, context)
-        if context.end_of_round then
+        if context.end_of_round and not context.repetition and not context.individual then
             ease_dollars(self.config.dollars)
             card_eval_status_text(card, 'jokers', nil, nil, nil, {message = "$"..self.config.dollars, colour = G.C.GOLD})
         end
@@ -105,7 +105,7 @@ Gemstones.GemSlot{
             if pseudorandom(pseudoseed("amber_slot")) < G.GAME.probabilities.normal / self.config.level_up_odds then
                 level_current_hand(card, 1)
             end
-        elseif context.cardarea == G.jokers and context.before then
+        elseif context.cardarea == G.jokers and context.before and not context.repetition then
             if pseudorandom(pseudoseed("amber_slot")) < G.GAME.probabilities.normal / self.config.level_up_odds then
                 level_current_hand(card, 1)
             end
@@ -403,8 +403,8 @@ Gemstones.GemSlot{
         x_mult = 1.75,
         dollars = 4
     },
-    joker_compat = true,
-    card_compat = false,
+    joker_compat = false,
+    card_compat = true,
 
     loc_vars = function(self, info_queue, card)
         return { vars = { self.config.x_mult, self.config.dollars } }
@@ -423,4 +423,15 @@ Gemstones.GemSlot{
             card_eval_status_text(card, 'jokers', nil, nil, nil, {message = "$"..self.config.dollars, colour = G.C.GOLD})
         end
     end
+}
+
+-- Time Crystal Gem Slot
+Gemstones.GemSlot{
+    key = "gemslot_timecrystal",
+    badge_colour = HEX("ee75bc"),
+    atlas = "slot",
+    pos = { x = 3, y = 3 },
+    config = {},
+    joker_compat = false,
+    card_compat = true,
 }
