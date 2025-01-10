@@ -168,6 +168,14 @@ return {
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
             },
+            c_gems_timecrystal = {
+                name = "Time Crystal",
+                text = {
+                    "Attach a {C:timecrystal}Time Crystal",
+                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected {C:attention}card{}",
+                    "{C:inactive}(Must have a Gem Slot){}"
+                }
+            },
         },
         Joker = {
             j_gems_drill_miner = {
