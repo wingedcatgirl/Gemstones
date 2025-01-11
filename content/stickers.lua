@@ -101,13 +101,19 @@ Gemstones.GemSlot{
         return { vars = { G.GAME.probabilities.normal or 1, self.config.level_up_odds } }
     end,
     calculate = function(self, card, context)
-        if context.cardarea == G.play and context.from_playing_card and not context.repetition then
-            if pseudorandom(pseudoseed("amber_slot")) < G.GAME.probabilities.normal / self.config.level_up_odds then
-                level_current_hand(card, 1)
-            end
-        elseif context.cardarea == G.jokers and context.before and not context.repetition then
-            if pseudorandom(pseudoseed("amber_slot")) < G.GAME.probabilities.normal / self.config.level_up_odds then
-                level_current_hand(card, 1)
+        if pseudorandom(pseudoseed("amber_slot")) < G.GAME.probabilities.normal / self.config.level_up_odds then
+            if context.cardarea == G.play and context.from_playing_card and not context.repetition then
+                return {
+                    level_up = true,
+                    card = card,
+                    message = localize('k_level_up_ex')
+                }
+            elseif context.cardarea == G.jokers and context.before and not context.repetition then
+                return {
+                    level_up = true,
+                    card = card,
+                    message = localize('k_level_up_ex')
+                }
             end
         end
     end

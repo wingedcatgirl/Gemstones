@@ -102,24 +102,6 @@ function Back.apply_to_run(self)
 	end
 end
 
--- Sticker compatability for playing cards (from Cryptid)
-local ec = eval_card
-function eval_card(card, context)
-	local ret = ec(card, context)
-    
-	if card.area == G.hand or card.area == G.play or card.area == G.discard or card.area == G.deck then
-		for k, v in pairs(SMODS.Stickers) do
-			if card.ability[k] and v.calculate and type(v.calculate) == "function" then
-				context.from_playing_card = true
-				context.ret = ret
-				v:calculate(card, context)
-			end
-		end
-	end
-
-	return ret
-end
-
 -- Last used Gemstone card
 local igo = Game.init_game_object
 Game.init_game_object = function(self)
@@ -224,15 +206,6 @@ function SMODS.eval_this(_card, effects)
 end
 
 --- GLOBAL FUNCS ---
-
--- Levels currently played hand
-function level_current_hand(card, amount)
-    local text,disp_text = G.FUNCS.get_poker_hand_info(G.play.cards)
-                
-    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')})
-    update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(text, 'poker_hands'),chips = G.GAME.hands[text].chips, mult = G.GAME.hands[text].mult, level=G.GAME.hands[text].level})
-    level_up_hand(card, text, nil, amount)
-end
 
 -- Check to see if a Gemstone card can be stored
 function can_store_gemstone_card(card)
