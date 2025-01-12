@@ -36,6 +36,7 @@ SMODS.Joker{
             if limit < G.consumeables.config.card_limit then
                 G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
                 G.E_MANAGER:add_event(Event({
+                    delay = 0.5,
                     func = (function()
                         G.E_MANAGER:add_event(Event({
                             func = function() 
