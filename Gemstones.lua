@@ -60,3 +60,13 @@ for _, file in ipairs(files) do
 	end
 	f()
 end
+
+-- Gather Gem Slot Pools
+Gemstones.pools = { both = {}, cards = {}, jokers = {} }
+for k, v in pairs(SMODS.Stickers) do
+	if v.key:find("gemslot") then
+		if v.joker_compat then table.insert(Gemstones.pools.jokers, v.key) end
+		if v.card_compat then table.insert(Gemstones.pools.cards, v.key) end
+		if v.joker_compat and v.card_compat then table.insert(Gemstones.pools.both, v.key) end
+	end
+end

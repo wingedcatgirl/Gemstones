@@ -6,6 +6,18 @@ SMODS.Atlas{
     py = 95
 }
 
+-- Create Card Booster
+local function create_gemstone_booster(self, card, i)
+    local _card
+    if i == card.ability.extra then
+        _card =  create_card("Tarot", G.pack_cards, nil, nil, true, nil, "c_gems_infusion", "ar1")
+    else
+        _card = create_card('Gemstone', G.pack_cards, nil, nil, true, nil, nil, "gems")
+    end
+
+    return _card
+end
+
 -- Booster Pack 1
 SMODS.Booster{
     name = "Gemstone Pack",
@@ -22,13 +34,7 @@ SMODS.Booster{
     unlocked = true,
     discovered = true,
     
-    create_card = function(self, card, i)
-        if i == card.ability.extra then
-            return create_card("Tarot", G.pack_cards, nil, nil, true, nil, "c_gems_infusion", "ar1")
-        else
-            return create_card('Gemstone', G.pack_cards, nil, nil, true, nil, nil, "gems")
-        end
-    end,
+    create_card = create_gemstone_booster,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = "c_gems_infusion", set = "Tarot", vars = {} }
         return { vars = { card.config.center.config.choose, card.ability.extra - 1 } }
@@ -50,14 +56,8 @@ SMODS.Booster{
     draw_hand = true, 
     unlocked = true,
     discovered = true,
-    
-    create_card = function(self, card, i)
-        if i == card.ability.extra then
-            return create_card("Tarot", G.pack_cards, nil, nil, true, nil, "c_gems_infusion", "ar1")
-        else
-            return create_card('Gemstone', G.pack_cards, nil, nil, true, nil, nil, "gems")
-        end
-    end,
+
+    create_card = create_gemstone_booster,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = "c_gems_infusion", set = "Tarot", vars = {} }
         return { vars = { card.config.center.config.choose, card.ability.extra - 1 } }
@@ -80,13 +80,7 @@ SMODS.Booster{
     unlocked = true,
     discovered = true,
     
-    create_card = function(self, card, i)
-        if i == card.ability.extra then
-            return create_card("Tarot", G.pack_cards, nil, nil, true, nil, "c_gems_infusion", "ar1")
-        else
-            return create_card('Gemstone', G.pack_cards, nil, nil, true, nil, nil, "gems")
-        end
-    end,
+    create_card = create_gemstone_booster,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = "c_gems_infusion", set = "Tarot", vars = {} }
         return { vars = { card.config.center.config.choose, card.ability.extra - 1 } }
@@ -109,13 +103,7 @@ SMODS.Booster{
     unlocked = true,
     discovered = true,
     
-    create_card = function(self, card, i)
-        if i == card.ability.extra then
-            return create_card("Tarot", G.pack_cards, nil, nil, true, nil, "c_gems_infusion", "ar1")
-        else
-            return create_card('Gemstone', G.pack_cards, nil, nil, true, nil, nil, "gems")
-        end
-    end,
+    create_card = create_gemstone_booster,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = "c_gems_infusion", set = "Tarot", vars = {} }
         return { vars = { card.config.center.config.choose, card.ability.extra - 1 } }

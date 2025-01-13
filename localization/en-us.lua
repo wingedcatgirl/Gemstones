@@ -236,18 +236,16 @@ return {
             c_gems_shine = {
                 name = "Shine",
                 text = {
-                    "Select up to {C:green}#1#{} cards to",
-                    "randomly attach a {C:diamond}Diamond{}, {C:turquoise}Turquoise",
-                    "{C:emerald}Emerald{}, {C:jade}Jade{}, or {C:amber}Amber{} {C:hearts}Gemstone{}",
+                    "Select up to {C:green}#1#{} {C:attention}cards{} to attach",
+                    "a random compatable {C:hearts}Gemstone{}",
                     "{C:inactive}(Gem Slot not required)"
                 }
             },
             c_gems_greed = {
                 name = "Greed",
                 text = {
-                    "Select {C:green}#1#{} {C:attention}Joker{} to randomly",
-                    "attach a {C:obsidian}Obsidian{}, {C:adamite}Adamite",
-                    "{C:epidote}Epidote{}, {C:topaz}Topaz{}, or {C:amber}Amber{} {C:hearts}Gemstone{}",
+                    "Select {C:green}#1#{} {C:attention}Joker{} to attach",
+                    "a random compatable {C:hearts}Gemstone{}",
                     "{C:inactive}(Gem Slot not required)"
                 }
             }

@@ -84,6 +84,29 @@ end
 
 --- HOOKS ---
 
+-- Add random chance of a Gem Slot
+local common_events_create_card = create_card
+function create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
+	local _card = common_events_create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
+
+    if area == G.pack_cards and _card.base.id then
+		if pseudorandom(pseudoseed("booster_gemstone")) < G.GAME.probabilities.normal / 10 then
+			Gemstones.set_gemslot(_card, pseudorandom_element(Gemstones.pools.cards, pseudoseed("booster_gemstone")))
+			G.E_MANAGER:add_event(Event({
+				trigger = 'after',
+				delay = 0.5,
+				func = function()
+					_card:juice_up(0.5, 0.5)
+					play_sound('gold_seal', 1.2, 0.4)
+					return true
+				end
+			}))
+		end
+	end
+
+	return _card
+end
+
 -- Apply Crystal Deck to run
 local Backapply_to_runRef = Back.apply_to_run
 function Back.apply_to_run(self)
