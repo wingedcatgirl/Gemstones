@@ -441,3 +441,14 @@ Gemstones.GemSlot{
     joker_compat = false,
     card_compat = true,
 }
+
+-- Citrine Gem Slot
+Gemstones.GemSlot{
+    key = "gemslot_citrine",
+    badge_colour = HEX("c86e04"),
+    atlas = "slot",
+    pos = { x = 4, y = 3 },
+    config = {},
+    joker_compat = true,
+    card_compat = true,
+}

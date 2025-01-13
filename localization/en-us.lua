@@ -176,6 +176,15 @@ return {
                     "{C:inactive}(Must have a Gem Slot){}"
                 }
             },
+            c_gems_citrine = {
+                name = "Citrine",
+                text = {
+                    "Attach a {C:citrine}Citrine",
+                    "{C:hearts}Gemstone{} to {C:green}#1#{} selected",
+                    "{C:attention}card{} or {C:attention}Joker{}",
+                    "{C:inactive}(Must have a Gem Slot){}"
+                }
+            },
         },
         Joker = {
             j_gems_drill_miner = {
@@ -448,6 +457,14 @@ return {
                     "to {C:attention}your deck",
                     "when played"
                 },
+            },
+            gemslot_citrine = {
+                name = "Citrine",
+                text = {
+                    "Increase all",
+                    "{C:green}probabilities{} on",
+                    "this card by {C:green}1"
+                }
             },
             p_gems_gemstone_normal_1 = {
                 name = "Gemstone Pack",

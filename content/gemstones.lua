@@ -354,3 +354,17 @@ Gemstones.GemstoneConsumable{
         sticker_id = "gemslot_timecrystal"
     }
 }
+
+-- Time Crystal Gemstone
+Gemstones.GemstoneConsumable{
+    name = "gem-Citrine",
+    key = "citrine",
+    atlas = "gems",
+    pos = { x = 8, y = 2 },
+    soul_pos = { x = 8, y = 3 },
+    order = 18,
+    config = {
+        max_highlighted = 1,
+        sticker_id = "gemslot_citrine"
+    }
+}

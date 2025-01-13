@@ -84,6 +84,19 @@ end
 
 --- HOOKS ---
 
+-- Deal with modified probabilities
+local gems_evalcard = eval_card
+function eval_card(card, context)
+	if not card or card.will_shatter then return end
+    
+	local game_probs = G.GAME.probabilities.normal
+	if card.ability.gemslot_citrine then G.GAME.probabilities.normal = game_probs + 1 end
+
+	local ret, ret2 = gems_evalcard(card, context)
+	if card.ability.gemslot_citrine then G.GAME.probabilities.normal = game_probs end
+	return ret, ret2
+end
+
 -- Add random chance of a Gem Slot
 local common_events_create_card = create_card
 function create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
