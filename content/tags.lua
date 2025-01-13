@@ -49,7 +49,7 @@ SMODS.Tag{
         colours = { G.ARGS.LOC_COLOURS[tag.ability.slot_applied and tag.ability.slot_applied:gsub("gemslot_", "") or "hearts"] } } }
     end,
     set_ability = function(self, tag)
-        tag.ability.slot_applied = "gemslot_"..pseudorandom_element(Gemstones.pools.jokers, pseudoseed("gems_infused_tag"))
+        tag.ability.slot_applied = pseudorandom_element(Gemstones.pools.jokers, pseudoseed("gems_infused_tag"))
     end,
     apply = function(self, tag, context)
         if context.type == "store_joker_modify" then

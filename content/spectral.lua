@@ -41,7 +41,7 @@ SMODS.Consumable{
 
     use = function(self, card, area, copier) 
         for i = 1, self.config.max_highlighted do
-            local rand_slot = "gemslot_"..pseudorandom_element(Gemstones.pools.cards, pseudoseed('spectral_shine'))
+            local rand_slot = pseudorandom_element(Gemstones.pools.cards, pseudoseed('spectral_shine'))
             local _c = G.hand.highlighted[i]
             
             G.E_MANAGER:add_event(Event({
@@ -89,7 +89,7 @@ SMODS.Consumable{
 
     use = function(self, card, area, copier) 
         for i = 1, self.config.max_highlighted do
-            local rand_slot = "gemslot_"..pseudorandom_element(Gemstones.pools.jokers, pseudoseed('spectral_shine'))
+            local rand_slot = pseudorandom_element(Gemstones.pools.jokers, pseudoseed('spectral_shine'))
             local _c = G.jokers.highlighted[i]
             
             G.E_MANAGER:add_event(Event({
