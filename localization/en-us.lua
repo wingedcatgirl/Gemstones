@@ -305,6 +305,24 @@ return {
                 },
             }
         },
+        Voucher = {
+            v_gems_gemstone_merchant = {
+                name = "Gemstone Merchant",
+                text = {
+                    "{C:hearts}Gemstone{} cards appear",
+                    "{C:attention}#1#X{} more frequently",
+                    "in the shop",
+                }
+            },
+            v_gems_gemstone_tycoon = {
+                name = "Gemstone Tycoon",
+                text = {
+                    "{C:hearts}Gemstone{} cards appear",
+                    "{C:attention}#1#X{} more frequently",
+                    "in the shop",
+                }
+            }
+        },
         Other = {
             gemslot_empty = {
                 name = "Empty",

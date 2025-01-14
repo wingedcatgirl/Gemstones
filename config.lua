@@ -4,4 +4,5 @@ return {
     Gems_Decks = true,
     Gems_Jokers = true,
     Gems_Tags = true,
+    Gems_Vouchers = true,
 }

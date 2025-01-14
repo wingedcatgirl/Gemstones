@@ -300,18 +300,6 @@ function inc_joker_value(self, multi, reset)
     card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), colour = G.C.RED, no_juice = true})
 end
 
--- Select a random item from a table
-function randomSelect(table)
-	for i = 1, 5 do
-		math.random()
-	end
-    if #table == 0 then
-        return nil -- Table is empty
-    end
-    local randomIndex = math.random(1, #table)
-    return table[randomIndex]
-end
-
 -- Makes sure Gemstones can be bought with half a slot remaining
 local G_FUNCS_check_for_buy_space = G.FUNCS.check_for_buy_space
 function G.FUNCS.check_for_buy_space(card)
@@ -624,6 +612,11 @@ Gemstones.config_tab = function()
             label = "Enable Tags",
             ref_table = Gemstones_Config,
             ref_value = "Gems_Tags",
+        }),
+        create_toggle({
+            label = "Enable Vouchers",
+            ref_table = Gemstones_Config,
+            ref_value = "Gems_Vouchers",
         }),
 		{
 			n = G.UIT.R,
