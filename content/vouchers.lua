@@ -43,7 +43,7 @@ SMODS.Voucher{
     redeem = function(self)
 		G.E_MANAGER:add_event(Event({
 			func = function()
-				G.GAME.gemstone_rate = G.GAME.gemstone_rate * self.config.rate_up
+				G.GAME.gemstone_rate = G.GAME.gemstone_rate * (self.config.rate_up / 2)
 				return true
 			end,
 		}))
