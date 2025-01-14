@@ -1,6 +1,8 @@
 # Gemstones
 Gemstones is a Balatro mod that adds a new unique card modifier: **Gem Slots**! Gem Slots can be obtained in multiple ways, and can hold Gemstones.
 
+![image](https://github.com/0fficialHalo/Gemstones/blob/main/assets/GitHub/GemSlots_Preview.png?raw=true)
+
 ## How to install?
 1. Click [here](www.github.com/0fficialHalo/Gemstones/releases/latest) to go to the latest release
 2. Scroll down and click on the .zip file to download the release
