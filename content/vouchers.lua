@@ -29,7 +29,7 @@ SMODS.Voucher{
 	end,
 }
 
--- Gemstone Tyycoon
+-- Gemstone Tycoon
 SMODS.Voucher{
     key = "gemstone_tycoon",
     order = 1,
