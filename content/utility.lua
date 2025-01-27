@@ -280,8 +280,13 @@ function inc_joker_value(self, multi, reset)
         local self_ability=self.ability
 		
         for k, v in pairs(possibleKeys) do
-            if self_ability[v] and (self_ability[v]~=(v=='x_mult' and 1 or 0) or (self_ability[v]~=(v=='x_chips' and 1 or 0))) then
-                self_ability[v]=self_ability[v]*multi
+            if self_ability[v] then
+				if (v == "x_chips" or v == "x_mult" or v == "h_x_mult") and self_ability[v] > 1 then
+					self_ability[v]=self_ability[v]*multi
+				elseif not (v == "x_chips" or v == "x_mult" or v == "h_x_mult") and self_ability[v] ~= 0 then
+					self_ability[v]=self_ability[v]*multi
+				end
+				
             end
         end
         if self_ability.extra then
@@ -546,7 +551,7 @@ Gemstones.extra_tabs = function()
                 {
                     n = G.UIT.T,
                     config = {
-                    text = "Contributors: AlexZGreat",
+                    text = "Contributors: AlexZGreat, Dragokillfist",
                     shadow = true,
                     scale = scale*0.8,
                     colour = G.C.GREEN
