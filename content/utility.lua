@@ -84,26 +84,13 @@ end
 
 --- HOOKS ---
 
--- Deal with modified probabilities
-local gems_evalcard = eval_card
-function eval_card(card, context)
-	if not card or card.will_shatter then return end
-    
-	local game_probs = G.GAME.probabilities.normal
-	if card.ability.gemslot_citrine then G.GAME.probabilities.normal = game_probs + 1 end
-
-	local ret, ret2 = gems_evalcard(card, context)
-	if card.ability.gemslot_citrine then G.GAME.probabilities.normal = game_probs end
-	return ret, ret2
-end
-
 -- Add random chance of a Gem Slot
 local common_events_create_card = create_card
 function create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
 	local _card = common_events_create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
 
     if area == G.pack_cards and _card.base.id then
-		if pseudorandom(pseudoseed("booster_gemstone")) < G.GAME.probabilities.normal / 10 then
+		if SMODS.pseudorandom_probability({}, "booster_gemstone", 1, 10, "booster_gemstone") then --I have no idea what trigger_obj is supposed to be in this context.
 			Gemstones.set_gemslot(_card, pseudorandom_element(Gemstones.pools.cards, pseudoseed("booster_gemstone")))
 			G.E_MANAGER:add_event(Event({
 				trigger = 'after',

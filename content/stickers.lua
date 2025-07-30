@@ -98,10 +98,11 @@ Gemstones.GemSlot{
     card_compat = true,
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { G.GAME.probabilities.normal or 1, self.config.level_up_odds } }
+        local luck, odds = SMODS.get_probability_vars(self, 1, self.config.level_up_odds, 'gem_amber_desc', false)
+        return { vars = { luck, odds } }
     end,
     calculate = function(self, card, context)
-        if pseudorandom(pseudoseed("amber_slot")) < G.GAME.probabilities.normal / self.config.level_up_odds then
+        if SMODS.pseudorandom_probability(card, "amber_slot", 1, self.config.level_up_odds, "amber_slot") then
             if context.cardarea == G.play and context.from_playing_card and not context.repetition then
                 return {
                     level_up = true,
@@ -248,7 +249,8 @@ Gemstones.GemSlot{
     card_compat = true,
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { G.GAME.probabilities.normal or 1, self.config.odds } }
+        local luck, odds = SMODS.get_probability_vars(self, 1, self.config.odds, 'gem_emerald_desc', false)
+        return { vars = { luck, odds } }
     end,
     calculate = function(self, card, context)
         if context.discard and (context.other_card == card) then
@@ -260,7 +262,7 @@ Gemstones.GemSlot{
                 end
             end
             if #pool > 0 then
-                if pseudorandom('gemslot_emerald') < G.GAME.probabilities.normal / self.config.odds then
+                if SMODS.pseudorandom_probability(card, "gemslot_emerald", 1, self.config.odds, "gemslot_emerald") then
                     local _card = pseudorandom_element(pool, pseudoseed('gemslot_emerald'))
                     local edition = poll_edition('wheel_of_fortune', nil, false, true, {'e_polychrome', 'e_holo', 'e_foil'})
                     _card:set_edition(edition)
@@ -356,11 +358,12 @@ Gemstones.GemSlot{
     card_compat = false,
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { G.GAME.probabilities.normal or 1, self.config.chance, self.config.retriggers } }
+        local luck, odds = SMODS.get_probability_vars(self, 1, self.config.chance, 'gem_adamite_desc', false)
+        return { vars = { luck, odds, self.config.retriggers } }
     end,
     calculate = function(self, card, context)
         if context.retrigger_joker_check and not context.retrigger_joker and context.other_card == card then
-            if pseudorandom(pseudoseed("adamite_slot")) < G.GAME.probabilities.normal / self.config.chance then
+            if SMODS.pseudorandom_probability(card, "adamite_slot", 1, self.config.chance, "adamite_slot") then
 			    return {
 			    	message = localize("k_again_ex"),
 			    	repetitions = self.config.retriggers,
@@ -448,4 +451,11 @@ Gemstones.GemSlot{
     config = {},
     joker_compat = true,
     card_compat = true,
+    calculate = function (self, card, context)
+        if context.mod_probability and context.trigger_obj == card and not context.blueprint then
+            return {
+                numerator = context.numerator + 1
+            }
+        end
+    end
 }

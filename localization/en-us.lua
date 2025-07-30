@@ -551,6 +551,7 @@ return {
             gemslot_sapphire = "Gem Slot",
             gemslot_aventurine = "Gem Slot",
             gemslot_timecrystal = "Gem Slot",
+            gemslot_citrine = "Gem Slot",
         },
         v_dictionary = {
             a_xchips = {"X#1# Chips"},
