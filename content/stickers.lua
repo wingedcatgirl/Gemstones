@@ -38,13 +38,10 @@ Gemstones.GemSlot{
         if card.area ~= G.jokers then card.ability.perma_x_mult = card.ability.perma_x_mult - (self.config.x_mult - 1) end
     end,
     calculate = function(self, card, context)
-        if card.area == G.jokers then
-            if context.joker_main and not context.before and not context.after then
-                SMODS.calculate_effect({
-                    message = localize{type='variable',key='a_xmult',vars={self.config.x_mult},colour = G.C.MULT},
-                    x_mult = self.config.x_mult
-                }, card)
-            end
+        if card.area == G.jokers and context.joker_main then
+            return {
+                xmult = self.config.x_mult
+            }
         end
     end
 }
@@ -58,6 +55,13 @@ Gemstones.GemSlot{
     config = {},
     joker_compat = false,
     card_compat = true,
+    calculate = function (self, card, context)
+        if context.modify_scoring_hand and context.other_card == card then
+            return {
+                add_to_hand = true
+            }
+        end
+    end
 }
 
 -- Topaz Gem Slot
@@ -80,7 +84,7 @@ Gemstones.GemSlot{
         if card.area ~= G.jokers then card.ability.p_dollars = card.ability.p_dollars - self.config.dollars end
     end,
     calculate = function(self, card, context)
-        if context.end_of_round and not context.repetition and not context.individual then
+        if context.end_of_round and context.individual and context.other_card == card then
             ease_dollars(self.config.dollars)
             card_eval_status_text(card, 'jokers', nil, nil, nil, {message = "$"..self.config.dollars, colour = G.C.GOLD})
         end
@@ -102,21 +106,19 @@ Gemstones.GemSlot{
         return { vars = { luck, odds } }
     end,
     calculate = function(self, card, context)
-        if SMODS.pseudorandom_probability(card, "amber_slot", 1, self.config.level_up_odds, "amber_slot") then
-            if context.cardarea == G.play and context.from_playing_card and not context.repetition then
-                return {
-                    level_up = true,
-                    card = card,
-                    message = localize('k_level_up_ex')
-                }
-            elseif context.cardarea == G.jokers and context.before and not context.repetition then
-                return {
-                    level_up = true,
-                    card = card,
-                    message = localize('k_level_up_ex')
-                }
+            if (
+                (context.cardarea == G.play and context.main_scoring)
+                or (context.cardarea == G.jokers and context.before)
+                )
+            and not context.repetition then
+                if SMODS.pseudorandom_probability(card, "amber_slot", 1, self.config.level_up_odds, "amber_slot") then
+                    return {
+                        level_up = true,
+                        card = card,
+                        message = localize('k_level_up_ex')
+                    }
+                end
             end
-        end
     end
 }
 
@@ -196,9 +198,9 @@ Gemstones.GemSlot{
         if card.area ~= G.jokers then card.ability.perma_x_chips = card.ability.perma_x_chips - self.config.x_chips end
     end,
     calculate = function(self, card, context)
-        if context.cardarea == G.jokers or context.cardarea == G.play then
-            if context.joker_main or context.main_scoring then
-                return { message = localize{type='variable',key='a_xchips',vars={self.config.x_chips},colour = G.C.CHIPS}, Xchip_mod = self.config.x_chips }
+        if context.cardarea == G.jokers then
+            if context.joker_main then
+                return { x_chips = self.config.x_chips }
             end
         end
     end
@@ -230,8 +232,7 @@ Gemstones.GemSlot{
     end,
     calculate = function(self, card, context)
         if context.cardarea == G.play and context.from_playing_card and not context.repetition then
-            card.ability.perma_bonus = card.ability.perma_bonus or 0
-            card.ability.perma_bonus = card.ability.perma_bonus + self.config.bonus_chips
+            card.ability.perma_bonus = (card.ability.perma_bonus or 0) + self.config.bonus_chips
             
             card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), colour = G.C.CHIPS})
         end
