@@ -251,7 +251,7 @@ Gemstones.GemSlot{
         return { vars = { G.GAME.probabilities.normal or 1, self.config.odds } }
     end,
     calculate = function(self, card, context)
-        if context.discard then
+        if context.discard and (context.other_card == card) then
             local pool = {}
             for i, j in ipairs(G.hand.cards) do
             local _card = G.hand.cards[i]
