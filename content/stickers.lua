@@ -425,7 +425,7 @@ Gemstones.GemSlot{
         card:flip('front')
     end,
     calculate = function(self, card, context)
-        if context.discard then
+        if context.discard and context.other_card == card then
             ease_dollars(self.config.dollars)
             card_eval_status_text(card, 'jokers', nil, nil, nil, {message = "$"..self.config.dollars, colour = G.C.GOLD})
         end
