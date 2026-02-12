@@ -196,7 +196,7 @@ return {
                 }
             },
             j_gems_gem_gauntlet = {
-                name = "Gem Gauntlet",
+                name = "Gemstone Gauntlet",
                 text = {
                     "Gives {X:mult,C:white} X#1# {} Mult",
                     "for each card with ",

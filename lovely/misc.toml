@@ -90,7 +90,7 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = "game.lua"
-pattern = "{card_limit = self.GAME.starting_params.joker_slots, type = 'joker', highlight_limit = 1})"
+pattern = "{card_limit = self.GAME.starting_params.joker_slots, type = 'joker', highlight_limit = 1, negative_info = 'joker'})"
 position = "at"
-payload = "{card_limit = self.GAME.starting_params.joker_slots, type = 'joker', highlight_limit = 2})"
+payload = "{card_limit = self.GAME.starting_params.joker_slots, type = 'joker', highlight_limit = 2, negative_info = 'joker'})"
 match_indent = true
