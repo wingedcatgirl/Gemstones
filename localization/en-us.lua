@@ -257,6 +257,14 @@ return {
                     "a random compatable {C:hearts}Gemstone{}",
                     "{C:inactive}(Gemstone Slot not required)"
                 }
+            },
+            c_gems_array = {
+                name = "Array",
+                text = {
+                    "Apply an {C:empty}Empty{} Gemstone Slot",
+                    "to {C:attention}all cards in hand{}",
+                    "without a Gemstone Slot"
+                }
             }
         },
         Stake = {},
