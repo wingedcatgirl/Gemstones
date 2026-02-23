@@ -199,21 +199,10 @@ SMODS.Joker{
         local found = {}
         
         if G["playing_cards"] and G["jokers"] then
-            for i = 1, #G.playing_cards do
-                local c = G.playing_cards[i]
-                for k, v in pairs(c.ability) do if string.find(k, "gemslot") and k ~= "gemslot_empty" and not found[k] then
-                    found[k] = true
-                    card.ability.gemstone_tally = card.ability.gemstone_tally + 1
-                end end
-            end
-    
-            for i = 1, #G.jokers.cards do
-                local j = G.jokers.cards[i]
-                for k, v in pairs(j.ability) do if string.find(k, "gemslot") and k ~= "gemslot_empty" and not found[k] then
-                    found[k] = true
-                    card.ability.gemstone_tally = card.ability.gemstone_tally + 1
-                end end
-            end
+            local playing_cards_tally, playing_cards_found = Gemstones.get_area_slot_tally(G.playing_cards, true, {})
+            local jokers_tally, jokers_found = Gemstones.get_area_slot_tally(G.jokers, true, playing_cards_found)
+
+            card.ability.gemstone_tally = playing_cards_tally + jokers_tally
         end
     end,
 
@@ -222,21 +211,10 @@ SMODS.Joker{
         local found = {}
         
         if G["playing_cards"] and G["jokers"] then
-            for i = 1, #G.playing_cards do
-                local c = G.playing_cards[i]
-                for k, v in pairs(c.ability) do if string.find(k, "gemslot") and k ~= "gemslot_empty" and not found[k] then
-                    found[k] = true
-                    card.ability.gemstone_tally = card.ability.gemstone_tally + 1
-                end end
-            end
-    
-            for i = 1, #G.jokers.cards do
-                local j = G.jokers.cards[i]
-                for k, v in pairs(j.ability) do if string.find(k, "gemslot") and k ~= "gemslot_empty" and not found[k] then
-                    found[k] = true
-                    card.ability.gemstone_tally = card.ability.gemstone_tally + 1
-                end end
-            end
+            local playing_cards_tally, playing_cards_found = Gemstones.get_area_slot_tally(G.playing_cards, true, {})
+            local jokers_tally, jokers_found = Gemstones.get_area_slot_tally(G.jokers, true, playing_cards_found)
+
+            card.ability.gemstone_tally = playing_cards_tally + jokers_tally
         end
     end,
 

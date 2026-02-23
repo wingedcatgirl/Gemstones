@@ -82,9 +82,25 @@ function Gemstones.get_gemslot(card)
     end
 end
 
+-- Get a tally for cards with a Gemstone Slot in a given area
+function Gemstones.get_area_slot_tally(area, unique_only, ignore_list)
+	local slot_tally = 0
+	local found = ignore_list or {}
+
+	for i = 1, #area do
+        local c = area[i]
+        for k, v in pairs(c.ability) do if string.find(k, "gemslot") and k ~= "gemslot_empty" and not found[k] then
+            slot_tally = slot_tally + 1
+			if unique_only then found[k] = true end
+        end end
+    end
+  
+	return slot_tally, found
+end
+
 --- HOOKS ---
 
--- Add random chance of a Gem Slot
+-- Add random chance of a Gemstone Slot
 local common_events_create_card = create_card
 function create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
 	local _card = common_events_create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
@@ -366,7 +382,7 @@ function G.UIDEF.use_and_sell_buttons(card)
 	return G_UIDEF_use_and_sell_buttons_ref(card)
 end
 
--- Create UI for Gem Slots
+-- Create UI for Gemstone Slots
 function create_UIBox_gemslots()
 	local _pool = {}
 	for i, v in pairs(SMODS.Stickers) do
@@ -434,7 +450,7 @@ G.FUNCS.reserve_card = function(e)
 	}))
 end
 
--- For Gem Slot collection UI
+-- For Gemstone Slot collection UI
 G.FUNCS.your_collection_gemslot = function()
 	G.SETTINGS.paused = true
 	G.FUNCS.overlay_menu{
@@ -444,7 +460,7 @@ end
 
 --- SMODS ---
 
--- Override function to remove Gem Slots from the pool
+-- Override function to remove Gemstone Slots from the pool
 create_UIBox_your_collection_stickers = function()
 	local _pool = {}
 	for i, v in pairs(SMODS.Stickers) do
@@ -467,12 +483,12 @@ create_UIBox_your_collection_stickers = function()
     })
 end
 
--- Gem Slots Collection Tab
+-- Gemstone Slots Collection Tab
 Gemstones.custom_collection_tabs = function()
     return {
         UIBox_button({
 			button = 'your_collection_gemslot',
-			label = {'Gem Slots'},
+			label = {'Gemstone Slots'},
 			minw = 5,
 			minh = 1,
 			id = 'your_collection_gemslot',
@@ -523,7 +539,7 @@ Gemstones.extra_tabs = function()
                 {
                     n = G.UIT.T,
                     config = {
-                    text = "Contributors: AlexZGreat, Dragokillfist",
+                    text = "Contributors: AlexZGreat, Dragokillfist, wingedcatgirl",
                     shadow = true,
                     scale = scale*0.8,
                     colour = G.C.GREEN

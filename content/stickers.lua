@@ -38,7 +38,7 @@ Gemstones.GemSlot{
         if card.area ~= G.jokers then card.ability.perma_x_mult = card.ability.perma_x_mult - (self.config.x_mult - 1) end
     end,
     calculate = function(self, card, context)
-        if card.area == G.jokers and context.joker_main then
+        if card.area == G.jokers then
             return {
                 xmult = self.config.x_mult
             }
@@ -254,7 +254,7 @@ Gemstones.GemSlot{
         return { vars = { luck, odds } }
     end,
     calculate = function(self, card, context)
-        if context.discard and (context.other_card == card) then
+        if context.discard and context.other_card == card then
             local pool = {}
             for i, j in ipairs(G.hand.cards) do
             local _card = G.hand.cards[i]

@@ -45,12 +45,11 @@ SMODS.Tag{
     min_ante = 2,
 
     loc_vars = function(self, info_queue, tag)
-        if tag.ability.slot_applied then
-            local vars = {}
-            if SMODS.Stickers[tag.ability.slot_applied].loc_vars then
-                vars = SMODS.Stickers[tag.ability.slot_applied]:loc_vars().vars
-            end
-            info_queue[#info_queue + 1] = { key = tag.ability.slot_applied, set = "Other", vars = vars } 
+        if tag.ability.slot_applied then 
+            info_queue[#info_queue + 1] = { 
+                key = tag.ability.slot_applied, set = "Other", 
+                vars = SMODS.Stickers[tag.ability.slot_applied].loc_vars and SMODS.Stickers[tag.ability.slot_applied]:loc_vars().vars or {} 
+            } 
         end
 
         return { vars = { tag.ability.slot_applied and G.localization.descriptions.Other[tag.ability.slot_applied].name or "[gemstone]", 
