@@ -42,7 +42,7 @@ if CardSleeves then
         end,
         trigger_effect = function(self, args)
             if self.get_current_deck_key() == "b_gems_crystal" then
-                if args.context.create_card and args.context.card.base.id then
+                if args.context and args.context.create_card and args.context.card.base.id then
                     Gemstones.set_gemslot(args.context.card, "gemslot_empty")
                 end
             end

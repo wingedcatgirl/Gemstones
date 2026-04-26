@@ -316,7 +316,7 @@ Gemstones.GemSlot{
 				end,
 			}))
 
-			return true
+			return {remove = true}
 		end
 	end,
 }
